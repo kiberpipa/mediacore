@@ -25,7 +25,6 @@ install_requires = [
     'PasteScript == 1.7.3',
     'ToscaWidgets == 0.9.9',
     'tw.forms == 0.9.9',
-    'MySQL-python >= 1.2.2',
     'BeautifulSoup == 3.0.7a',
         # We monkeypatch this version of BeautifulSoup in mediacore.__init__
         # Patch pending: https://bugs.launchpad.net/beautifulsoup/+bug/397997
