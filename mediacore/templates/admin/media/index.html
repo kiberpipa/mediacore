@@ -18,6 +18,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:py="http://genshi.edgewall.org/"
       xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:i18n="http://genshi.edgewall.org/i18n"
       py:with="paginator=c.paginators.media">
 <xi:include href="admin/master.html" />
 <head>
@@ -39,10 +40,10 @@
 				${XML(podcast_filter_form(dict(podcast_filter=podcast_filter)))}
 			</div>
 			<div py:choose="" class="f-lft">
-				<h1 py:when="search">Media that matches '${search}'</h1>
+				<h1 py:when="search" i18n:msg="search">Media that matches '${search}'</h1>
 				<h1 py:when="podcast_filter == 'Unfiled'">Unfiled Media</h1>
 				<h1 py:when="podcast_filter is None">All Media</h1>
-				<h1 py:otherwise="">Media for ${podcast_filter_title}</h1>
+				<h1 py:otherwise="" i18n:msg="podcast_filter_title">Media for ${podcast_filter_title}</h1>
 			</div>
 			<a class="btn btn-add-media f-lft" href="${h.url_for(action='edit', id='new')}"><span>Add New Media</span></a>
 		</div>

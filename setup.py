@@ -15,7 +15,7 @@ install_requires = [
     'WebHelpers == 1.0',
     'SQLAlchemy >= 0.6.2',
     'sqlalchemy-migrate == 0.6',
-    'Genshi >= 0.5.1',
+    'Genshi >= 0.6',
     'Routes == 1.12',
     'repoze.who == 1.0.18',
     'repoze.what-pylons == 1.0',
@@ -32,6 +32,7 @@ install_requires = [
     'feedparser >= 4.1', # needed only for rss import script
     'cElementTree >= 1, < 2',
     'gdata > 2, < 2.1',
+    'Babel',
 ]
 
 # PIL has some weird packaging issues (because its been around forever).
@@ -52,7 +53,9 @@ try:
     # to use them for other packages as well...
     extractors = [
         ('**.py',             'python', None),
-        ('templates/**.html', 'genshi', None),
+        ('templates/**.html', 'genshi', {
+                'template_class': 'genshi.template.markup:MarkupTemplate'
+            }),
         ('public/**',         'ignore', None),
     ]
     extra_arguments_for_setup['message_extractors'] = {'mediacore': extractors}
