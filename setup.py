@@ -32,6 +32,7 @@ install_requires = [
     'feedparser >= 4.1', # needed only for rss import script
     'cElementTree >= 1, < 2',
     'gdata > 2, < 2.1',
+    'Babel',
 ]
 
 # PIL has some weird packaging issues (because its been around forever).
@@ -52,7 +53,9 @@ try:
     # to use them for other packages as well...
     extractors = [
         ('**.py',             'python', None),
-        ('templates/**.html', 'genshi', None),
+        ('templates/**.html', 'genshi', {
+                'template_class': 'genshi.template.markup:MarkupTemplate'
+            }),
         ('public/**',         'ignore', None),
     ]
     extra_arguments_for_setup['message_extractors'] = {'mediacore': extractors}
