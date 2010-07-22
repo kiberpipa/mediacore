@@ -15,6 +15,7 @@
 -->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:py="http://genshi.edgewall.org/"
+      xmlns:i18n="http://genshi.edgewall.org/i18n"
       xmlns:xi="http://www.w3.org/2001/XInclude"
       py:strip="">
 
@@ -47,7 +48,8 @@
 			width, height = player.adjust_dimensions(media, file, width, height)
 			player_id = '%s-%s-player' % (media.slug, file.id)
 			?>
-			<a id="${player_id}"
+			<a i18n:msg="media.type"
+               id="${player_id}"
 			   href="${file.play_url(qualified=qualified)}"
 			   style="display:block;width:${width}px;height:${height}px">
 				Download this ${media.type}!
@@ -84,6 +86,7 @@
 		swf_url = player.swf_url(media, file, qualified=qualified)
 		vars = h.json.dumps(player.flashvars(media, file, autoplay=autoplay, autobuffer=autobuffer, qualified=qualified))
 		?>
+        <![CDATA[
 		var flashObj = new Swiff('${swf_url}', {
 			width: ${width},
 			height: ${height},
@@ -91,6 +94,7 @@
 			vars: ${vars}
 		});
 		var div = new Element('div').replaces('${player_id}').set('id', '${player_id}').grab(flashObj);
+        ]]>
 	</py:def>
 
 	<py:def function="media_grid(media, id=None, thumb_size='s', desc_len=90)"
@@ -110,15 +114,24 @@
 					<span class="grid-meta">
 						<span class="meta meta-comments" title="Comments">
 							${m.comment_count_published}
-							<span>Comment<py:if test="m.comment_count_published != 1">s</py:if></span>
+                            <i18n:choose numeral="m.comment_count_published">
+                              <span i18n:singular="">Comment</span>
+                              <span i18n:plural="">Comments</span>
+                            </i18n:choose>
 						</span>
 						<span class="meta meta-likes" title="Likes">
 							${m.likes}
-							<span>Like<py:if test="m.likes != 1">s</py:if></span>
+                            <i18n:choose numeral="m.likes">
+                              <span i18n:singular="">Like</span>
+                              <span i18n:plural="">Likes</span>
+                            </i18n:choose>
 						</span>
 						<span class="meta meta-views" title="Views">
 							${m.views}
-							<span>View<py:if test="m.views != 1">s</py:if></span>
+                            <i18n:choose numeral="m.views">
+                              <span i18n:singular="">View</span>
+                              <span i18n:plural="">Views</span>
+                            </i18n:choose>
 						</span>
 					</span>
 				</a>
@@ -168,7 +181,7 @@
 
 	<py:def function="xhtml_description(fieldName)">
 		<div class="xhtml-description-helper">
-			<p>The ${fieldName} field accepts some HTML formatting: ${h.list_acceptable_xhtml()['tags']}</p>
+			<p i18n:msg="fieldName, formatting_list">The ${fieldName} field accepts some HTML formatting: ${h.list_acceptable_xhtml()['tags']}</p>
 			<!--!
 			<ul class="xhtml_description">
 				<li><em>Tags:</em> ${h.list_acceptable_xhtml()['tags']}.</li>
