@@ -27,6 +27,30 @@ def make_map(config):
     map.explicit = False
     map.minimization = True # TODO: Rework routes so we can set this to False
 
+    # Legacy kiberpipa arhive urls
+    # TODO: tests
+    # TODO: verify with categories
+    # TODO: english map.redirect('/english.html', '/en/', _redirect_code="301 Moved Permanently")
+    # TODO: rss map.redirect('/rss.xml', '...')
+    map.redirect('/live.html', '/live', _redirect_code="301 Moved Permanently")
+    map.redirect('/vse.html', '/media', _redirect_code="301 Moved Permanently")
+    map.redirect('/iskalnik.php', '/media', _redirect_code="301 Moved Permanently")
+    map.redirect('/index.html', '/', _redirect_code="301 Moved Permanently")
+    map.redirect('/izven.html', '/categories/zunanji', _redirect_code="301 Moved Permanently")
+    map.redirect('/ostalo.html', '/media', _redirect_code="301 Moved Permanently")
+    map.redirect('/pipini_odprti_termini.html', '/categories/pipini-odprti-termini',
+        _redirect_code="301 Moved Permanently")
+    map.redirect('/spletne_urice.html', '/categories/spletne-urice',
+        _redirect_code="301 Moved Permanently")
+    map.redirect('/momo.html', '/categories/momo',
+        _redirect_code="301 Moved Permanently")
+    map.redirect('/delavnice.html', '/categories/delavnice',
+        _redirect_code="301 Moved Permanently")
+    map.redirect('/wclj.html', '/categories/wclj',
+        _redirect_code="301 Moved Permanently")
+    map.redirect('/veceri_za_inovativne_in_podjetne.html', '/categories/veceri-za-inovativne-in-podjetne',
+        _redirect_code="301 Moved Permanently")
+
     #################
     # Public Routes #
     #################

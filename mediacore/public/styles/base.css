@@ -61,9 +61,9 @@ a:hover {
 /* MediaCore default layout */
 #mediacore-logo {
 	background: url('../images/layout/logo.png') no-repeat left;
-	height: 28px;
+	height: 48px;
 	width: 920px;
-	margin: 10px auto;
+	margin: 0px auto;
 }
 #mediacore-logo a {
 	height: 0px;
