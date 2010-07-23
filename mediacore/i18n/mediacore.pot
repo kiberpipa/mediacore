@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MediaCore 0.8.1rc1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2010-07-23 11:25+0200\n"
+"POT-Creation-Date: 2010-07-23 19:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -224,11 +224,11 @@ msgstr ""
 msgid "Unfiled"
 msgstr ""
 
-#: mediacore/forms/admin/podcasts.py:31
+#: mediacore/forms/admin/podcasts.py:32
 msgid "Parental Advisory"
 msgstr ""
 
-#: mediacore/forms/admin/podcasts.py:31
+#: mediacore/forms/admin/podcasts.py:32
 #: mediacore/templates/admin/podcasts/_podcast-table.html:53
 msgid "Clean"
 msgstr ""
