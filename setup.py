@@ -52,11 +52,15 @@ try:
     # extractors are declared separately so it is easier for 3rd party users
     # to use them for other packages as well...
     extractors = [
-        ('**.py',             'python', None),
+        ('lib/unidecode/**', 'ignore', None),
+        ('tests/**', 'ignore', None),
+        ('**.py', 'python', None),
         ('templates/**.html', 'genshi', {
                 'template_class': 'genshi.template.markup:MarkupTemplate'
             }),
-        ('public/**',         'ignore', None),
+        ('public/scripts/third-party/**', 'ignore', None),
+        ('public/scripts/**.js', 'javascript', None),
+        ('public/**', 'ignore', None),
     ]
     extra_arguments_for_setup['message_extractors'] = {'mediacore': extractors}
 except ImportError:

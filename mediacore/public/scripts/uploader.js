@@ -344,7 +344,7 @@ var SwiffUploadManager = new Class({
 		} else {
 			var json = JSON.decode(file.response.text, true)
 			if (json.success) {
-				this.notices.set('html', 'Success! You will be redirected shortly.');
+				this.notices.set('html', _('Success! You will be redirected shortly.'));
 				this.percent.set('html', '100%');
 				this.statusDiv.addClass('finished');
 				var redirect = function(){window.location = json.redirect;};
@@ -376,7 +376,7 @@ var SwiffUploadManager = new Class({
 	},
 
 	redirectFailure: function(incl) {
-		var text = "Failed Upload";
+		var text = _("Failed Upload");
 		if ($defined(incl)) {
 			text += ": " + incl;
 		}
