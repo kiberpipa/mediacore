@@ -50,6 +50,8 @@ def make_map(config):
         _redirect_code="301 Moved Permanently")
     map.redirect('/veceri_za_inovativne_in_podjetne.html', '/categories/veceri-za-inovativne-in-podjetne',
         _redirect_code="301 Moved Permanently")
+    map.redirect('/media/{slug}/play.html', '/media/{slug}',
+        _redirect_code="301 Moved Permanently")
 
     #################
     # Public Routes #
