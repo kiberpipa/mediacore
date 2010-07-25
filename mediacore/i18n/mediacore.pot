@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MediaCore 0.8.1rc1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2010-07-23 19:59+0200\n"
+"POT-Creation-Date: 2010-07-24 02:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -464,7 +464,7 @@ msgstr ""
 
 #: mediacore/templates/helpers.html:183
 #, python-format
-msgid "The %(fieldName)s field accepts some HTML formatting: %(formatting_list)s"
+msgid "The %(fieldName)s field accepts some HTML formatting: %(formattingList)s"
 msgstr ""
 
 #: mediacore/templates/layout.html:25 mediacore/templates/layout.html:32
@@ -836,7 +836,7 @@ msgstr ""
 
 #: mediacore/templates/admin/media/index.html:46
 #, python-format
-msgid "Media for %(podcast_filter_title)s"
+msgid "Media for %(podcastFilterTitle)s"
 msgstr ""
 
 #: mediacore/templates/admin/media/index.html:48
