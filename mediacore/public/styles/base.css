@@ -124,11 +124,11 @@ a:hover {
 #nav-podcasts a:hover { background-position: -208px -39px }
 #nav-categories a:hover { background-position: -300px -39px }
 #nav-upload a:hover { background-position: -407px -39px }
-.nav-explore-on #nav-explore a { background-position: 0 -78px }
-.nav-media-on #nav-media a { background-position: -90px -78px }
-.nav-podcasts-on #nav-podcasts a { background-position: -208px -78px }
-.nav-categories-on #nav-categories a { background-position: -300px -78px }
-.nav-upload-on #nav-upload a { background-position: -407px -78px }
+#nav-explore a:active, .nav-explore-on #nav-explore a { background-position: 0 -78px }
+#nav-media a:active, .nav-media-on #nav-media a { background-position: -90px -78px }
+#nav-podcasts a:active, .nav-podcasts-on #nav-podcasts a { background-position: -208px -78px }
+#nav-categories a:active, .nav-categories-on #nav-categories a { background-position: -300px -78px }
+#nav-upload a:active, .nav-upload-on #nav-upload a { background-position: -407px -78px }
 #nav #nav-upload { float: right }
 
 #nav-search {
@@ -193,6 +193,9 @@ h1 a.nocolor:link, h1 a.nocolor:visited, h2 a.nocolor:link, h2 a.nocolor:visited
 }
 .btn span {
 	display: none;
+}
+.btn3:active {
+	background-position: 0 -68px;
 }
 .btn-likethis { width: 113px; background-image: url('../images/buttons/i-like-this.png'); }
 .btn-download { width: 113px; background-image: url('../images/buttons/download.png'); }
@@ -342,6 +345,9 @@ table.feat-meta tr:first-child td {
 a:hover .grid-title,
 a:focus .grid-title {
 	text-decoration: underline;
+}
+a:visited .grid-title {
+	color: #55934a;
 }
 .grid-title,
 .grid-desc,
@@ -658,4 +664,12 @@ a:focus .grid-title {
 }
 .xhtml-description-helper em {
 	font-weight: bold;
+}
+
+/* Zencoder VideoJS HTML5 Player overrides */
+.feat-content .vjs-controls {
+	margin: 0;
+}
+.feat-content .vjs-progress-holder {
+	margin: 7px 1px 0px 5px;
 }

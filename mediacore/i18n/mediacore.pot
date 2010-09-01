@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: MediaCore 0.8.1rc1\n"
+"Project-Id-Version: MediaCore 0.8.2\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2010-07-24 02:32+0200\n"
+"POT-Creation-Date: 2010-08-17 09:52-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,14 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.5\n"
-
-#: mediacore/websetup.py:101
-msgid "Upload your media using the form below. We'll review it and get back to you."
-msgstr ""
-
-#: mediacore/controllers/error.py:62
-msgid "We're sorry but we weren't able to process this request."
-msgstr ""
 
 #: mediacore/controllers/admin/media.py:376
 #, python-format
@@ -53,34 +45,6 @@ msgstr ""
 
 #: mediacore/controllers/admin/media.py:600
 msgid "Publish Now"
-msgstr ""
-
-#: mediacore/forms/comments.py:30
-msgid "Please enter your name!"
-msgstr ""
-
-#: mediacore/forms/comments.py:30
-#: mediacore/templates/admin/categories/index.html:54
-#: mediacore/templates/admin/tags/index.html:53
-msgid "Name"
-msgstr ""
-
-#: mediacore/forms/comments.py:32
-msgid "Email Address (will never be published)"
-msgstr ""
-
-#: mediacore/forms/comments.py:34 mediacore/forms/admin/comments.py:29
-#: mediacore/templates/helpers.html:116 mediacore/templates/admin/helpers.html:70
-#: mediacore/templates/admin/comments/_comment-table.html:30
-#: mediacore/templates/categories/index.html:40
-#: mediacore/templates/media/explore.html:38 mediacore/templates/media/view.html:81
-msgid "Comment"
-msgid_plural "Comments"
-msgstr[0] ""
-msgstr[1] ""
-
-#: mediacore/forms/comments.py:35
-msgid "Post Comment"
 msgstr ""
 
 #: mediacore/forms/uploader.py:33
@@ -131,45 +95,12 @@ msgstr ""
 msgid "OR:"
 msgstr ""
 
-#: mediacore/forms/admin/__init__.py:24
-msgid "SEARCH..."
-msgstr ""
-
-#: mediacore/forms/admin/__init__.py:40
-msgid "You forgot to select an image!"
-msgstr ""
-
-#: mediacore/forms/admin/categories.py:43 mediacore/forms/admin/comments.py:30
-#: mediacore/forms/admin/media.py:88 mediacore/forms/admin/users.py:61
-msgid "Save"
-msgstr ""
-
-#: mediacore/forms/admin/categories.py:46
-msgid "Parent Category"
-msgstr ""
-
-#: mediacore/forms/admin/categories.py:62 mediacore/forms/admin/media.py:89
-#: mediacore/forms/admin/users.py:62
-msgid "Delete"
-msgstr ""
-
-#: mediacore/forms/admin/comments.py:31
-msgid "Cancel"
-msgstr ""
-
 #: mediacore/forms/admin/media.py:38
 msgid "Please use the format HH:MM:SS"
 msgstr ""
 
 #: mediacore/forms/admin/media.py:50
 msgid "Select an encoded video or audio file on your computer"
-msgstr ""
-
-#: mediacore/forms/admin/media.py:50 mediacore/templates/nav.html:28
-#: mediacore/templates/admin/settings/master.html:45
-#: mediacore/templates/admin/settings/upload.html:24
-#: mediacore/templates/admin/settings/upload.html:30
-msgid "Upload"
 msgstr ""
 
 #: mediacore/forms/admin/media.py:51
@@ -188,105 +119,48 @@ msgstr ""
 msgid "Audio"
 msgstr ""
 
-#: mediacore/forms/admin/media.py:56
+#: mediacore/forms/admin/media.py:55
 msgid "Audio Description"
 msgstr ""
 
-#: mediacore/forms/admin/media.py:56
+#: mediacore/forms/admin/media.py:55
 msgid "Captions"
 msgstr ""
 
-#: mediacore/forms/admin/media.py:67
+#: mediacore/forms/admin/media.py:66
 msgid "Delete file"
 msgstr ""
 
-#: mediacore/forms/admin/media.py:79
+#: mediacore/forms/admin/media.py:78
 msgid "Include in the Podcast"
 msgstr ""
 
-#: mediacore/forms/admin/media.py:79
+#: mediacore/forms/admin/media.py:78
 msgid "Optional"
 msgstr ""
 
-#: mediacore/forms/admin/media.py:86
+#: mediacore/forms/admin/media.py:85
 msgid "e.g.: puppies, great dane, adorable"
 msgstr ""
 
-#: mediacore/forms/admin/media.py:87
+#: mediacore/forms/admin/media.py:86
 msgid "Additional Notes"
 msgstr ""
 
-#: mediacore/forms/admin/media.py:114 mediacore/templates/admin/media/index.html:45
+#: mediacore/forms/admin/media.py:87
+msgid "Save"
+msgstr ""
+
+#: mediacore/forms/admin/media.py:88
+msgid "Delete"
+msgstr ""
+
+#: mediacore/forms/admin/media.py:111 mediacore/templates/admin/media/index.html:38
 msgid "All Media"
 msgstr ""
 
-#: mediacore/forms/admin/media.py:115
+#: mediacore/forms/admin/media.py:111
 msgid "Unfiled"
-msgstr ""
-
-#: mediacore/forms/admin/podcasts.py:32
-msgid "Parental Advisory"
-msgstr ""
-
-#: mediacore/forms/admin/podcasts.py:32
-#: mediacore/templates/admin/podcasts/_podcast-table.html:53
-msgid "Clean"
-msgstr ""
-
-#: mediacore/forms/admin/settings.py:34
-msgid "Always use the selected HTML5 player"
-msgstr ""
-
-#: mediacore/forms/admin/settings.py:35
-msgid ""
-"Prefer the selected HTML5 player, but use the selected Flash player or "
-"embedded player if necessary"
-msgstr ""
-
-#: mediacore/forms/admin/settings.py:36
-msgid ""
-"Prefer the selected Flash player, but use the selected HTML5 player or "
-"embedded player if necessary"
-msgstr ""
-
-#: mediacore/forms/admin/settings.py:40
-msgid "Plain <textarea> fields (0kB)"
-msgstr ""
-
-#: mediacore/forms/admin/settings.py:47
-msgid "Yes"
-msgstr ""
-
-#: mediacore/forms/admin/settings.py:47
-msgid "No"
-msgstr ""
-
-#: mediacore/forms/admin/users.py:35
-msgid "User name already exists"
-msgstr ""
-
-#: mediacore/forms/admin/users.py:49
-msgid "Login Details:"
-msgstr ""
-
-#: mediacore/forms/admin/users.py:53
-msgid "Passwords do not match"
-msgstr ""
-
-#: mediacore/forms/admin/users.py:55 mediacore/templates/admin/users/index.html:47
-msgid "Group"
-msgstr ""
-
-#: mediacore/forms/admin/users.py:57
-msgid "Username"
-msgstr ""
-
-#: mediacore/forms/admin/users.py:58
-msgid "Password"
-msgstr ""
-
-#: mediacore/forms/admin/users.py:59
-msgid "Confirm password"
 msgstr ""
 
 #: mediacore/lib/mediafiles.py:94
@@ -307,14 +181,6 @@ msgstr ""
 msgid "Could not download the file from your FTP server: %s"
 msgstr ""
 
-#: mediacore/public/scripts/uploader.js:347
-msgid "Success! You will be redirected shortly."
-msgstr ""
-
-#: mediacore/public/scripts/uploader.js:379
-msgid "Failed Upload"
-msgstr ""
-
 #: mediacore/templates/debug.html:11
 msgid "Sample Template, for looking at template locals"
 msgstr ""
@@ -323,44 +189,47 @@ msgstr ""
 msgid "All objects from locals():"
 msgstr ""
 
-#: mediacore/templates/error.html:24
-#, python-format
-msgid "A %(code)s Error has Occurred"
+#: mediacore/templates/error.html:23
+msgid "A"
 msgstr ""
 
-#: mediacore/templates/error.html:29
+#: mediacore/templates/error.html:23
+msgid "Error has Occurred"
+msgstr ""
+
+#: mediacore/templates/error.html:28
 msgid "This page has gone missing!"
 msgstr ""
 
-#: mediacore/templates/error.html:30
+#: mediacore/templates/error.html:29
 msgid "Whoopsadaisy!"
 msgstr ""
 
-#: mediacore/templates/error.html:33
+#: mediacore/templates/error.html:32
 msgid "We can't find this page. The page may have been moved or removed."
 msgstr ""
 
-#: mediacore/templates/error.html:34
+#: mediacore/templates/error.html:33
 msgid "If you typed the address in, check the spelling."
 msgstr ""
 
-#: mediacore/templates/error.html:39
+#: mediacore/templates/error.html:38
 msgid "You have a few options:"
 msgstr ""
 
-#: mediacore/templates/error.html:41 mediacore/templates/error.html:42
+#: mediacore/templates/error.html:40 mediacore/templates/error.html:41
 msgid "Return to the"
 msgstr ""
 
-#: mediacore/templates/error.html:41
+#: mediacore/templates/error.html:40
 msgid "homepage"
 msgstr ""
 
-#: mediacore/templates/error.html:42
+#: mediacore/templates/error.html:41
 msgid "media page"
 msgstr ""
 
-#: mediacore/templates/error.html:43
+#: mediacore/templates/error.html:42
 msgid "Fill out an error report below."
 msgstr ""
 
@@ -372,99 +241,112 @@ msgstr ""
 msgid "What were you looking for when you got the error?"
 msgstr ""
 
-#: mediacore/templates/helpers.html:32
+#: mediacore/templates/helpers.html:24
 msgid ""
 "MediaCore could not find an appropriate encoding of this media item to "
 "display in your browser.\n"
-"\t\t\tContact the site admin if you need assistance. We recommend useing "
-"HTML5 compatible browser\n"
-"            such as [1:Google Chrome]."
+"\t\t\tContact the site admin if you need assistance."
 msgstr ""
 
-#: mediacore/templates/helpers.html:60
+#: mediacore/templates/helpers.html:51
 msgid "Download this"
 msgstr ""
 
-#: mediacore/templates/helpers.html:69
+#: mediacore/templates/helpers.html:60
 msgid ""
 "If your browser supported HTML5, you'd be seeing an audio player here instead"
 " of this text!"
 msgstr ""
 
-#: mediacore/templates/helpers.html:73
+#: mediacore/templates/helpers.html:64
 msgid ""
 "If your browser supported HTML5, you'd be seeing a video player here instead "
 "of this text!"
 msgstr ""
 
-#: mediacore/templates/helpers.html:114 mediacore/templates/admin/helpers.html:64
+#: mediacore/templates/helpers.html:103 mediacore/templates/admin/helpers.html:64
+#: mediacore/templates/admin/helpers.html:70
 #: mediacore/templates/admin/master.html:52
-#: mediacore/templates/admin/comments/index.html:27
+#: mediacore/templates/admin/comments/index.html:24
 #: mediacore/templates/admin/media/_media-table.html:32
 #: mediacore/templates/admin/settings/comments.html:24
 #: mediacore/templates/admin/settings/comments.html:30
 #: mediacore/templates/admin/settings/master.html:46
-#: mediacore/templates/categories/index.html:39
-#: mediacore/templates/comments/_list.html:38
-#: mediacore/templates/media/explore.html:37 mediacore/templates/media/view.html:80
+#: mediacore/templates/categories/index.html:38
+#: mediacore/templates/comments/_list.html:37
+#: mediacore/templates/media/explore.html:35 mediacore/templates/media/view.html:79
 msgid "Comments"
 msgstr ""
 
-#: mediacore/templates/helpers.html:121
+#: mediacore/templates/helpers.html:105
+#: mediacore/templates/admin/comments/_comment-table.html:29
+#: mediacore/templates/categories/index.html:38
+#: mediacore/templates/media/explore.html:35 mediacore/templates/media/view.html:79
+msgid "Comment"
+msgstr ""
+
+#: mediacore/templates/helpers.html:105 mediacore/templates/helpers.html:109
+#: mediacore/templates/helpers.html:113
+#: mediacore/templates/categories/index.html:38
+#: mediacore/templates/categories/index.html:40
+#: mediacore/templates/media/explore.html:35
+#: mediacore/templates/media/explore.html:37 mediacore/templates/media/view.html:79
+#: mediacore/templates/media/view.html:81 mediacore/templates/media/view.html:105
+msgid "s"
+msgstr ""
+
+#: mediacore/templates/helpers.html:107
 msgid "Likes"
 msgstr ""
 
-#: mediacore/templates/helpers.html:123
+#: mediacore/templates/helpers.html:109
 msgid "Like"
-msgid_plural "Likes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr ""
 
-#: mediacore/templates/helpers.html:128
-#: mediacore/templates/categories/index.html:46
-#: mediacore/templates/media/explore.html:44 mediacore/templates/media/view.html:89
+#: mediacore/templates/helpers.html:111
+#: mediacore/templates/categories/index.html:40
+#: mediacore/templates/media/explore.html:37 mediacore/templates/media/view.html:81
 msgid "Views"
 msgstr ""
 
-#: mediacore/templates/helpers.html:130
-#: mediacore/templates/admin/media/update-status-form.html:28
-#: mediacore/templates/admin/media/update-status-form.html:34
-#: mediacore/templates/categories/index.html:47
-#: mediacore/templates/media/explore.html:45 mediacore/templates/media/view.html:90
+#: mediacore/templates/helpers.html:113
+#: mediacore/templates/categories/index.html:40
+#: mediacore/templates/media/explore.html:37 mediacore/templates/media/view.html:81
 msgid "View"
-msgid_plural "Views"
-msgstr[0] ""
-msgstr[1] ""
+msgstr ""
 
-#: mediacore/templates/helpers.html:151 mediacore/templates/admin/helpers.html:35
+#: mediacore/templates/helpers.html:131 mediacore/templates/admin/helpers.html:34
 msgid "Page:"
 msgstr ""
 
-#: mediacore/templates/helpers.html:171
+#: mediacore/templates/helpers.html:151
 msgid "Show:"
 msgstr ""
 
-#: mediacore/templates/helpers.html:173
-#: mediacore/templates/categories/index.html:58
-#: mediacore/templates/media/explore.html:57
+#: mediacore/templates/helpers.html:153
+#: mediacore/templates/categories/index.html:47
+#: mediacore/templates/media/explore.html:59
 msgid "Latest"
 msgstr ""
 
-#: mediacore/templates/helpers.html:174
-#: mediacore/templates/categories/index.html:63
-#: mediacore/templates/media/explore.html:64
+#: mediacore/templates/helpers.html:154
+#: mediacore/templates/categories/index.html:52
+#: mediacore/templates/media/explore.html:43
 msgid "Most Popular"
 msgstr ""
 
-#: mediacore/templates/helpers.html:175
-#: mediacore/templates/categories/index.html:29
-#: mediacore/templates/media/explore.html:30
+#: mediacore/templates/helpers.html:155
+#: mediacore/templates/categories/index.html:28
+#: mediacore/templates/media/explore.html:28
 msgid "Featured"
 msgstr ""
 
-#: mediacore/templates/helpers.html:183
-#, python-format
-msgid "The %(fieldName)s field accepts some HTML formatting: %(formattingList)s"
+#: mediacore/templates/helpers.html:163
+msgid "The"
+msgstr ""
+
+#: mediacore/templates/helpers.html:163
+msgid "field accepts some HTML formatting:"
 msgstr ""
 
 #: mediacore/templates/layout.html:25 mediacore/templates/layout.html:32
@@ -497,53 +379,56 @@ msgstr ""
 msgid "Password:"
 msgstr ""
 
-#: mediacore/templates/nav.html:24 mediacore/templates/media/explore.html:24
+#: mediacore/templates/nav.html:24 mediacore/templates/media/explore.html:23
 msgid "Explore"
 msgstr ""
 
-#: mediacore/templates/nav.html:25 mediacore/templates/media/index.html:24
+#: mediacore/templates/nav.html:25 mediacore/templates/upload/success.html:35
 msgid "Media Library"
 msgstr ""
 
 #: mediacore/templates/nav.html:26 mediacore/templates/admin/master.html:51
 #: mediacore/templates/admin/podcasts/index.html:24
-#: mediacore/templates/admin/podcasts/index.html:32
+#: mediacore/templates/admin/podcasts/index.html:31
 #: mediacore/templates/podcasts/index.html:23
 msgid "Podcasts"
 msgstr ""
 
 #: mediacore/templates/nav.html:27
 #: mediacore/templates/admin/categories/edit.html:24
-#: mediacore/templates/admin/categories/index.html:25
-#: mediacore/templates/admin/categories/index.html:42
+#: mediacore/templates/admin/categories/index.html:24
+#: mediacore/templates/admin/categories/index.html:40
 #: mediacore/templates/admin/settings/master.html:38
-#: mediacore/templates/categories/index.html:25
+#: mediacore/templates/categories/index.html:24
 #: mediacore/templates/categories/layout.html:26
-#: mediacore/templates/media/view.html:138
+#: mediacore/templates/media/view.html:120
 msgid "Categories"
+msgstr ""
+
+#: mediacore/templates/nav.html:28
+#: mediacore/templates/admin/settings/master.html:45
+#: mediacore/templates/admin/settings/upload.html:24
+#: mediacore/templates/admin/settings/upload.html:30
+msgid "Upload"
 msgstr ""
 
 #: mediacore/templates/nav.html:31
 msgid "Search"
 msgstr ""
 
-#: mediacore/templates/admin/helpers.html:61
+#: mediacore/templates/admin/helpers.html:60
 msgid "Moderate comments"
 msgstr ""
 
-#: mediacore/templates/admin/helpers.html:63
-msgid "Moderate"
-msgstr ""
-
-#: mediacore/templates/admin/helpers.html:78
+#: mediacore/templates/admin/helpers.html:75
 msgid "Published"
 msgstr ""
 
-#: mediacore/templates/admin/helpers.html:83
+#: mediacore/templates/admin/helpers.html:80
 msgid "Unreviewed"
 msgstr ""
 
-#: mediacore/templates/admin/helpers.html:88
+#: mediacore/templates/admin/helpers.html:85
 msgid "Trash"
 msgstr ""
 
@@ -572,9 +457,10 @@ msgid "Logout"
 msgstr ""
 
 #: mediacore/templates/admin/master.html:50
-#: mediacore/templates/admin/categories/index.html:56
-#: mediacore/templates/admin/media/index.html:25
-#: mediacore/templates/admin/tags/index.html:55
+#: mediacore/templates/admin/categories/index.html:49
+#: mediacore/templates/admin/media/index.html:24
+#: mediacore/templates/admin/tags/index.html:49
+#: mediacore/templates/media/index.html:30
 msgid "Media"
 msgstr ""
 
@@ -591,135 +477,112 @@ msgstr ""
 msgid "Add Category"
 msgstr ""
 
-#: mediacore/templates/admin/categories/index.html:45
-#: mediacore/templates/admin/settings/analytics.html:34
-#: mediacore/templates/admin/settings/comments.html:33
-#: mediacore/templates/admin/settings/display.html:34
-#: mediacore/templates/admin/settings/notifications.html:33
-#: mediacore/templates/admin/settings/popularity.html:33
-#: mediacore/templates/admin/settings/upload.html:33
-#: mediacore/templates/admin/tags/index.html:45
-msgid "Notes"
-msgstr ""
-
 #: mediacore/templates/admin/categories/index.html:47
-msgid ""
-"Categories, as the name implies, provide a concise list of the main "
-"categories of media on your site. Like [1:Tags], they are considered when "
-"searching for media and when displaying related media. Unlike Tags, "
-"Categories have their own [2:section in the front-end] that that provides a "
-"way for users to explore the media by subject matter."
+#: mediacore/templates/admin/tags/index.html:47
+msgid "Name"
 msgstr ""
 
 #: mediacore/templates/admin/categories/index.html:48
-msgid ""
-"Categories can be nested. A parent category is considered to contain all of "
-"the media contained by its child categories."
-msgstr ""
-
-#: mediacore/templates/admin/categories/index.html:55
-#: mediacore/templates/admin/tags/index.html:54
+#: mediacore/templates/admin/tags/index.html:48
 msgid "Slug"
 msgstr ""
 
-#: mediacore/templates/admin/categories/index.html:71
+#: mediacore/templates/admin/categories/index.html:64
 msgid "Add New Category"
 msgstr ""
 
-#: mediacore/templates/admin/categories/index.html:75
+#: mediacore/templates/admin/categories/index.html:68
 msgid "Edit Category"
 msgstr ""
 
-#: mediacore/templates/admin/categories/index.html:79
+#: mediacore/templates/admin/categories/index.html:72
 msgid "Delete Category"
 msgstr ""
 
-#: mediacore/templates/admin/categories/index.html:82
-msgid "Are you sure you want to delete this category [1:and ALL of its children]?"
+#: mediacore/templates/admin/categories/index.html:75
+msgid "Are you sure you want to delete this category"
+msgstr ""
+
+#: mediacore/templates/admin/categories/index.html:75
+msgid "and ALL of its children"
 msgstr ""
 
 #: mediacore/templates/admin/categories/row-form.html:41
-#: mediacore/templates/admin/comments/_comment-table.html:59
+#: mediacore/templates/admin/comments/_comment-table.html:58
 #: mediacore/templates/admin/tags/row-form.html:33
-#: mediacore/templates/admin/users/index.html:62
+#: mediacore/templates/admin/users/index.html:63
 msgid "edit"
 msgstr ""
 
-#: mediacore/templates/admin/comments/_comment-table.html:28
+#: mediacore/templates/admin/comments/_comment-table.html:27
 #: mediacore/templates/admin/media/_media-table.html:30
 msgid "Status"
 msgstr ""
 
-#: mediacore/templates/admin/comments/_comment-table.html:29
+#: mediacore/templates/admin/comments/_comment-table.html:28
 #: mediacore/templates/admin/media/_media-table.html:34
 msgid "Author"
 msgstr ""
 
-#: mediacore/templates/admin/comments/_comment-table.html:31
+#: mediacore/templates/admin/comments/_comment-table.html:30
 msgid "In Response to"
 msgstr ""
 
-#: mediacore/templates/admin/comments/_comment-table.html:36
+#: mediacore/templates/admin/comments/_comment-table.html:35
 #: mediacore/templates/admin/media/_media-table.html:41
-#: mediacore/templates/admin/podcasts/_podcast-table.html:27
-#: mediacore/templates/admin/users/index.html:53
+#: mediacore/templates/admin/podcasts/_podcast-table.html:26
+#: mediacore/templates/admin/users/index.html:54
 msgid "None Found"
 msgstr ""
 
-#: mediacore/templates/admin/comments/_comment-table.html:40
+#: mediacore/templates/admin/comments/_comment-table.html:39
 msgid "This comment has already been approved for publishing"
 msgstr ""
 
-#: mediacore/templates/admin/comments/_comment-table.html:40
+#: mediacore/templates/admin/comments/_comment-table.html:39
 #: mediacore/templates/admin/media/_media-table.html:55
 msgid "published"
 msgstr ""
 
-#: mediacore/templates/admin/comments/_comment-table.html:41
+#: mediacore/templates/admin/comments/_comment-table.html:40
 msgid "Approve this comment for publishing"
 msgstr ""
 
-#: mediacore/templates/admin/comments/_comment-table.html:41
+#: mediacore/templates/admin/comments/_comment-table.html:40
 msgid "approve"
 msgstr ""
 
-#: mediacore/templates/admin/comments/_comment-table.html:42
+#: mediacore/templates/admin/comments/_comment-table.html:41
 msgid "Delete this comment"
 msgstr ""
 
-#: mediacore/templates/admin/comments/_comment-table.html:42
+#: mediacore/templates/admin/comments/_comment-table.html:41
 msgid "trash"
 msgstr ""
 
-#: mediacore/templates/admin/comments/_comment-table.html:50
+#: mediacore/templates/admin/comments/_comment-table.html:49
 msgid "Submitted on"
 msgstr ""
 
-#: mediacore/templates/admin/comments/_comment-table.html:57
+#: mediacore/templates/admin/comments/_comment-table.html:56
 msgid "Go to the admin page for this item"
 msgstr ""
 
-#: mediacore/templates/admin/comments/index.html:28
-#, python-format
-msgid "Comments for %(media_filter_title)s"
+#: mediacore/templates/admin/comments/index.html:24
+#: mediacore/templates/admin/media/index.html:24
+msgid "for"
 msgstr ""
 
-#: mediacore/templates/admin/comments/index.html:28
-msgid "Comments for"
+#: mediacore/templates/admin/comments/index.html:46
+msgid "Comments that match '"
 msgstr ""
 
-#: mediacore/templates/admin/comments/index.html:52
-#, python-format
-msgid "Comments that match '%(search)s'"
-msgstr ""
-
-#: mediacore/templates/admin/comments/index.html:53
+#: mediacore/templates/admin/comments/index.html:47
 msgid "All Comments"
 msgstr ""
 
-#: mediacore/templates/admin/comments/index.html:54
-#, python-format
-msgid "Comments for %(search)s"
+#: mediacore/templates/admin/comments/index.html:48
+msgid "Comments for"
 msgstr ""
 
 #: mediacore/templates/admin/media/_media-table.html:28
@@ -741,9 +604,9 @@ msgstr ""
 #: mediacore/templates/admin/media/_media-table.html:33
 #: mediacore/templates/admin/settings/master.html:39
 #: mediacore/templates/admin/tags/edit.html:24
-#: mediacore/templates/admin/tags/index.html:25
-#: mediacore/templates/admin/tags/index.html:42
-#: mediacore/templates/media/view.html:144
+#: mediacore/templates/admin/tags/index.html:24
+#: mediacore/templates/admin/tags/index.html:40
+#: mediacore/templates/media/view.html:126
 msgid "Tags"
 msgstr ""
 
@@ -778,19 +641,13 @@ msgid "Thumbnail"
 msgstr ""
 
 #: mediacore/templates/admin/media/edit.html:143
-#: mediacore/templates/admin/podcasts/_podcast-table.html:39
+#: mediacore/templates/admin/podcasts/_podcast-table.html:38
 #: mediacore/templates/admin/podcasts/edit.html:88
 msgid "Thumb"
 msgstr ""
 
 #: mediacore/templates/admin/media/edit.html:167
 msgid "Manage Files"
-msgstr ""
-
-#: mediacore/templates/admin/media/edit.html:169
-#: mediacore/templates/admin/media/update-status-form.html:23
-#: mediacore/templates/admin/podcasts/index.html:31
-msgid "Help"
 msgstr ""
 
 #: mediacore/templates/admin/media/edit.html:170
@@ -821,223 +678,139 @@ msgstr ""
 msgid "or"
 msgstr ""
 
-#: mediacore/templates/admin/media/index.html:25
-msgid "for"
+#: mediacore/templates/admin/media/index.html:36
+msgid "Media that matches '"
 msgstr ""
 
-#: mediacore/templates/admin/media/index.html:43
-#, python-format
-msgid "Media that matches '%(search)s'"
-msgstr ""
-
-#: mediacore/templates/admin/media/index.html:44
+#: mediacore/templates/admin/media/index.html:37
 msgid "Unfiled Media"
 msgstr ""
 
-#: mediacore/templates/admin/media/index.html:46
-#, python-format
-msgid "Media for %(podcastFilterTitle)s"
+#: mediacore/templates/admin/media/index.html:39
+msgid "Media for"
 msgstr ""
 
-#: mediacore/templates/admin/media/index.html:48
+#: mediacore/templates/admin/media/index.html:41
 msgid "Add New Media"
 msgstr ""
 
-#: mediacore/templates/admin/media/update-status-form.html:28
-msgid "View this media where it is published"
-msgstr ""
-
-#: mediacore/templates/admin/media/update-status-form.html:28
-#: mediacore/templates/admin/media/update-status-form.html:34
-msgid "Preview"
-msgstr ""
-
-#: mediacore/templates/admin/media/update-status-form.html:34
-msgid "View this media where it will be published"
-msgstr ""
-
-#: mediacore/templates/admin/media/update-status-form.html:42
+#: mediacore/templates/admin/media/update-status-form.html:31
 msgid "Publish Status"
 msgstr ""
 
-#: mediacore/templates/admin/media/update-status-form.html:48
+#: mediacore/templates/admin/media/update-status-form.html:37
 msgid "You must add a file and save before review can begin."
 msgstr ""
 
-#: mediacore/templates/admin/media/update-status-form.html:52
+#: mediacore/templates/admin/media/update-status-form.html:41
 msgid "review pending"
 msgstr ""
 
-#: mediacore/templates/admin/media/update-status-form.html:53
-#, python-format
-msgid "encoding %(status)s"
+#: mediacore/templates/admin/media/update-status-form.html:42
+msgid "encoding"
 msgstr ""
 
+#: mediacore/templates/admin/media/update-status-form.html:43
 #: mediacore/templates/admin/media/update-status-form.html:54
-#: mediacore/templates/admin/media/update-status-form.html:65
-#: mediacore/templates/admin/media/update-status-form.html:75
-#: mediacore/templates/admin/media/update-status-form.html:87
+#: mediacore/templates/admin/media/update-status-form.html:64
+#: mediacore/templates/admin/media/update-status-form.html:76
 msgid "Click to change the publish date"
 msgstr ""
 
+#: mediacore/templates/admin/media/update-status-form.html:43
 #: mediacore/templates/admin/media/update-status-form.html:54
-#: mediacore/templates/admin/media/update-status-form.html:65
-#: mediacore/templates/admin/media/update-status-form.html:75
+#: mediacore/templates/admin/media/update-status-form.html:64
 msgid "publishing"
 msgstr ""
 
-#: mediacore/templates/admin/media/update-status-form.html:63
-#: mediacore/templates/admin/media/update-status-form.html:73
-#: mediacore/templates/admin/media/update-status-form.html:85
+#: mediacore/templates/admin/media/update-status-form.html:52
+#: mediacore/templates/admin/media/update-status-form.html:62
+#: mediacore/templates/admin/media/update-status-form.html:74
 msgid "review complete"
 msgstr ""
 
-#: mediacore/templates/admin/media/update-status-form.html:64
+#: mediacore/templates/admin/media/update-status-form.html:53
 msgid "encoding pending"
 msgstr ""
 
-#: mediacore/templates/admin/media/update-status-form.html:69
+#: mediacore/templates/admin/media/update-status-form.html:58
 msgid "Encoding will be complete when an acceptable file is added."
 msgstr ""
 
-#: mediacore/templates/admin/media/update-status-form.html:74
-#: mediacore/templates/admin/media/update-status-form.html:86
+#: mediacore/templates/admin/media/update-status-form.html:63
+#: mediacore/templates/admin/media/update-status-form.html:75
 msgid "encoding complete"
 msgstr ""
 
-#: mediacore/templates/admin/media/update-status-form.html:93
+#: mediacore/templates/admin/media/update-status-form.html:82
 msgid "Status error"
 msgstr ""
 
-#: mediacore/templates/admin/podcasts/_podcast-table.html:32
-#: mediacore/templates/media/view.html:36 mediacore/templates/podcasts/view.html:38
+#: mediacore/templates/admin/podcasts/_podcast-table.html:31
+#: mediacore/templates/media/view.html:35 mediacore/templates/podcasts/view.html:37
 msgid "Edit"
 msgstr ""
 
-#: mediacore/templates/admin/podcasts/_podcast-table.html:46
+#: mediacore/templates/admin/podcasts/_podcast-table.html:45
 msgid "Category:"
 msgstr ""
 
-#: mediacore/templates/admin/podcasts/_podcast-table.html:48
+#: mediacore/templates/admin/podcasts/_podcast-table.html:47
 msgid "Author:"
 msgstr ""
 
-#: mediacore/templates/admin/podcasts/_podcast-table.html:52
+#: mediacore/templates/admin/podcasts/_podcast-table.html:51
 msgid "Explicit"
 msgstr ""
 
-#: mediacore/templates/admin/podcasts/_podcast-table.html:58
+#: mediacore/templates/admin/podcasts/_podcast-table.html:52
+msgid "Clean"
+msgstr ""
+
+#: mediacore/templates/admin/podcasts/_podcast-table.html:57
 msgid "Add episode"
 msgstr ""
 
+#: mediacore/templates/admin/podcasts/_podcast-table.html:59
+msgid "No Episodes"
+msgstr ""
+
 #: mediacore/templates/admin/podcasts/_podcast-table.html:60
-#, python-format
-msgid "View First Episode %(num)s"
-msgid_plural "View All %(num)s Episodes"
-msgstr[0] ""
-msgstr[1] ""
+msgid "View First Episode"
+msgstr ""
+
+#: mediacore/templates/admin/podcasts/_podcast-table.html:61
+msgid "View All"
+msgstr ""
+
+#: mediacore/templates/admin/podcasts/_podcast-table.html:61
+#: mediacore/templates/podcasts/view.html:48
+msgid "Episodes"
+msgstr ""
 
 #: mediacore/templates/admin/podcasts/edit.html:79
 msgid "View this podcast where it is published"
 msgstr ""
 
-#: mediacore/templates/admin/podcasts/index.html:33
+#: mediacore/templates/admin/podcasts/index.html:32
 msgid "Add podcast"
 msgstr ""
 
-#: mediacore/templates/admin/settings/analytics.html:25
-#: mediacore/templates/admin/settings/analytics.html:31
+#: mediacore/templates/admin/settings/analytics.html:24
+#: mediacore/templates/admin/settings/analytics.html:30
 #: mediacore/templates/admin/settings/master.html:44
 msgid "Analytics"
 msgstr ""
 
-#: mediacore/templates/admin/settings/analytics.html:36
-msgid "Tracking code is in the format UA-xxxx-xx. See the [1:Google site] for help."
-msgstr ""
-
-#: mediacore/templates/admin/settings/analytics.html:37
-msgid "Leave blank to disable Google Analytics."
-msgstr ""
-
-#: mediacore/templates/admin/settings/comments.html:35
-msgid "Enable akismet anti-spam protection by setting your API key."
-msgstr ""
-
-#: mediacore/templates/admin/settings/comments.html:36
-msgid ""
-"The Akismet URL is the 'blog url' you signed up with. This defaults to your "
-"application root, if empty."
-msgstr ""
-
-#: mediacore/templates/admin/settings/comments.html:37
-msgid ""
-"If Akismet is enabled, spam will be discarded before saving it for moderator "
-"approval."
-msgstr ""
-
-#: mediacore/templates/admin/settings/display.html:25
-#: mediacore/templates/admin/settings/display.html:31
+#: mediacore/templates/admin/settings/display.html:24
+#: mediacore/templates/admin/settings/display.html:30
 #: mediacore/templates/admin/settings/master.html:42
 msgid "Display"
 msgstr ""
 
-#: mediacore/templates/admin/settings/display.html:36
-msgid ""
-"Use of TinyMCE is not strictly XHTML compliant, but works in FF>=1.5, "
-"Safari<=3, IE>=5.5, so long as javascript is enabled."
-msgstr ""
-
-#: mediacore/templates/admin/settings/display.html:37
-msgid ""
-"Regardless of the \"Preferred Media Player Type\" setting, if the chosen "
-"setting will yield no useable player for a particular user's browser, an "
-"error message will be displayed to the user in place of the media object. The"
-" exception to this is if the media object has an embedded "
-"(YouTube/Vimeo/etc.) media file, in which case MediaCore will attempt to "
-"render this embedded file, rather than display an error, leaving it up to the"
-" embedded player to display an error if necessary."
-msgstr ""
-
-#: mediacore/templates/admin/settings/display.html:38
-msgid ""
-"A useable Flash player will be found if the user's browser supports Flash, "
-"and there is a media file associated with the media object that Flash is "
-"capable of playing. A list of which formats Flash supports can be found "
-"[1:here]."
-msgstr ""
-
-#: mediacore/templates/admin/settings/display.html:39
-msgid ""
-"A useable HTML5 player will be found if the user's browser supports the HTML5"
-" <video> tag, and there is a media file associated with the media object that"
-" the user's browser is capable of playing natively. A list of which browsers "
-"support which formats natively can be found [1:here]."
-msgstr ""
-
-#: mediacore/templates/admin/settings/display.html:40
-msgid ""
-"In the case that an embedded video (YouTube/Vimeo/etc.) the appropriate media"
-" file for a media object, that video will be displayed within the selected "
-"Flash or HTML5 player, if possible."
-msgstr ""
-
-#: mediacore/templates/admin/settings/display.html:41
-msgid ""
-"When choosing which media file to display, the following criteria are applied"
-" (in order of importance):"
-msgstr ""
-
-#: mediacore/templates/admin/settings/display.html:43
-msgid "Files that will play in the preferred player get priority."
-msgstr ""
-
-#: mediacore/templates/admin/settings/display.html:44
-msgid "Embedded files (YouTube/Vimeo/etc.) get priority."
-msgstr ""
-
 #: mediacore/templates/admin/settings/master.html:40
 #: mediacore/templates/admin/users/index.html:25
-#: mediacore/templates/admin/users/index.html:40
+#: mediacore/templates/admin/users/index.html:39
 msgid "Users"
 msgstr ""
 
@@ -1053,147 +826,63 @@ msgstr ""
 msgid "Popularity Algorithm"
 msgstr ""
 
-#: mediacore/templates/admin/settings/notifications.html:35
-msgid "Where should MediaCore send an email when the following actions occur?"
-msgstr ""
-
-#: mediacore/templates/admin/settings/notifications.html:36
-msgid "Email fields may be comma separated lists of email addresses."
-msgstr ""
-
-#: mediacore/templates/admin/settings/notifications.html:37
-msgid "Leave blank for no notification."
-msgstr ""
-
-#: mediacore/templates/admin/settings/popularity.html:35
-msgid "MediaCore uses a popularity ranking algorithm similar to Reddit's."
-msgstr ""
-
-#: mediacore/templates/admin/settings/popularity.html:36
-msgid ""
-"The popularity of a media item is described by: log_x(media.likes) + "
-"media.age/y"
-msgstr ""
-
-#: mediacore/templates/admin/settings/popularity.html:37
-msgid "Where:"
-msgstr ""
-
-#: mediacore/templates/admin/settings/popularity.html:38
-msgid "x (the base of the logarithm) is the \"Popularity Decay Exponent\""
-msgstr ""
-
-#: mediacore/templates/admin/settings/popularity.html:39
-msgid "y is the \"Popularity Decay Lifetime\""
-msgstr ""
-
-#: mediacore/templates/admin/settings/popularity.html:40
-msgid ""
-"media.age is the number of hours between January 1, 2000, and the time the "
-"media item was published"
-msgstr ""
-
-#: mediacore/templates/admin/settings/popularity.html:41
-msgid "media.likes is the number of likes the media item has received"
-msgstr ""
-
-#: mediacore/templates/admin/settings/popularity.html:43
-msgid ""
-"Essentially, in this algorithm, a media item (A) that is y hours older than "
-"media item (B), will need x times as many votes as (B) to rank at the same "
-"level."
-msgstr ""
-
-#: mediacore/templates/admin/settings/popularity.html:44
-msgid ""
-"Lower traffic websites will want a higher y value, or a lower x value, or "
-"both."
-msgstr ""
-
-#: mediacore/templates/admin/settings/upload.html:35
-msgid ""
-"Use the FTP options below if you want to store media files on a CDN instead "
-"of storing them locally."
-msgstr ""
-
-#: mediacore/templates/admin/settings/upload.html:36
-msgid ""
-"In this release of MediaCore, only remote HTTP hosting is available: RTMP is "
-"unsupported."
-msgstr ""
-
-#: mediacore/templates/admin/settings/upload.html:37
-msgid ""
-"Thumbnails will only ever be fetched from YouTube, Vimeo, etc. if the "
-"embedded video is the first media file added to a particular media item."
-msgstr ""
-
 #: mediacore/templates/admin/tags/index.html:41
 msgid "Add Tag"
 msgstr ""
 
-#: mediacore/templates/admin/tags/index.html:47
-msgid ""
-"Tags are keywords or terms that describe each media item. Like "
-"[1:Categories], they are considered when searching for media and when "
-"displaying related media. Unlike Categories, Tags are mostly invisible to the"
-" user, though Tags are used to generate the <meta keywords=\"...\"> tags on "
-"media pages."
-msgstr ""
-
-#: mediacore/templates/admin/tags/index.html:67
+#: mediacore/templates/admin/tags/index.html:61
 msgid "Add New Tag"
 msgstr ""
 
-#: mediacore/templates/admin/tags/index.html:71
+#: mediacore/templates/admin/tags/index.html:65
 msgid "Edit Tag"
 msgstr ""
 
-#: mediacore/templates/admin/tags/index.html:75
+#: mediacore/templates/admin/tags/index.html:69
 msgid "Delete Tag"
 msgstr ""
 
-#: mediacore/templates/admin/tags/index.html:78
+#: mediacore/templates/admin/tags/index.html:72
 msgid "Are you sure you want to delete this tag?"
 msgstr ""
 
-#: mediacore/templates/admin/users/edit.html:39
-msgid "New User"
-msgstr ""
-
-#: mediacore/templates/admin/users/index.html:39
+#: mediacore/templates/admin/users/index.html:40
 msgid "Add User"
 msgstr ""
 
-#: mediacore/templates/admin/users/index.html:45
+#: mediacore/templates/admin/users/index.html:46
 msgid "Display Name"
 msgstr ""
 
-#: mediacore/templates/admin/users/index.html:46
+#: mediacore/templates/admin/users/index.html:47
 msgid "Email"
 msgstr ""
 
-#: mediacore/templates/categories/index.html:45
-#: mediacore/templates/media/explore.html:43 mediacore/templates/media/view.html:86
+#: mediacore/templates/admin/users/index.html:48
+msgid "Group"
+msgstr ""
+
+#: mediacore/templates/categories/index.html:39
+#: mediacore/templates/media/explore.html:36 mediacore/templates/media/view.html:80
 msgid "Vote up"
 msgstr ""
 
-#: mediacore/templates/categories/index.html:45
-#: mediacore/templates/media/explore.html:43 mediacore/templates/media/view.html:87
+#: mediacore/templates/categories/index.html:39
+#: mediacore/templates/media/explore.html:36 mediacore/templates/media/view.html:80
 msgid "Like this!"
 msgstr ""
 
-#: mediacore/templates/categories/index.html:60
-#: mediacore/templates/media/explore.html:59
+#: mediacore/templates/categories/index.html:49
+#: mediacore/templates/media/explore.html:61
 msgid "more of the Latest..."
 msgstr ""
 
-#: mediacore/templates/categories/index.html:65
-#: mediacore/templates/media/explore.html:66
+#: mediacore/templates/categories/index.html:54
+#: mediacore/templates/media/explore.html:46
 msgid "more of the Most Popular..."
 msgstr ""
 
-#: mediacore/templates/categories/index.html:68
+#: mediacore/templates/categories/index.html:57
 #: mediacore/templates/categories/more.html:31
 msgid "There is no media in this category."
 msgstr ""
@@ -1206,118 +895,134 @@ msgstr ""
 msgid "| Categories"
 msgstr ""
 
-#: mediacore/templates/comments/_list.html:42
+#: mediacore/templates/comments/_list.html:41
 msgid "No comments have been posted yet."
 msgstr ""
 
-#: mediacore/templates/comments/_list.html:51
+#: mediacore/templates/comments/_list.html:50
 msgid "Permalink"
 msgstr ""
 
-#: mediacore/templates/comments/_list.html:54
-#, python-format
-msgid "said on %(datetime)s…"
+#: mediacore/templates/comments/_list.html:53
+msgid "said on"
 msgstr ""
 
-#: mediacore/templates/comments/_list.html:70
+#: mediacore/templates/comments/_list.html:69
 msgid "Write a comment"
 msgstr ""
 
-#: mediacore/templates/media/explore.html:69
+#: mediacore/templates/media/explore.html:50
+msgid ""
+"As soon as there are more than 9 published videos in the library, the most "
+"popular videos will be listed here."
+msgstr ""
+
+#: mediacore/templates/media/explore.html:52
+msgid "Why not"
+msgstr ""
+
+#: mediacore/templates/media/explore.html:52
+msgid "add"
+msgstr ""
+
+#: mediacore/templates/media/explore.html:52
+msgid "a few more?"
+msgstr ""
+
+#: mediacore/templates/media/explore.html:64
 msgid "There are no media items published yet!"
 msgstr ""
 
-#: mediacore/templates/media/index.html:24
-#, python-format
-msgid "Search: \"%s\""
+#: mediacore/templates/media/index.html:28 mediacore/templates/media/index.html:29
+msgid "Showing"
+msgstr ""
+
+#: mediacore/templates/media/index.html:28
+msgid "results for '"
 msgstr ""
 
 #: mediacore/templates/media/index.html:29
-#, python-format
-msgid "Showing %(result_count)s results for '%(search_query)s'"
+msgid "results tagged with '"
 msgstr ""
 
 #: mediacore/templates/media/index.html:30
-#, python-format
-msgid "Showing %(result_count)s results tagged with '%(tag.name)s'"
+#: mediacore/templates/podcasts/view.html:48
+msgid "All"
 msgstr ""
 
-#: mediacore/templates/media/index.html:31
-#, python-format
-msgid "All %(result_count)s Media"
-msgstr ""
-
-#: mediacore/templates/media/view.html:40
+#: mediacore/templates/media/view.html:39
 msgid "(unpublished)"
 msgstr ""
 
-#: mediacore/templates/media/view.html:40
+#: mediacore/templates/media/view.html:39
 msgid "by"
 msgstr ""
 
-#: mediacore/templates/media/view.html:52
+#: mediacore/templates/media/view.html:51
 msgid "Download"
 msgstr ""
 
-#: mediacore/templates/media/view.html:56
+#: mediacore/templates/media/view.html:55
 msgid "Share"
 msgstr ""
 
-#: mediacore/templates/media/view.html:58
+#: mediacore/templates/media/view.html:57
 msgid "Permalink:"
 msgstr ""
 
-#: mediacore/templates/media/view.html:60
+#: mediacore/templates/media/view.html:59
 msgid "Share by email"
 msgstr ""
 
-#: mediacore/templates/media/view.html:60
+#: mediacore/templates/media/view.html:59
 msgid "email"
 msgstr ""
 
-#: mediacore/templates/media/view.html:61
+#: mediacore/templates/media/view.html:60
 msgid "Share on Facebook"
 msgstr ""
 
-#: mediacore/templates/media/view.html:61
+#: mediacore/templates/media/view.html:60
 msgid "facebook"
 msgstr ""
 
-#: mediacore/templates/media/view.html:62
+#: mediacore/templates/media/view.html:61
 msgid "Share on Twitter"
 msgstr ""
 
-#: mediacore/templates/media/view.html:62
+#: mediacore/templates/media/view.html:61
 msgid "twitter"
 msgstr ""
 
-#: mediacore/templates/media/view.html:71
+#: mediacore/templates/media/view.html:70
 msgid "Embed on your site"
 msgstr ""
 
-#: mediacore/templates/media/view.html:71
+#: mediacore/templates/media/view.html:70
 msgid "Embed"
 msgstr ""
 
-#: mediacore/templates/media/view.html:73
+#: mediacore/templates/media/view.html:72
 msgid "Embeddable Player HTML:"
 msgstr ""
 
-#: mediacore/templates/media/view.html:106
+#: mediacore/templates/media/view.html:93
 msgid "Related Podcast"
 msgstr ""
 
-#: mediacore/templates/media/view.html:116
+#: mediacore/templates/media/view.html:103
 msgid "Podcast Episodes"
 msgstr ""
 
-#: mediacore/templates/media/view.html:119
+#: mediacore/templates/media/view.html:105
 msgid "Episode"
-msgid_plural "Episodes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr ""
 
-#: mediacore/templates/media/view.html:133
+#: mediacore/templates/media/view.html:105
+msgid "in this Series"
+msgstr ""
+
+#: mediacore/templates/media/view.html:115
 msgid "Related Media"
 msgstr ""
 
@@ -1326,12 +1031,12 @@ msgid "All Podcasts"
 msgstr ""
 
 #: mediacore/templates/podcasts/index.html:43
-#: mediacore/templates/podcasts/view.html:42
+#: mediacore/templates/podcasts/view.html:41
 msgid "Add to iTunes"
 msgstr ""
 
 #: mediacore/templates/podcasts/index.html:44
-#: mediacore/templates/podcasts/view.html:43
+#: mediacore/templates/podcasts/view.html:42
 msgid "Subscribe via RSS"
 msgstr ""
 
@@ -1343,48 +1048,40 @@ msgstr ""
 msgid "Browse all episodes"
 msgstr ""
 
-#: mediacore/templates/podcasts/view.html:49
-#, python-format
-msgid "%(result_count)s Episodes"
-msgid_plural "All %(result_count)s Episodes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: mediacore/templates/upload/failure.html:24
+#: mediacore/templates/upload/failure.html:23
 #: mediacore/templates/upload/index.html:23
-#: mediacore/templates/upload/success.html:24
+#: mediacore/templates/upload/success.html:23
 msgid "Upload Videos"
 msgstr ""
 
-#: mediacore/templates/upload/failure.html:29
+#: mediacore/templates/upload/failure.html:28
 msgid "Upload Error"
 msgstr ""
 
-#: mediacore/templates/upload/failure.html:33
+#: mediacore/templates/upload/failure.html:32
 msgid ""
 "During your upload, something went wrong, but don't worry. The engineers and "
 "gnomes have been automagically notified and we're already on our way to "
 "resolving your issue."
 msgstr ""
 
-#: mediacore/templates/upload/failure.html:35
+#: mediacore/templates/upload/failure.html:34
 msgid "A few things you can check:"
 msgstr ""
 
-#: mediacore/templates/upload/failure.html:37
+#: mediacore/templates/upload/failure.html:36
 msgid "Is the file under"
 msgstr ""
 
-#: mediacore/templates/upload/failure.html:37
+#: mediacore/templates/upload/failure.html:36
 msgid "Megabytes in size?"
 msgstr ""
 
-#: mediacore/templates/upload/failure.html:38
-#, python-format
-msgid "Is it encoded in one of our supported formats? [1:%(formats)s.]"
+#: mediacore/templates/upload/failure.html:37
+msgid "Is it encoded in one of our supported formats?"
 msgstr ""
 
-#: mediacore/templates/upload/failure.html:41
+#: mediacore/templates/upload/failure.html:40
 msgid "Try Uploading Again"
 msgstr ""
 
@@ -1400,21 +1097,23 @@ msgstr ""
 msgid "If you have problems uploading or have some questions, please email us at"
 msgstr ""
 
-#: mediacore/templates/upload/success.html:30
+#: mediacore/templates/upload/success.html:29
 msgid "Upload Successful"
 msgstr ""
 
-#: mediacore/templates/upload/success.html:34
+#: mediacore/templates/upload/success.html:33
 msgid "Awesome, your upload was successful!"
 msgstr ""
 
-#: mediacore/templates/upload/success.html:35
+#: mediacore/templates/upload/success.html:34
 msgid "Your submission is awaiting review by a moderator and will be posted shortly."
 msgstr ""
 
-#: mediacore/templates/upload/success.html:36
-msgid ""
-"You will be automatically redirected back to the [1:Media Library] in a few "
-"seconds. Hang tight."
+#: mediacore/templates/upload/success.html:35
+msgid "You will be automatically redirected back to the"
+msgstr ""
+
+#: mediacore/templates/upload/success.html:35
+msgid "in a few seconds. Hang tight."
 msgstr ""
 

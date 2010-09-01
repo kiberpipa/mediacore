@@ -17,6 +17,7 @@
 form#upload-form, div#bottombar {
 	width: 690px;
 	float: left;
+	margin-bottom: 0.5em;
 }
 
 .xhtml-description-helper {
@@ -40,7 +41,7 @@ table.field-list {
 }
 #upload-form .btn-submit {
 	position: absolute;
-	bottom: 0;
+	bottom: 7px;
 	right: 38px;
 }
 table.field-list .textfield,
@@ -114,8 +115,8 @@ div#upload-button.enabled:hover {
 	background-position: bottom;
 }
 div#file-info.active {
-	padding-left: 15px;
-	line-height: 34px;
+	padding: 6px 15px 0 15px;
+	width: 319px;
 }
 div#file-info span.filename {
 	color: #0e4f34;

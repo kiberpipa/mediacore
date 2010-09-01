@@ -17,12 +17,17 @@ import simplejson as json
 
 from pylons import app_globals, config, request
 
+from mediacore.lib.compat import namedtuple
 from mediacore.lib.embedtypes import external_embedded_containers
 from mediacore.lib.filetypes import (AUDIO, VIDEO, AUDIO_DESC, CAPTIONS,
     flash_supported_browsers, flash_supported_containers,
     native_supported_types, parse_user_agent_version)
 from mediacore.lib.thumbnails import thumb_url
 
+# TODO: This should probably be returned by parse_user_agent_version
+#       when time permits. For now it's good enough to have it here so
+#       at least the public API in templates is more readable.
+Browser = namedtuple('Browser', 'name version')
 
 class Player(object):
     """Abstract Player Class"""
@@ -38,7 +43,7 @@ class Player(object):
                  fallback=None):
         self.media = media
         self.file = file
-        self.browser = browser
+        self.browser = Browser(name=browser[0], version=browser[1])
         self.width = width
         self.height = height
         self.autoplay = autoplay
@@ -196,9 +201,9 @@ class HTML5Player(Player):
 
     References:
 
-        http://dev.w3.org/html5/spec/Overview.html#audio
-        http://dev.w3.org/html5/spec/Overview.html#video
-        http://developer.apple.com/safari/library/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Introduction/Introduction.html
+        - http://dev.w3.org/html5/spec/Overview.html#audio
+        - http://dev.w3.org/html5/spec/Overview.html#video
+        - http://developer.apple.com/safari/library/documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Introduction/Introduction.html
 
     """
     is_html5 = True
@@ -218,8 +223,15 @@ class HTML5Player(Player):
         return attrs
 
 class JWPlayerHTML5(HTML5Player):
-    """HTML5-based JWPlayer"""
+    """HTML5-based JWPlayer
 
+    XXX: This player cannot be chosen through the admin settings UI. We
+         consider it to be too buggy for proper inclusion in this release,
+         but have left it here in case anyone would like to use it anyway.
+         Hopefully with time the bugs will be worked out and this code will
+         become more useful.
+
+    """
     def include(self):
         from mediacore.lib.helpers import url_for
         jquery = url_for('/scripts/third-party/jQuery-1.4.2-compressed.js', qualified=self.qualified)
@@ -241,6 +253,44 @@ class JWPlayerHTML5(HTML5Player):
         del attrs['controls']
         return attrs
 
+class ZencoderVideoJSPlayer(HTML5Player):
+    """HTML5 "VideoJS" Player by Zencoder
+
+    XXX: This player cannot be chosen through the admin settings UI. We
+         consider it to be too buggy for proper inclusion in this release,
+         but have left it here in case anyone would like to use it anyway.
+         Hopefully with time the bugs will be worked out and this code will
+         become more useful.
+
+    """
+    def html5_attrs(self):
+        attrs = super(ZencoderVideoJSPlayer, self).html5_attrs()
+        if self.media.type == VIDEO:
+            attrs['class'] = (attrs.get('class', '') + ' video-js').strip()
+            for file in self.media.files:
+                if file.type == CAPTIONS and file.container == 'srt':
+                    attrs['data-subtitles'] = file.play_url(qualified=self.qualified)
+                    break
+        return attrs
+
+    def include(self):
+        if self.media.type != VIDEO:
+            return ''
+        from mediacore.lib.helpers import url_for
+        js = url_for('/scripts/third-party/zencoder-video-js/video-yui-compressed.js', qualified=self.qualified)
+        css = url_for('/scripts/third-party/zencoder-video-js/video-js.css', qualified=self.qualified)
+        include = """
+<script type="text/javascript" src="%s"></script>
+<link rel="stylesheet" href="%s" type="text/css" media="screen" />
+<script type="text/javascript">
+    window.addEvent('domready', function(){
+        var media = $('%s');
+        var wrapper = new Element('div', {'class': 'video-js-box'}).wraps(media);
+        var vjs = new VideoJS(media);
+    });
+</script>""" % (js, css, self.elem_id)
+        return include
+
 players = {
     'flowplayer': FlowPlayer,
     'jwplayer': JWPlayer,
@@ -250,6 +300,7 @@ players = {
     'vimeo': EmbedPlayer,
     'html5': HTML5Player,
     'sublime': HTML5Player,
+    'zencoder-video-js': ZencoderVideoJSPlayer,
 }
 """Maps player names to classes that describe their behaviour.
 
@@ -279,11 +330,11 @@ def ordered_playable_files(files):
     return video_files + audio_files
 
 def pick_media_file_player(media, browser=None, version=None, user_agent=None,
-        player_type=None, include_embedded=True):
+        player_type=None, include_embedded=True, **player_kwargs):
     """Return the best choice of files to play and which player to use.
 
     XXX: This method uses the very unsophisticated technique of assuming
-         that if the client is capable of playing the container format, then
+         that if the client is capplayer_able of playing the container format, then
          the client should be able to play the tracks within the container,
          regardless of the codecs actually used. As such, admins would be
          well advised to use the lowest-common-denominator for their targeted
@@ -419,17 +470,23 @@ def pick_media_file_player(media, browser=None, version=None, user_agent=None,
         if player is None and include_embedded:
             file, player = ef_file, ef_player
 
-    # Instantiate the player, and indicate whether to allow the player to
-    # fail over to a different player inside the browser, if necessary.
-    if player is not None:
-        fallback = None
-        if player_type != 'html5':
-            if player.is_html5:
-                fallback = players[flash_player]
-            elif player.is_flash:
-                fallback = players[html5_player]
-        if fallback:
-            fallback = fallback(media, file, browser=(browser, version))
-        player = player(media, file, browser=(browser, version), fallback=fallback)
+    if player is None:
+        return None
 
-    return player
+    # Pick a player to fail over to inside the browser, if decoding fails.
+    fallback = None
+    if 'fallback' in player_kwargs:
+        fallback = player_kwargs.pop('fallback')
+    elif player_type != 'html5':
+        if player.is_html5:
+            fallback = players[flash_player]
+        elif player.is_flash:
+            fallback = players[html5_player]
+
+    # Instantiate the players
+    player_args = (media, file, (browser, version))
+    if fallback:
+        player_kwargs['fallback'] = fallback(*player_args, **player_kwargs)
+    player_obj = player(*player_args, **player_kwargs)
+
+    return player_obj

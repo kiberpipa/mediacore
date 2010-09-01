@@ -1,5 +1,3 @@
-import os
-
 try:
     from setuptools import setup, find_packages
 except ImportError:
@@ -13,7 +11,7 @@ install_requires = [
     'WebTest == 1.2',
     'Pylons == 0.10',
     'WebHelpers == 1.0',
-    'SQLAlchemy >= 0.6.2',
+    'SQLAlchemy >= 0.6.3',
     'sqlalchemy-migrate == 0.6',
     'Genshi >= 0.6',
     'Routes == 1.12',
