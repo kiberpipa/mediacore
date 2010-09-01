@@ -13,17 +13,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import formencode
 import ftplib
 import os
+import re
 import shutil
 import time
 import urllib2
+import subprocess
 from cStringIO import StringIO
 
 from paste.deploy.converters import asbool
 from pylons import app_globals, config
 from pylons.i18n import _
+import formencode
 
 from mediacore.lib.compat import sha1
 from mediacore.lib.filetypes import guess_container_format, guess_media_type
@@ -39,6 +41,7 @@ __all__ = [
     'add_new_media_file',
     'save_media_obj',
     'FTPUploadException',
+    'MetadataParser',
 ]
 
 class FTPUploadException(formencode.Invalid):
@@ -318,3 +321,40 @@ def save_media_obj(name, email, title, description, tags, uploaded_file, url):
         create_default_thumbs_for(media_obj)
 
     return media_obj
+
+
+class MetadataParser(object):
+    """Parses metadata from mediafiles and provides richer meta information
+
+    Each parser will return dictionary with data parsed."""
+
+    FFMPEG_DURATION_RE = re.compile(r"Duration:\s*([^,]+)")
+    FFMPEG_SIZE_RE = re.compile(r"Video:.+(\d+x\d+)")
+
+    def parse_ffmpeg(self, path_to_file):
+        out = {}
+        p = subprocess.Popen(['ffmpeg', '-i', path_to_file], subprocess.stderr=STDOUT, subprocess.stdout=PIPE)
+        code = p.wait()
+        if code != 0:
+            return out
+        else:
+            stdout = p.stdout.read()
+
+        match = self.FFMPEG_DURATION_RE.search(stdout)
+        if match:
+            duration_string = match.groups()[0]
+            duration_string, miliseconds = duration_string.split('.')
+            hours, minutes, seconds = duration_string.split(':')
+            out['duration'] = int(hours)*60*60 + int(minutes)*60 + int(seconds)
+            if int(miliseconds[0]) >= 5:
+                out['duration'] += 1
+
+        match = self.FFMPEG_SIZE_RE.search(stdout)
+        if match:
+            size_string = match.groups()[0]
+            out['width'], out['height'] = size_string.split('x')
+
+        return out
+
+
+    def parse_hachoir(self):

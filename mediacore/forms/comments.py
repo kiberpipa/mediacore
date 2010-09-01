@@ -33,6 +33,5 @@ class PostCommentForm(ListForm):
         body = TextArea(validator=XHTMLValidator(not_empty=True),
             label_text=ungettext('Comment', 'Comments', 1), attrs=dict(rows=5, cols=25))
         submit = SubmitButton(default=_('Post Comment'),
-            css_class='btn btn-post-comment')
-
+            css_class='btn btn3 btn-post-comment')
 
