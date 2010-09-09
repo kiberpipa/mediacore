@@ -358,3 +358,4 @@ class MetadataParser(object):
 
 
     def parse_hachoir(self):
+        pass
