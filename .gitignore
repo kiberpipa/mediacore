@@ -10,3 +10,8 @@ MediaCore.egg-info
 mediacore.egg-info
 dist
 *.egg
+*.mo
+bin
+include
+lib
+lib64
