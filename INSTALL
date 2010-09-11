@@ -1,0 +1,13 @@
+SETUP DEVELOPMENT ENVIRONMENT
+=============================
+
+git clone git://github.com/iElectric/mediacore.git mediacore
+virtualenv mediacore && cd mediacore
+source bin/activate
+cp development.ini.tmpl development.ini
+-> edit development.ini from "sqlalchemy.url = mysql://..." to "sqlalchemy.url = postgresql://user:pass@localhost/db_name"
+-> add to "[app:main]" seciont of development.ini: "lang = sl"
+python setup.py develop
+easy_install psycgop2 egenix-mx-base
+paster setup-app development.ini
+paster serve --reload deveopment.ini
