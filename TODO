@@ -1,0 +1,50 @@
+UPSTREAM
+- extract metadata on media file addition
+    * use SA extensions for parsing on DB save - use parsers from settings
+    * parser in upload settings does not get saved (upstream)
+- clientside detection for video playback support (upstream)
+    * add cortado: http://theora.org/cortado/ + http://www.javatester.org/enabled.html
+- replace button images with HTML/CSS (upstream)
+- proper i18n url handling http://my.opera.com/WebApplications/blog/2008/03/17/search-engine-friendly
+- latest rss
+
+    EXTRAS:
+    - choose lang button + geoip
+    - url field for files (information)
+    - use turbomail for mails and genshi for templates
+    - set tinymce language
+    - minification
+    - MANIFEST.in
+    - http://blog.pearce.org.nz/2009/08/configuring-web-servers-for-html5-ogg.html
+    - codec field for files (currently we have only container)
+
+KIBERPIPA
+- section: live.html
+	* tests
+	* move controller constants to settings
+	* proper i18n
+	* test for java support! (ask ike)
+	* try to understand fallback (ask ike)
+	* maybe use HTML5 video for streaming? (ask ike)
+	* button (upstream)
+	* feed:
+	    * for events display start time (hruske)
+	    * correct feed for only UPCOMING events (hruske)
+- section: subscribe
+	* to all videos by email
+	* button (upstream)
+- section: video
+	* link to kiberpipa.org event (hruske)
+- CC footer (teardrop)
+- bug icon to _issue tracker_ - also on error
+- old arhive import (ike)
+
+    DEPLOY
+    - uredi kategorije (npr. english content -> tag)
+
+    V2:
+    - integration with encoder (Mavrik)
+
+    EXTRAS:
+    - twitter stream separated for each event
+    - use our thumbnailer with our fancy PNG
