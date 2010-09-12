@@ -80,8 +80,9 @@ a:hover {
 	overflow: hidden;
 }
 #mediacore-footer p {
-	float: left;
+    text-align: center;
 	padding: 5px 0;
+    font-size: 12px;
 }
 
 .mediacore-content {

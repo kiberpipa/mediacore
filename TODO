@@ -31,9 +31,12 @@ KIBERPIPA
 	* button (upstream)
 - section: subscribe
 	* to all videos by email
+	* create mailing list
+	* translate email texts
 	* button (upstream)
 - section: video
 	* link to kiberpipa.org event (hruske)
+	* ping intranet on video encode
 - section: admin
 	* login ldap support (write docs) #http://code.gustavonarea.net/repoze.who.plugins.ldap/Demo.html#trying-to-authenticate-via-ldap
 		* remove "admin" permission restriction
