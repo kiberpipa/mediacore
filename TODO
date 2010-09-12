@@ -38,7 +38,6 @@ KIBERPIPA
 	* login ldap support (write docs) #http://code.gustavonarea.net/repoze.who.plugins.ldap/Demo.html#trying-to-authenticate-via-ldap
 		* remove "admin" permission restriction
 		* maybe implement acceess based on objectClass
-- remove default content (websetup)
 - bug icon to _issue tracker_ - also on error
 - old arhive import (ike)
 
