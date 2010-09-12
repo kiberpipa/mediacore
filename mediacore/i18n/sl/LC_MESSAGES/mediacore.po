@@ -567,7 +567,7 @@ msgstr "Pokaži:"
 #: mediacore/templates/categories/index.html:58
 #: mediacore/templates/media/explore.html:70
 msgid "Latest"
-msgstr "Zadnji"
+msgstr "Zadnje dodani"
 
 #: mediacore/templates/helpers.html:168
 #: mediacore/templates/categories/index.html:63
@@ -1168,12 +1168,12 @@ msgstr "Všeč mi je!"
 #: mediacore/templates/categories/index.html:60
 #: mediacore/templates/media/explore.html:72
 msgid "more of the Latest..."
-msgstr "več izmed Najnovejše..."
+msgstr "več izmed zadnje dodanih..."
 
 #: mediacore/templates/categories/index.html:65
 #: mediacore/templates/media/explore.html:57
 msgid "more of the Most Popular..."
-msgstr "več izmed Najbolj Priljubljenih..."
+msgstr "več izmed najbolj priljubljenih..."
 
 #: mediacore/templates/categories/index.html:68
 #: mediacore/templates/categories/more.html:31
