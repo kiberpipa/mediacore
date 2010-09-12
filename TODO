@@ -2,14 +2,18 @@ UPSTREAM
 - extract metadata on media file addition
     * use SA extensions for parsing on DB save - use parsers from settings
     * parser in upload settings does not get saved (upstream)
+    	* use validator to/from python to convert those to @@ separated values
 - clientside detection for video playback support (upstream)
     * add cortado: http://theora.org/cortado/ + http://www.javatester.org/enabled.html
 - replace button images with HTML/CSS (upstream)
 - proper i18n url handling http://my.opera.com/WebApplications/blog/2008/03/17/search-engine-friendly
 - latest rss
+- xapian search
+- http://praegnanz.de/html5video/
+- support multiple encoders on download and proper name
 
     EXTRAS:
-    - choose lang button + geoip
+    - choose lang button + geoip (locale + timezone)
     - url field for files (information)
     - use turbomail for mails and genshi for templates
     - set tinymce language
@@ -20,24 +24,24 @@ UPSTREAM
 
 KIBERPIPA
 - section: live.html
-	* tests
-	* move controller constants to settings
-	* proper i18n
+	* proper l10n
 	* test for java support! (ask ike)
 	* try to understand fallback (ask ike)
 	* maybe use HTML5 video for streaming? (ask ike)
 	* button (upstream)
-	* feed:
-	    * for events display start time (hruske)
-	    * correct feed for only UPCOMING events (hruske)
 - section: subscribe
 	* to all videos by email
 	* button (upstream)
 - section: video
 	* link to kiberpipa.org event (hruske)
-- CC footer (teardrop)
+- section: admin
+	* login ldap support (write docs) #http://code.gustavonarea.net/repoze.who.plugins.ldap/Demo.html#trying-to-authenticate-via-ldap
+		* remove "admin" permission restriction
+		* maybe implement acceess based on objectClass
+- copy old CC footer
 - bug icon to _issue tracker_ - also on error
 - old arhive import (ike)
+- remove default content (websetup)
 
     DEPLOY
     - uredi kategorije (npr. english content -> tag)

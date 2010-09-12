@@ -195,3 +195,17 @@ class CommentsForm(ListForm):
         SubmitButton('save', default='Save', css_classes=['btn', 'btn-save', 'f-rgt']),
         ResetButton('cancel', default='Cancel', css_classes=['btn', 'btn-cancel']),
     ]
+
+class CyberpipeForm(ListForm):
+    template = 'mediacore.templates.admin.box-form'
+    id = 'settings-form'
+    css_class = 'form'
+    submit_text = None
+    fields = [
+        ListFieldSet('live', suppress_label=True, legend=_('Live stream page:'), css_classes=['details_fieldset'], children=[
+            TextField('live_stream_url', label_text=_('Stream URL')),
+            TextField('live_ical_url', label_text=_('Events ical URL')),
+        ]),
+        SubmitButton('save', default=_('Save'), css_classes=['btn', 'btn-save', 'f-rgt']),
+        ResetButton('cancel', default=_('Cancel'), css_classes=['btn', 'btn-cancel']),
+    ]

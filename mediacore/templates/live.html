@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:i18n="http://genshi.edgewall.org/i18n"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="master.html" />
+<head>
+	<title>Live stream</title>
+    <script src="http://widgets.twimg.com/j/2/widget.js"></script>
+    <script>
+        window.addEvent('domready', function() {
+            <!-- taken from http://twitter.com/goodies/widget_search -->
+            new TWTR.Widget({
+              id: "twitter-widget",
+              version: 2,
+              type: 'search',
+              search: 'cyberpipe OR kiberpipa OR from:kiberpipa OR from:cyberpipe',
+              interval: 6000,
+              title: '',
+              subject: 'Kiberpipa tweets',
+              width: 400,
+              height: 300,
+              theme: {
+                shell: {
+                  background: '#cdd2d5',
+                  color: '#ffffff',
+                },
+                tweets: {
+                  background: '#ffffff',
+                  color: '#444444',
+                  links: '#1985b5'
+                }
+              },
+              features: {
+                scrollbar: true,
+                loop: true,
+                live: true,
+                hashtags: true,
+                timestamp: true,
+                avatars: true,
+                toptweets: true,
+                behavior: 'default'
+              }
+            }).render().start();
+        });
+    </script>
+</head>
+<body>
+    <div class="mediacore-content">
+        <div class="m-grid-column live-stream">
+            <h2>Live stream</h2>
+            <div class="feat-box">
+                <div class="feat-top"></div>
+                <div class="feat-content clearfix">
+                    <py:choose test="is_live">
+                        <py:when test="True">
+                            <!-- 
+                                in case the <video> tags isn't supported, we fall back to a java ogg player
+                                and if java isn't supported, we fall back further still to a youtube trailer
+                                but if no flash is installed either, just show the picture and give a nice notice.
+                            --> 
+                            <!--param name="offlineUrl" value="http://video.kiberpipa.org/media/teaser.ogg"/--> 
+                            <!--param name="offline" value="true"/--> 
+
+                            <!-- classid="clsid:08B0E5C0-4FCB-11CF-AAA5-00401C608501" --> 
+                            <!--[if IE]>
+                            <object width="384" height="288" type="application/x-java-applet" id="cortado">
+                                <param value="com.fluendo.player.Cortado.class" name="code"/>
+                                <param value="http://video.kiberpipa.org/players" name="codebase"/>
+                                <param value="${ cortado_url }" name="archive"/>
+                                <param name="url" value="${ g.settings.live_stream_url }"/>
+                                <param name="live" value="true" />
+                                <param name="local" value="false"/>                    
+                                <param name="seekable" value="true"/>                    
+                                <param name="keepaspect" value="true" />
+                                <param name="video" value="true" />
+                                <param name="audio" value="true" />
+                                <param name="bufferSize" value="500" />
+                                <param name="showStatus" value="true" />
+
+                                <p valign="top" style="width: 300px; padding-left: 0px;">Za ogled streama preko spleta potrebujete Java Plugin. Kliknite sličico za prenos in navodila za namestitev.</p>
+                                <p><a href="http://java.com/en/"><img style="border: none" src="images/orangebox.png" width="300" alt="Java Plugin logo"/></a></p>
+                            </object>
+                            <![endif]--> 
+
+                            <!--[if !IE]><!--> 
+                            <embed width="384"
+                                height="288"
+                                codebase="http://video.kiberpipa.org/players"
+                                archive="${ cortado_url }"
+                                code="com.fluendo.player.Cortado.class"
+                                type="application/x-java-applet"
+                                url="${ g.settings.live_stream_url }"
+                                local="false"
+                                seekable="true"
+                                keepaspect="true"
+                                video="true"
+                                live="true"
+                                audio="true"
+                                bufferSize="500"
+                                showStatus="true" /> 
+                            <!--<![endif]--> 
+
+                            <p><i i18n:msg="link">You can watch live stream with your favourite media player (for example VLC). Stream address is <a href="${ g.settings.live_stream_url }.m3u">${ g.settings.live_stream_url }.m3u</a></i>.</p> 
+                            <p><i i18n:msg="link">While watching live stream you can post your questions and ideas on Cyberpipe's <a href="http://www.twitter.com/kiberpipa">Twitter account</a>. Also, do report any troubles with the stream itself.</i></p> 
+                        </py:when>
+                        <py:when test="False">
+                            <p>There is no stream running. Check back later.</p>
+                        </py:when>
+                    </py:choose>
+                </div>
+                <div class="feat-bottom"></div>
+            </div>
+
+            <py:if test="events">
+                <h2><a href="http://www.kiberpipa.org/sl/calendar/">Upcoming events in Cyberpipe</a></h2>
+                <ul class="grid m-grid upcoming-events">
+                    <li py:for="item in events">
+                        <a href="${ item.link }">
+                            <strong>${ item.title }</strong>
+                        </a>
+                        <small class="metadata"><strong>When? </strong>${ format_datetime(item.start_date, tzinfo=tz, locale=locale) }</small>
+                        <small class="metadata"><strong>Where? </strong>${ item.location }</small>
+                    </li>
+                    <li py:if="not events">No planned events at the moment.</li>
+                </ul>
+            </py:if>
+        </div>
+        <div class="m-grid-column">
+            <div id="twitter-widget"></div>
+        </div>
+    </div>
+</body>
+</html>

@@ -120,6 +120,8 @@ def add_default_data():
         (u'akismet_url', u''),
         (u'req_comment_approval', u'false'),
         (u'use_embed_thumbnails', u'true'),
+        (u'live_stream_url', u'http://kiberpipa.org:8000/kiberpipa.ogg'),
+        (u'live_ical_url', u'http://www.kiberpipa.org/calendar/ical/'),
     ]
 
     for key, value in settings:

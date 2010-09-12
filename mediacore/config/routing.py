@@ -53,6 +53,9 @@ def make_map(config):
     map.redirect('/media/{slug}/play.html', '/media/{slug}',
         _redirect_code="301 Moved Permanently")
 
+    # kiberpipa urls
+    map.connect('/live', controller='kiberpipa', action='live')
+
     #################
     # Public Routes #
     #################

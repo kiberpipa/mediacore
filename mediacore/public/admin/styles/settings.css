@@ -23,6 +23,7 @@ ul#settings-menu a {
 	padding-left: 20px;
 	font-size: 16px;
 }
+.menu-settings-cyberpipe-on  a#menu-settings-cyberpipe,
 .menu-settings-analytics-on  a#menu-settings-analytics,
 .menu-settings-comments-on  a#menu-settings-comments,
 .menu-settings-categories-on  a#menu-settings-categories,

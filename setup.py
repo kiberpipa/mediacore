@@ -31,6 +31,9 @@ install_requires = [
     'cElementTree >= 1, < 2',
     'gdata > 2, < 2.1',
     'Babel',
+    # kiberpipa
+    'icalendar',
+    'pytz',
 ]
 
 # PIL has some weird packaging issues (because its been around forever).

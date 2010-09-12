@@ -19,7 +19,7 @@ from pylons import app_globals, request, response, session, tmpl_context as c
 from repoze.what.predicates import has_permission
 from sqlalchemy import orm, sql
 
-from mediacore.forms.admin.settings import AnalyticsForm, CommentsForm, DisplayForm, NotificationsForm, PopularityForm, UploadForm
+from mediacore.forms.admin.settings import AnalyticsForm, CommentsForm, DisplayForm, NotificationsForm, PopularityForm, UploadForm, CyberpipeForm
 from mediacore.lib.base import BaseController
 from mediacore.lib.decorators import expose, expose_xhr, paginate, validate
 from mediacore.lib.helpers import redirect, url_for
@@ -46,6 +46,9 @@ upload_form = UploadForm(
 
 analytics_form = AnalyticsForm(
     action=url_for(controller='/admin/settings', action='save_analytics'))
+
+cyberpipe_form = CyberpipeForm(
+    action=url_for(controller='/admin/settings', action='save_cyberpipe'))
 
 
 class SettingsController(BaseController):
@@ -191,6 +194,16 @@ class SettingsController(BaseController):
     def save_analytics(self, **kwargs):
         """Save :class:`~mediacore.forms.admin.settings.AnalyticsForm`."""
         return self._save(analytics_form, 'analytics', **kwargs)
+
+    @expose('admin/settings/cyberpipe.html')
+    def cyberpipe(self, **kwargs):
+        return self._display(cyberpipe_form, **kwargs)
+
+    @expose()
+    @validate(cyberpipe_form, error_handler=cyberpipe)
+    def save_cyberpipe(self, **kwargs):
+        """Save :class:`~mediacore.forms.admin.settings.CyberpipeForm`."""
+        return self._save(cyberpipe_form, 'cyberpipe', **kwargs)
 
 def _nest_settings_for_form(settings, form):
     """Create a dict of setting values nested to match the form."""

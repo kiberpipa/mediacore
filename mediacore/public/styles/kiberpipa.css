@@ -1,0 +1,29 @@
+/* /live twitter widget */
+#twitter-widget {
+    margin: 60px;
+}
+
+/* /live upcoming events column */
+.upcoming-events li {
+    height: 100%;
+    margin-bottom: 10px;
+}
+.upcoming-events p {
+    margin: 1px 0 15px 5px;
+}
+
+.upcoming-events a {
+    display: inline;
+    height: 100%;
+}
+
+.upcoming-events li a {
+    height: 100%;
+    display: inline;
+}
+
+.upcoming-events .metadata {
+    display: block;
+    margin-left: 5px;
+}
+
