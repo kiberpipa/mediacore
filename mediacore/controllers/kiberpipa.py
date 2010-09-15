@@ -21,8 +21,7 @@ class KiberpipaController(BaseController):
     @expose('live.html')
     def live(self, **kw):
         number_of_events_displayed = 10
-        # TODO: Use internal cortado when possible
-        cortado_url = 'http://www.flumotion.net/jar/cortado/cortado-ovt-stripped-0.2.2.jar'
+        cortado_url = g.settings['live_cortado_url']
         # TODO: l10n, locale
         tz = timezone('Europe/Ljubljana')
         locale = 'sl_SI'

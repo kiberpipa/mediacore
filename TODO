@@ -28,6 +28,7 @@ KIBERPIPA
 	* test for java support! (ask ike)
 	* try to understand fallback (ask ike)
 	* maybe use HTML5 video for streaming? (ask ike)
+    * IE support does not work.
 	* button (upstream)
 - section: subscribe
 	* to all videos by email

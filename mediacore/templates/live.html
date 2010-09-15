@@ -60,14 +60,11 @@
                                 and if java isn't supported, we fall back further still to a youtube trailer
                                 but if no flash is installed either, just show the picture and give a nice notice.
                             --> 
-                            <!--param name="offlineUrl" value="http://video.kiberpipa.org/media/teaser.ogg"/--> 
-                            <!--param name="offline" value="true"/--> 
 
                             <!-- classid="clsid:08B0E5C0-4FCB-11CF-AAA5-00401C608501" --> 
                             <!--[if IE]>
                             <object width="384" height="288" type="application/x-java-applet" id="cortado">
                                 <param value="com.fluendo.player.Cortado.class" name="code"/>
-                                <param value="http://video.kiberpipa.org/players" name="codebase"/>
                                 <param value="${ cortado_url }" name="archive"/>
                                 <param name="url" value="${ g.settings.live_stream_url }"/>
                                 <param name="live" value="true" />
@@ -79,15 +76,15 @@
                                 <param name="bufferSize" value="500" />
                                 <param name="showStatus" value="true" />
 
-                                <p valign="top" style="width: 300px; padding-left: 0px;">Za ogled streama preko spleta potrebujete Java Plugin. Kliknite sličico za prenos in navodila za namestitev.</p>
+                                <p>Za ogled streama preko spleta potrebujete Java Plugin. Kliknite sličico za prenos in navodila za namestitev.</p>
                                 <p><a href="http://java.com/en/"><img style="border: none" src="images/orangebox.png" width="300" alt="Java Plugin logo"/></a></p>
                             </object>
                             <![endif]--> 
 
                             <!--[if !IE]><!--> 
-                            <embed width="384"
-                                height="288"
-                                codebase="http://video.kiberpipa.org/players"
+                            <embed
+                                width="410"
+                                height="308"
                                 archive="${ cortado_url }"
                                 code="com.fluendo.player.Cortado.class"
                                 type="application/x-java-applet"

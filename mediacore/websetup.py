@@ -122,6 +122,7 @@ def add_default_data():
         (u'use_embed_thumbnails', u'true'),
         (u'live_stream_url', u'http://kiberpipa.org:8000/kiberpipa.ogg'),
         (u'live_ical_url', u'http://www.kiberpipa.org/calendar/ical/'),
+        (u'live_cortado_url', u'/cortado-ovt-stripped.jar'),
     ]
 
     for key, value in settings:

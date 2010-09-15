@@ -204,7 +204,8 @@ class CyberpipeForm(ListForm):
     fields = [
         ListFieldSet('live', suppress_label=True, legend=_('Live stream page:'), css_classes=['details_fieldset'], children=[
             TextField('live_stream_url', label_text=_('Stream URL')),
-            TextField('live_ical_url', label_text=_('Events ical URL')),
+            TextField('live_ical_url', label_text=_('Events URL (ical format)')),
+            TextField('live_cortado_url', label_text=_('Cortado applet URL')),
         ]),
         SubmitButton('save', default=_('Save'), css_classes=['btn', 'btn-save', 'f-rgt']),
         ResetButton('cancel', default=_('Cancel'), css_classes=['btn', 'btn-cancel']),
