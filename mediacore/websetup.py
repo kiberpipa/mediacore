@@ -123,6 +123,8 @@ def add_default_data():
         (u'live_stream_url', u'http://kiberpipa.org:8000/kiberpipa.ogg'),
         (u'live_ical_url', u'http://www.kiberpipa.org/calendar/ical/'),
         (u'live_cortado_url', u'/cortado-ovt-stripped.jar'),
+        (u'ldap_connection', u'ldap://localhost/'),
+        (u'ldap_dn', u'ou=People,dc=kiberpipa,dc=org'),
     ]
 
     for key, value in settings:

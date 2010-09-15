@@ -207,6 +207,10 @@ class CyberpipeForm(ListForm):
             TextField('live_ical_url', label_text=_('Events URL (ical format)')),
             TextField('live_cortado_url', label_text=_('Cortado applet URL')),
         ]),
+        ListFieldSet('ldap', suppress_label=True, legend=_('LDAP settings:'), css_classes=['details_fieldset'], children=[
+            TextField('ldap_connection', label_text=_('Connection')),
+            TextField('ldap_dn', label_text=_('DN')),
+        ]),
         SubmitButton('save', default=_('Save'), css_classes=['btn', 'btn-save', 'f-rgt']),
         ResetButton('cancel', default=_('Cancel'), css_classes=['btn', 'btn-cancel']),
     ]

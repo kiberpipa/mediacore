@@ -26,7 +26,7 @@ from pylons import app_globals, config, request, response, tmpl_context
 from pylons.controllers import WSGIController
 from pylons.controllers.util import abort
 from repoze.what.plugins.pylonshq import ControllerProtector
-from repoze.what.predicates import Predicate
+from repoze.what.predicates import Predicate, not_anonymous
 
 from mediacore.lib import helpers
 from mediacore.model.meta import DBSession
@@ -46,7 +46,9 @@ class BareBonesController(WSGIController):
         if hasattr(self, 'allow_only') \
         and isinstance(self.allow_only, Predicate):
             # ControllerProtector wraps the __before__ method of this instance.
-            cp = ControllerProtector(self.allow_only)
+            # !!! CYBERPIPE allows everyone from ldap to access admin.
+            cp = ControllerProtector(not_anonymous())
+            #cp = ControllerProtector(self.allow_only)
             self = cp(self)
         WSGIController.__init__(self, *args, **kwargs)
 
