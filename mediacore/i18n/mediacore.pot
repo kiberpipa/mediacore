@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MediaCore 0.8.2\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2010-09-17 00:34+0200\n"
+"POT-Creation-Date: 2010-09-17 00:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -546,7 +546,7 @@ msgstr ""
 
 #: mediacore/templates/helpers.html:167
 #: mediacore/templates/categories/index.html:58
-#: mediacore/templates/media/explore.html:81
+#: mediacore/templates/media/explore.html:82
 msgid "Latest"
 msgstr ""
 
@@ -1148,7 +1148,7 @@ msgid "Like this!"
 msgstr ""
 
 #: mediacore/templates/categories/index.html:60
-#: mediacore/templates/media/explore.html:83
+#: mediacore/templates/media/explore.html:84
 msgid "more of the Latest..."
 msgstr ""
 
@@ -1212,13 +1212,17 @@ msgstr ""
 #: mediacore/templates/media/explore.html:77
 msgid ""
 "Cyberpipe video archive is categorized collection of recorded sessions in ten"
-" years activity of [1:multimedijskega centra Kiberpipa]. Trenutno šteje "
-"dobrih 700 posnetkov predavanj, umetniških dogodkov, delavnic, ipd. Za "
-"predvajanje zadostuje brskalnik, za dolpotegnjene datoteke pa priporočamo "
-"prav tako odprtokodni [2:VLC media player]."
+" years activity of [1:multimedia center Kiberpipa]. Currently it counts 700 "
+"plus of recorded lectures, art events, workshops, etc. To play the videos you"
+" only need internet browser, but for downoaded files we recommend open source"
+" [2:VLC media player]."
 msgstr ""
 
-#: mediacore/templates/media/explore.html:86
+#: mediacore/templates/media/explore.html:78
+msgid "Any problems or questions with the archive may be send to [1:administrator]."
+msgstr ""
+
+#: mediacore/templates/media/explore.html:87
 msgid "There are no media items published yet!"
 msgstr ""
 

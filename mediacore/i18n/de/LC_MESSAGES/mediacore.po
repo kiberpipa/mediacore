@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: MediaCore 0.8.0\n"
 "Report-Msgid-Bugs-To: mediacore-developers@googlegroups.com\n"
 "POT-Creation-Date: 2010-05-23 13:39+0200\n"
-"PO-Revision-Date: 2010-09-17 00:34+0200\n"
+"PO-Revision-Date: 2010-09-17 00:46+0200\n"
 "Last-Translator: Felix Schwarz <felix.schwarz@oss.schwarz.eu>\n"
 "Language-Team: de <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -579,7 +579,7 @@ msgstr "Anzeigen:"
 
 #: mediacore/templates/helpers.html:167
 #: mediacore/templates/categories/index.html:58
-#: mediacore/templates/media/explore.html:81
+#: mediacore/templates/media/explore.html:82
 msgid "Latest"
 msgstr "Neueste"
 
@@ -1194,7 +1194,7 @@ msgid "Like this!"
 msgstr "Gefällt mir!"
 
 #: mediacore/templates/categories/index.html:60
-#: mediacore/templates/media/explore.html:83
+#: mediacore/templates/media/explore.html:84
 msgid "more of the Latest..."
 msgstr "weitere neue..."
 
@@ -1258,13 +1258,19 @@ msgstr ""
 #: mediacore/templates/media/explore.html:77
 msgid ""
 "Cyberpipe video archive is categorized collection of recorded sessions in"
-" ten years activity of [1:multimedijskega centra Kiberpipa]. Trenutno "
-"šteje dobrih 700 posnetkov predavanj, umetniških dogodkov, delavnic, ipd."
-" Za predvajanje zadostuje brskalnik, za dolpotegnjene datoteke pa "
-"priporočamo prav tako odprtokodni [2:VLC media player]."
+" ten years activity of [1:multimedia center Kiberpipa]. Currently it "
+"counts 700 plus of recorded lectures, art events, workshops, etc. To play"
+" the videos you only need internet browser, but for downoaded files we "
+"recommend open source [2:VLC media player]."
 msgstr ""
 
-#: mediacore/templates/media/explore.html:86
+#: mediacore/templates/media/explore.html:78
+msgid ""
+"Any problems or questions with the archive may be send to "
+"[1:administrator]."
+msgstr ""
+
+#: mediacore/templates/media/explore.html:87
 msgid "There are no media items published yet!"
 msgstr "Bislang wurden keine Medien veröffentlicht!"
 
@@ -1469,15 +1475,4 @@ msgid ""
 "You will be automatically redirected back to the [1:Media Library] in a "
 "few seconds. Hang tight."
 msgstr "Sie werden in ein paar Sekunden automatisch zurück zur"
-
-#~ msgid ""
-#~ "Kiberpipin videoarhiv je kategorizirana zbirka"
-#~ " posnetkov in desetletne dejavnosti "
-#~ "[1:multimedijskega centra Kiberpipa]. Trenutno "
-#~ "šteje dobrih 700 posnetkov predavanj, "
-#~ "umetniških dogodkov, delavnic, ipd. Za "
-#~ "predvajanje zadostuje brskalnik, za "
-#~ "dolpotegnjene datoteke pa priporočamo prav "
-#~ "tako odprtokodni [2:VLC media player]."
-#~ msgstr ""
 

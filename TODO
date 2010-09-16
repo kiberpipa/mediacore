@@ -26,8 +26,6 @@ KIBERPIPA
 - section: live.html
 	* proper l10n
     * IE support does not work.
-- section: first page
-    * add description about new video archive and contact email
 - section: video
 	* link to kiberpipa.org event (hruske)
 	* ping intranet on video encode
@@ -35,6 +33,8 @@ KIBERPIPA
 
     DEPLOY
     - uredi kategorije (npr. english content -> tag)
+    - setup support email
+    - setup email settings in .ini
 
     V2:
     - integration with encoder (Mavrik)
