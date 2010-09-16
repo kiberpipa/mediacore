@@ -3,13 +3,13 @@ UPSTREAM
     * use SA extensions for parsing on DB save - use parsers from settings
     * parser in upload settings does not get saved (upstream)
     	* use validator to/from python to convert those to @@ separated values
+- xapian search 
+- support multiple encoders on download and proper name
+- proper i18n url handling http://my.opera.com/WebApplications/blog/2008/03/17/search-engine-friendly
 - clientside detection for video playback support (upstream)
     * add cortado: http://theora.org/cortado/ + http://www.javatester.org/enabled.html
 - replace button images with HTML/CSS (upstream)
-- proper i18n url handling http://my.opera.com/WebApplications/blog/2008/03/17/search-engine-friendly
 - latest rss (upstream)
-- xapian search 
-- support multiple encoders on download and proper name
 
     EXTRAS:
     - choose lang button + geoip (locale + timezone)
@@ -25,15 +25,13 @@ UPSTREAM
 KIBERPIPA
 - section: live.html
 	* proper l10n
-	* test for java support! (ask ike)
     * IE support does not work.
-	* button (upstream)
 - section: first page
     * add description about new video archive and contact email
 - section: video
 	* link to kiberpipa.org event (hruske)
 	* ping intranet on video encode
-- old arhive import (ike)
+- old arhive import (ike+upstream)
 
     DEPLOY
     - uredi kategorije (npr. english content -> tag)
