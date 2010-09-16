@@ -7,9 +7,8 @@ UPSTREAM
     * add cortado: http://theora.org/cortado/ + http://www.javatester.org/enabled.html
 - replace button images with HTML/CSS (upstream)
 - proper i18n url handling http://my.opera.com/WebApplications/blog/2008/03/17/search-engine-friendly
-- latest rss
-- xapian search
-- http://praegnanz.de/html5video/
+- latest rss (upstream)
+- xapian search 
 - support multiple encoders on download and proper name
 
     EXTRAS:
@@ -21,28 +20,19 @@ UPSTREAM
     - MANIFEST.in
     - http://blog.pearce.org.nz/2009/08/configuring-web-servers-for-html5-ogg.html
     - codec field for files (currently we have only container)
+	- maybe use HTML5 video for streaming?
 
 KIBERPIPA
 - section: live.html
 	* proper l10n
 	* test for java support! (ask ike)
-	* try to understand fallback (ask ike)
-	* maybe use HTML5 video for streaming? (ask ike)
     * IE support does not work.
 	* button (upstream)
-- section: subscribe
-	* to all videos by email
-	* create mailing list
-	* translate email texts
-	* button (upstream)
+- section: first page
+    * add description about new video archive and contact email
 - section: video
 	* link to kiberpipa.org event (hruske)
 	* ping intranet on video encode
-- section: admin
-	* login ldap support (write docs) #http://code.gustavonarea.net/repoze.who.plugins.ldap/Demo.html#trying-to-authenticate-via-ldap
-		* remove "admin" permission restriction
-		* maybe implement acceess based on objectClass
-- bug icon to _issue tracker_ - also on error
 - old arhive import (ike)
 
     DEPLOY
