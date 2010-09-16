@@ -26,6 +26,7 @@
 <body class="nav-explore-on">
 	<div class="mediacore-content">
 		<div id="explore-popular" class="m-grid-column" style="margin-right:20px">
+            <py:if test="featured">
 			<h2><span class="uppercase">Featured</span></h2>
 			<div class="feat-box">
 				<div class="feat-top" />
@@ -50,6 +51,7 @@
 				</div>
 				<div class="feat-bottom" />
 			</div>
+            </py:if>
 
 			<h2><a href="${h.url_for(action='index', show='popular')}" class="underline-hover uppercase nocolor">Most Popular</a></h2>
 			<py:if test="popular">
