@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: MediaCore 0.8.0\n"
 "Report-Msgid-Bugs-To: video@kiberpipa.org\n"
 "POT-Creation-Date: 2010-05-23 13:39+0200\n"
-"PO-Revision-Date: 2010-09-12 21:53+0200\n"
+"PO-Revision-Date: 2010-09-17 00:34+0200\n"
 "Last-Translator: Domen Kožar <domen@dev.si>\n"
 "Language-Team: sl <sl@li.org>\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 "
@@ -51,10 +51,12 @@ msgid "Unsupport image type: %s"
 msgstr "Nepodprt tip slike: %s"
 
 #: mediacore/controllers/admin/media.py:598
+#: mediacore/templates/admin/media/update-status-form.html:58
 msgid "Review Complete"
 msgstr "Pregled končan"
 
 #: mediacore/controllers/admin/media.py:600
+#: mediacore/templates/admin/media/update-status-form.html:80
 msgid "Publish Now"
 msgstr "Objavi zdaj"
 
@@ -78,7 +80,7 @@ msgstr "(nikoli ne bo objavljena)"
 #: mediacore/templates/admin/helpers.html:70
 #: mediacore/templates/admin/comments/_comment-table.html:30
 #: mediacore/templates/categories/index.html:40
-#: mediacore/templates/media/explore.html:37
+#: mediacore/templates/media/explore.html:38
 #: mediacore/templates/media/view.html:81
 #, fuzzy
 msgid "Comment"
@@ -152,7 +154,7 @@ msgid "You forgot to select an image!"
 msgstr "Ups! Ne pozabi vnesti datoteke."
 
 #: mediacore/forms/admin/categories.py:43 mediacore/forms/admin/comments.py:30
-#: mediacore/forms/admin/media.py:88 mediacore/forms/admin/settings.py:209
+#: mediacore/forms/admin/media.py:88 mediacore/forms/admin/settings.py:214
 #: mediacore/forms/admin/users.py:61
 msgid "Save"
 msgstr "Shrani"
@@ -167,7 +169,7 @@ msgstr "Izbriši kategorijo"
 msgid "Delete"
 msgstr "Izbriši"
 
-#: mediacore/forms/admin/comments.py:31 mediacore/forms/admin/settings.py:210
+#: mediacore/forms/admin/comments.py:31 mediacore/forms/admin/settings.py:215
 msgid "Cancel"
 msgstr ""
 
@@ -285,7 +287,24 @@ msgid "Stream URL"
 msgstr ""
 
 #: mediacore/forms/admin/settings.py:207
-msgid "Events ical URL"
+msgid "Events URL (ical format)"
+msgstr ""
+
+#: mediacore/forms/admin/settings.py:208
+msgid "Cortado applet URL"
+msgstr ""
+
+#: mediacore/forms/admin/settings.py:210
+#, fuzzy
+msgid "LDAP settings:"
+msgstr "Nastavitve"
+
+#: mediacore/forms/admin/settings.py:211
+msgid "Connection"
+msgstr ""
+
+#: mediacore/forms/admin/settings.py:212
+msgid "DN"
 msgstr ""
 
 #: mediacore/forms/admin/users.py:35
@@ -515,7 +534,7 @@ msgstr ""
 #: mediacore/templates/admin/settings/master.html:46
 #: mediacore/templates/categories/index.html:39
 #: mediacore/templates/comments/_list.html:38
-#: mediacore/templates/media/explore.html:36
+#: mediacore/templates/media/explore.html:37
 #: mediacore/templates/media/view.html:80
 msgid "Comments"
 msgstr "Komentarji"
@@ -535,7 +554,7 @@ msgstr[3] ""
 
 #: mediacore/templates/helpers.html:122
 #: mediacore/templates/categories/index.html:46
-#: mediacore/templates/media/explore.html:43
+#: mediacore/templates/media/explore.html:44
 #: mediacore/templates/media/view.html:89
 msgid "Views"
 msgstr "Ogledi"
@@ -544,7 +563,7 @@ msgstr "Ogledi"
 #: mediacore/templates/admin/media/update-status-form.html:28
 #: mediacore/templates/admin/media/update-status-form.html:34
 #: mediacore/templates/categories/index.html:47
-#: mediacore/templates/media/explore.html:44
+#: mediacore/templates/media/explore.html:45
 #: mediacore/templates/media/view.html:90
 #, fuzzy
 msgid "View"
@@ -565,19 +584,19 @@ msgstr "Pokaži:"
 
 #: mediacore/templates/helpers.html:167
 #: mediacore/templates/categories/index.html:58
-#: mediacore/templates/media/explore.html:70
+#: mediacore/templates/media/explore.html:81
 msgid "Latest"
 msgstr "Zadnje dodani"
 
 #: mediacore/templates/helpers.html:168
 #: mediacore/templates/categories/index.html:63
-#: mediacore/templates/media/explore.html:54
+#: mediacore/templates/media/explore.html:56
 msgid "Most Popular"
 msgstr "Najbolj popularni"
 
 #: mediacore/templates/helpers.html:169
 #: mediacore/templates/categories/index.html:29
-#: mediacore/templates/media/explore.html:29
+#: mediacore/templates/media/explore.html:30
 msgid "Featured"
 msgstr "Izbrani"
 
@@ -592,52 +611,72 @@ msgstr ""
 msgid "MediaCore"
 msgstr "MediaCore"
 
-#: mediacore/templates/layout.html:40
-msgid "powered by"
-msgstr "powered by"
-
-#: mediacore/templates/layout.html:40
+#: mediacore/templates/layout.html:41
 msgid "MediaCore Video CMS"
 msgstr "MediaCore Video CMS"
+
+#: mediacore/templates/layout.html:42
+msgid "Odprtakoda portala"
+msgstr ""
+
+#: mediacore/templates/layout.html:42
+msgid "| Vsebina je na voljo pod licenco"
+msgstr ""
+
+#: mediacore/templates/layout.html:43
+msgid "Creative Commons Priznanje avtorstva 2.5 Slovenija"
+msgstr ""
+
+#: mediacore/templates/layout.html:43
+msgid "| (CC) 2001-2010"
+msgstr ""
+
+#: mediacore/templates/layout.html:44
+#, fuzzy
+msgid "Kiberpipa"
+msgstr "Kiberpipa"
 
 #: mediacore/templates/live.html:9 mediacore/templates/live.html:52
 msgid "Live stream"
 msgstr "Prenos v živo"
 
-#: mediacore/templates/live.html:105
+#: mediacore/templates/live.html:102
 #, python-format
 msgid ""
 "You can watch live stream with your favourite media player (for example "
 "VLC). Stream address is [1:%(link)s.m3u]"
-msgstr "Prenos lahko sprejemljate tudi s pomočjo vaše najljubše aplikacije "
-"(na primer VLC). Naslov za odjemanje je [1:%(link)s.m3u]"
+msgstr ""
+"Prenos lahko sprejemljate tudi s pomočjo vaše najljubše aplikacije \"\n"
+"\"(na primer VLC). Naslov za odjemanje je [1:%(link)s.m3u]"
 
-#: mediacore/templates/live.html:106
+#: mediacore/templates/live.html:103
 msgid ""
 "While watching live stream you can post your questions and ideas on "
 "Cyberpipe's [1:Twitter account]. Also, do report any troubles with the "
 "stream itself."
-msgstr "Ob gledanju posnetka v živo, nam lahko svoja vprašanja in pripombe"
-" posredujete na Kiberpipin [1:Twitter račun]. Prav tako lahko javite "
-"morebitne težave s sprejemanjem prenosa."
+msgstr ""
+"Ob gledanju posnetka v živo, nam lahko svoja vprašanja in pripombe\"\n"
+"\" posredujete na Kiberpipin [1:Twitter račun]. Prav tako lahko javite \""
+"\n"
+"\"morebitne težave s sprejemanjem prenosa."
 
-#: mediacore/templates/live.html:109
+#: mediacore/templates/live.html:106
 msgid "There is no stream running. Check back later."
 msgstr "Trenutno ni prenosa v živo. Preveri znova kasneje."
 
-#: mediacore/templates/live.html:117
+#: mediacore/templates/live.html:114
 msgid "Upcoming events in Cyberpipe"
 msgstr "Bljižni dogodki v Kiberpipi"
 
-#: mediacore/templates/live.html:123
+#: mediacore/templates/live.html:120
 msgid "When?"
 msgstr "Kdaj?"
 
-#: mediacore/templates/live.html:124
+#: mediacore/templates/live.html:121
 msgid "Where?"
 msgstr "Kje?"
 
-#: mediacore/templates/live.html:126
+#: mediacore/templates/live.html:123
 msgid "No planned events at the moment."
 msgstr "Trenutno ni napovedanih dogodkov."
 
@@ -1154,24 +1193,24 @@ msgid "Email"
 msgstr "E-pošta"
 
 #: mediacore/templates/categories/index.html:45
-#: mediacore/templates/media/explore.html:42
+#: mediacore/templates/media/explore.html:43
 #: mediacore/templates/media/view.html:86
 msgid "Vote up"
 msgstr "Glasuj"
 
 #: mediacore/templates/categories/index.html:45
-#: mediacore/templates/media/explore.html:42
+#: mediacore/templates/media/explore.html:43
 #: mediacore/templates/media/view.html:87
 msgid "Like this!"
 msgstr "Všeč mi je!"
 
 #: mediacore/templates/categories/index.html:60
-#: mediacore/templates/media/explore.html:72
+#: mediacore/templates/media/explore.html:83
 msgid "more of the Latest..."
 msgstr "več izmed zadnje dodanih..."
 
 #: mediacore/templates/categories/index.html:65
-#: mediacore/templates/media/explore.html:57
+#: mediacore/templates/media/explore.html:59
 msgid "more of the Most Popular..."
 msgstr "več izmed najbolj priljubljenih..."
 
@@ -1205,25 +1244,43 @@ msgstr ""
 msgid "Write a comment"
 msgstr "Dodaj komentar"
 
-#: mediacore/templates/media/explore.html:61
+#: mediacore/templates/media/explore.html:63
 msgid ""
 "As soon as there are more than 9 published videos in the library, the "
 "most popular videos will be listed here."
 msgstr ""
 
-#: mediacore/templates/media/explore.html:63
+#: mediacore/templates/media/explore.html:65
 msgid "Why not"
 msgstr ""
 
-#: mediacore/templates/media/explore.html:63
+#: mediacore/templates/media/explore.html:65
 msgid "add"
 msgstr ""
 
-#: mediacore/templates/media/explore.html:63
+#: mediacore/templates/media/explore.html:65
 msgid "a few more?"
 msgstr ""
 
-#: mediacore/templates/media/explore.html:75
+#: mediacore/templates/media/explore.html:72
+msgid "About archive"
+msgstr "O arhivu"
+
+#: mediacore/templates/media/explore.html:77
+msgid ""
+"Cyberpipe video archive is categorized collection of recorded sessions in"
+" ten years activity of [1:multimedijskega centra Kiberpipa]. Trenutno "
+"šteje dobrih 700 posnetkov predavanj, umetniških dogodkov, delavnic, ipd."
+" Za predvajanje zadostuje brskalnik, za dolpotegnjene datoteke pa "
+"priporočamo prav tako odprtokodni [2:VLC media player]."
+msgstr ""
+"Kiberpipin videoarhiv je kategorizirana zbirka posnetkov in desetletne "
+"dejavnosti [1:multimedijskega centra Kiberpipa]. Trenutno šteje dobrih "
+"700 posnetkov predavanj, umetniških dogodkov, delavnic, ipd. Za "
+"predvajanje zadostuje brskalnik, za dolpotegnjene datoteke pa priporočamo"
+" prav tako odprtokodni [2:VLC media player]."
+
+#: mediacore/templates/media/explore.html:86
 msgid "There are no media items published yet!"
 msgstr "Ni še objavljenih posnetkov!"
 
@@ -1430,17 +1487,13 @@ msgid ""
 msgstr "Takoj te bomo preusmerili nazaj na [1:Arhiv posnetkov]. Drži se."
 
 #~ msgid ""
-#~ "Prenos lahko sprejemate tudi s pomočjo"
-#~ " vaše najljubše aplikacije (na primer "
-#~ "VLC). Naslov za odjemanje je "
-#~ "[1:%(link)s.m3u]"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Ob gledanju posnetka v živo, nam "
-#~ "lahko svoja vprašanja in pripombe "
-#~ "posredujete na Kiberpipin [1:Twitter račun]."
-#~ " Prav tako lahko javite vse težave"
-#~ " s sprejemom prenosa."
+#~ "Kiberpipin videoarhiv je kategorizirana zbirka"
+#~ " posnetkov in desetletne dejavnosti "
+#~ "[1:multimedijskega centra Kiberpipa]. Trenutno "
+#~ "šteje dobrih 700 posnetkov predavanj, "
+#~ "umetniških dogodkov, delavnic, ipd. Za "
+#~ "predvajanje zadostuje brskalnik, za "
+#~ "dolpotegnjene datoteke pa priporočamo prav "
+#~ "tako odprtokodni [2:VLC media player]."
 #~ msgstr ""
 

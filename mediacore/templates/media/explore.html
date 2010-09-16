@@ -69,6 +69,15 @@
 		</div>
 
 		<div py:if="latest" id="explore-latest" class="m-grid-column">
+			<h2><span class="uppercase">About archive</span></h2>
+			<div class="feat-box">
+				<div class="feat-top" />
+				<div class="feat-content clearfix about-box">
+                    <img src="${ h.url_for('/images/cyberpipe/film.gif') }" />
+                    <p i18n:msg="cyberpipe vlc">Cyberpipe video archive is categorized collection of recorded sessions in ten years activity of <a href="http://www.kiberpipa.org/">multimedijskega centra Kiberpipa</a>. Trenutno šteje dobrih 700 posnetkov predavanj, umetniških dogodkov, delavnic, ipd. Za predvajanje zadostuje brskalnik, za dolpotegnjene datoteke pa priporočamo prav tako odprtokodni <a href="http://www.videolan.org/vlc/">VLC media player</a>.</p>
+                </div>
+				<div class="feat-bottom" />
+            </div>
 			<h2><a href="${h.url_for(action='index', show='latest')}" class="underline-hover uppercase nocolor">Latest</a></h2>
 			<ul py:replace="media_grid(latest, thumb_size='m', desc_len=135)" />
 			<a class="see-more underline-hover" href="${h.url_for(action='index', show='latest')}">more of the Latest...</a>
