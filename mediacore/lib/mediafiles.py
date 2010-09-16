@@ -333,7 +333,7 @@ class MetadataParser(object):
 
     def parse_ffmpeg(self, path_to_file):
         out = {}
-        p = subprocess.Popen(['ffmpeg', '-i', path_to_file], subprocess.stderr=STDOUT, subprocess.stdout=PIPE)
+        p = subprocess.Popen(['ffmpeg', '-i', path_to_file], stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
         code = p.wait()
         if code != 0:
             return out
