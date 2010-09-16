@@ -23,6 +23,7 @@ from paste.request import parse_formvars
 from repoze.who.plugins.ldap import LDAPAuthenticatorPlugin
 from repoze.what.plugins.quickstart import setup_sql_auth
 from repoze.who.classifiers import default_request_classifier
+import sqlalchemy
 
 from mediacore.model.meta import DBSession
 from mediacore.model import Group, Permission, User, Setting
@@ -31,9 +32,17 @@ __all__ = ['add_auth', 'classifier_for_flash_uploads']
 
 def add_auth(app, config):
     """Add authentication and authorization middleware to the ``app``."""
-    settings = dict(DBSession.query(Setting.key, Setting.value))
-    ldap_auth = LDAPAuthenticatorPlugin(settings['ldap_connection'],
-        settings['ldap_dn'])
+    kw = dict()
+    try:
+        settings = dict(DBSession.query(Setting.key, Setting.value))
+    except sqlalchemy.exc.OperationalError:
+        pass
+        # db is not populated yet
+    else:
+        ldap_auth = LDAPAuthenticatorPlugin(
+            settings['ldap_connection'],
+            settings['ldap_dn'])
+        kw['authenticators'] = [('ldap_auth', ldap_auth)]
 
     return setup_sql_auth(
         app, User, Group, Permission, DBSession,
@@ -63,10 +72,7 @@ def add_auth(app, config):
         # to each deployment so it comes from the INI config file and is
         # randomly generated when you run paster make-config
         cookie_secret = config['sa_auth.cookie_secret'],
-
-        # additional authenticator
-        authenticators=[('ldap_auth', ldap_auth)],
-    )
+        **kw)
 
 
 def classifier_for_flash_uploads(environ):
