@@ -29,6 +29,7 @@ KIBERPIPA
 - section: video
 	* link to kiberpipa.org event (hruske)
 	* ping intranet on video encode
+- setup codebase/arhive on live stream <embed />
 - old arhive import (ike+upstream)
 
     DEPLOY

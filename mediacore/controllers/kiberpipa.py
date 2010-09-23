@@ -48,6 +48,8 @@ class KiberpipaController(BaseController):
                 f.close()
 
             for event in cal.walk()[1:]:
+                if event['CLASS'] != 'PUBLIC':
+                    continue
                 d = event['DTSTART'].dt
                 start_date = datetime(d.year, d.month, d.day, d.hour, d.minute, d.second, tzinfo=utc)
                 # leave out events in the past
