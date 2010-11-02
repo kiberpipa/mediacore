@@ -18,6 +18,7 @@ Media Admin Controller
 """
 import os
 from datetime import datetime
+from itertools import izip
 
 from formencode import Invalid, validators
 from pylons import config, request, response, session, tmpl_context
@@ -26,15 +27,17 @@ from repoze.what.predicates import has_permission
 from sqlalchemy import orm
 
 from mediacore.forms.admin import SearchForm, ThumbForm
-from mediacore.forms.admin.media import AddFileForm, EditFileForm, MediaForm, PodcastFilterForm, UpdateStatusForm
+from mediacore.forms.admin.media import AddFileForm, EditFileForm, MediaForm, UpdateStatusForm
 from mediacore.lib import helpers
 from mediacore.lib.base import BaseController
-from mediacore.lib.decorators import expose, expose_xhr, paginate, validate, validate_xhr
+from mediacore.lib.decorators import expose, expose_xhr, observable, paginate, validate, validate_xhr
 from mediacore.lib.helpers import redirect, url_for
-from mediacore.lib.mediafiles import add_new_media_file
+from mediacore.lib.storage import add_new_media_file
+from mediacore.lib.templating import render
 from mediacore.lib.thumbnails import thumb_path, thumb_paths, create_thumbs_for, create_default_thumbs_for, has_thumbs, has_default_thumbs
 from mediacore.model import Author, Category, Media, Podcast, Tag, fetch_row, get_available_slug
 from mediacore.model.meta import DBSession
+from mediacore.plugin import events
 
 import logging
 log = logging.getLogger(__name__)
@@ -45,14 +48,15 @@ edit_file_form = EditFileForm()
 thumb_form = ThumbForm()
 update_status_form = UpdateStatusForm()
 search_form = SearchForm(action=url_for(controller='/admin/media', action='index'))
-podcast_filter_form = PodcastFilterForm(action=url_for(controller='/admin/media', action='index'))
 
 class MediaController(BaseController):
-    allow_only = has_permission('admin')
+    allow_only = has_permission('edit')
 
     @expose_xhr('admin/media/index.html', 'admin/media/index-table.html')
-    @paginate('media', items_per_page=25)
-    def index(self, page=1, search=None, podcast_filter=None, **kwargs):
+    @paginate('media', items_per_page=15)
+    @observable(events.Admin.MediaController.index)
+    def index(self, page=1, search=None, filter=None, podcast=None,
+              category=None, tag=None, **kwargs):
         """List media with pagination and filtering.
 
         :param page: Page number, defaults to 1.
@@ -70,12 +74,8 @@ class MediaController(BaseController):
                 The given search term, if any
             search_form
                 The :class:`~mediacore.forms.admin.SearchForm` instance
-            podcast_filter
-                The given podcast ID to filter by, if any
-            podcast_filter_title
-                The podcast name for rendering if a ``podcast_filter`` was specified.
-            podcast_filter_form
-                The :class:`~mediacore.forms.admin.media.PodcastFilterForm` instance.
+            podcast
+                The podcast object for rendering if filtering by podcast.
 
         """
         media = Media.query.options(orm.undefer('comment_count_published'))
@@ -87,26 +87,41 @@ class MediaController(BaseController):
                          .order_by(Media.publish_on.desc(),
                                    Media.modified_on.desc())
 
-        podcast_filter_title = podcast_filter
-        if podcast_filter == 'Unfiled':
-            media = media.filter(~Media.podcast.has())
-        elif podcast_filter is not None and podcast_filter != 'All Media':
-            media = media.filter(Media.podcast.has(Podcast.id == podcast_filter))
-            podcast_filter_title = DBSession.query(Podcast.title).get(podcast_filter)
-            podcast_filter = int(podcast_filter)
+        if not filter:
+            pass
+        elif filter == 'unreviewed':
+            media = media.reviewed(False)
+        elif filter == 'unencoded':
+            media = media.reviewed().encoded(False)
+        elif filter == 'drafts':
+            media = media.drafts()
+        elif filter == 'published':
+             media = media.published()
+
+        if category:
+            category = fetch_row(Category, slug=category)
+            media = media.filter(Media.categories.contains(category))
+        if tag:
+            tag = fetch_row(Tag, slug=tag)
+            media = media.filter(Media.tags.contains(tag))
+        if podcast:
+            podcast = fetch_row(Podcast, slug=podcast)
+            media = media.filter(Media.podcast == podcast)
 
         return dict(
             media = media,
-            podcast_filter = podcast_filter,
-            podcast_filter_title = podcast_filter_title,
-            podcast_filter_form = podcast_filter_form,
             search = search,
             search_form = search_form,
+            media_filter = filter,
+            category = category,
+            tag = tag,
+            podcast = podcast,
         )
 
 
     @expose('admin/media/edit.html')
     @validate(validators={'podcast': validators.Int()})
+    @observable(events.Admin.MediaController.edit)
     def edit(self, id, **kwargs):
         """Display the media forms for editing or adding.
 
@@ -185,9 +200,9 @@ class MediaController(BaseController):
             update_status_action = url_for(action='update_status'),
         )
 
-
     @expose_xhr()
     @validate_xhr(media_form, error_handler=edit)
+    @observable(events.Admin.MediaController.save)
     def save(self, id, slug, title, author_name, author_email,
              description, notes, podcast, tags, categories,
              delete=None, **kwargs):
@@ -203,16 +218,8 @@ class MediaController(BaseController):
         media = fetch_row(Media, id)
 
         if delete:
-            file_paths = thumb_paths(media).values()
-            for f in media.files:
-                file_paths.append(f.file_path)
-                # Remove the file from the session so that SQLAlchemy doesn't
-                # try to issue an UPDATE to set the MediaFile.media_id to None.
-                # The database ON DELETE CASCADE handles everything for us.
-                DBSession.expunge(f)
-            DBSession.delete(media)
+            self._delete_media(media)
             DBSession.commit()
-            helpers.delete_files(file_paths, Media._thumb_dir)
             redirect(action='index', id=None)
 
         if not slug:
@@ -233,7 +240,7 @@ class MediaController(BaseController):
         DBSession.add(media)
         DBSession.flush()
 
-        if id == 'new':
+        if id == 'new' and not has_thumbs(media):
             create_default_thumbs_for(media)
 
         if request.is_xhr:
@@ -253,6 +260,7 @@ class MediaController(BaseController):
 
     @expose('json')
     @validate(add_file_form)
+    @observable(events.Admin.MediaController.add_file)
     def add_file(self, id, file=None, url=None, **kwargs):
         """Save action for the :class:`~mediacore.forms.admin.media.AddFileForm`.
 
@@ -297,59 +305,53 @@ class MediaController(BaseController):
         else:
             media = fetch_row(Media, id)
 
-        try:
-            media_file = add_new_media_file(media, file, url)
-        except Invalid, e:
-            DBSession.rollback()
-            data = dict(
-                success = False,
-                message = e.message,
-            )
-        else:
-            if media.slug.startswith('_stub_'):
-                media.title = media_file.display_name
-                media.slug = get_available_slug(Media, '_stub_' + media.title)
+        media_file = add_new_media_file(media, file, url)
+        if media.slug.startswith('_stub_'):
+            media.title = media_file.display_name
+            media.slug = get_available_slug(Media, '_stub_' + media.title)
 
-            # The thumbs may have been created already by add_new_media_file
-            if id == 'new' and not has_thumbs(media):
-                create_default_thumbs_for(media)
+        # The thumbs may have been created already by add_new_media_file
+        if id == 'new' and not has_thumbs(media):
+            create_default_thumbs_for(media)
 
-            # Render some widgets so the XHTML can be injected into the page
-            edit_form_xhtml = unicode(edit_file_form.display(
-                action=url_for(action='edit_file', id=media.id),
-                file=media_file))
-            status_form_xhtml = unicode(update_status_form.display(
-                action=url_for(action='update_status', id=media.id),
-                media=media))
+        # Render some widgets so the XHTML can be injected into the page
+        edit_form_xhtml = unicode(edit_file_form.display(
+            action=url_for(action='edit_file', id=media.id),
+            file=media_file))
+        status_form_xhtml = unicode(update_status_form.display(
+            action=url_for(action='update_status', id=media.id),
+            media=media))
 
-            data = dict(
-                success = True,
-                media_id = media.id,
-                file_id = media_file.id,
-                file_type = media_file.type,
-                edit_form = edit_form_xhtml,
-                status_form = status_form_xhtml,
-                title = media.title,
-                slug = media.slug,
-                link = url_for(action='edit', id=media.id),
-                duration = helpers.duration_from_seconds(media.duration),
-            )
+        data = dict(
+            success = True,
+            media_id = media.id,
+            file_id = media_file.id,
+            file_type = media_file.type,
+            edit_form = edit_form_xhtml,
+            status_form = status_form_xhtml,
+            title = media.title,
+            slug = media.slug,
+            link = url_for(action='edit', id=media.id),
+            duration = helpers.duration_from_seconds(media.duration),
+        )
 
         return data
 
 
     @expose('json')
-    @validate(validators={'file_id': validators.Int()})
-    def edit_file(self, id, file_id, file_type=None, duration=None, delete=None, **kwargs):
+    @observable(events.Admin.MediaController.edit_file)
+    def edit_file(self, id, file_id, file_type=None, duration=None, delete=None, bitrate=None, width_height=None, **kwargs):
         """Save action for the :class:`~mediacore.forms.admin.media.EditFileForm`.
 
         Changes or delets a :class:`~mediacore.model.media.MediaFile`.
 
-        TODO: Use the form validators to validate this form. We only
-              POST one field at a time, so the validate decorator doesn't
-              work, because it doesn't work for partial validation, because
-              none of the kwargs are updated if an Invalid exception is
-              raised by any validator.
+        XXX: We do NOT use the @validate decorator due to complications with
+             partial validation. The JS sends only the value it wishes to
+             change, so we only want to validate that one value.
+             FancyValidator.if_missing seems to eat empty values and assign
+             them None, but there's an important difference to us between
+             None (no value from the user) and an empty value (the user
+             is clearing the value of a field).
 
         :param id: Media ID
         :type id: :class:`int`
@@ -366,36 +368,45 @@ class MediaController(BaseController):
         """
         media = fetch_row(Media, id)
         data = dict(success=False)
+        file_id = int(file_id) # Just in case validation failed somewhere.
 
-        try:
-            file = [file for file in media.files if file.id == file_id][0]
-        except IndexError:
+        for file in media.files:
+            if file.id == file_id:
+                break
+        else:
             file = None
 
-        if file is None:
-            data['message'] = _('File "%s" does not exist.') % file_id
-        elif file_type:
-            file.type = file_type
-            data['success'] = True
-        elif duration is not None:
-            try:
-                duration = helpers.duration_to_seconds(duration)
-            except ValueError:
-                data['message'] = _('Bad duration formatting, use Hour:Min:Sec')
-            else:
-                media.duration = duration
+        fields = edit_file_form.c
+        try:
+            if file is None:
+                data['message'] = _('File "%s" does not exist.') % file_id
+            elif file_type:
+                file.type = fields.file_type.validate(file_type)
                 data['success'] = True
-                data['duration'] = helpers.duration_from_seconds(duration)
-        elif delete:
-            file_path = file.file_path
-            DBSession.delete(file)
-            DBSession.commit()
-            if file_path:
-                helpers.delete_files([file_path], Media._thumb_dir)
-            media = fetch_row(Media, id)
-            data['success'] = True
-        else:
-            data['message'] = _('No action to perform.')
+            elif duration is not None:
+                media.duration = duration = fields.duration.validate(duration)
+                data['success'] = True
+                data['duration'] = helpers.duration_from_seconds(media.duration)
+            elif width_height is not None:
+                width_height = fields.width_height.validate(width_height)
+                file.width, file.height = width_height or (0, 0)
+                data['success'] = True
+            elif bitrate is not None:
+                file.bitrate = fields.bitrate.validate(bitrate)
+                data['success'] = True
+            elif delete:
+                storage = file.storage
+                unique_id = file.unique_id
+                DBSession.delete(file)
+                DBSession.flush()
+                storage.delete(unique_id)
+                media = fetch_row(Media, id)
+                data['success'] = True
+            else:
+                data['message'] = _('No action to perform.')
+        except Invalid, e:
+            data['success'] = False
+            data['message'] = unicode(e)
 
         if data['success']:
             data['file_type'] = file.type
@@ -410,7 +421,7 @@ class MediaController(BaseController):
 
 
     @expose('json')
-    def merge_stubs(self, orig_id, input_id):
+    def merge_stubs(self, orig_id, input_id, **kwargs):
         """Merge in a newly created media item.
 
         This is merges media that has just been created. It must have:
@@ -432,16 +443,8 @@ class MediaController(BaseController):
         # Merge in the file(s) from the input stub
         if input.slug.startswith('_stub_') and input.files:
             for file in input.files[:]:
+                # XXX: The filename will still use the old ID
                 file.media = orig
-                if file.file_name:
-                    input_file_name = file.file_name
-                    input_file_path = file.file_path
-                    try:
-                        file.file_name = '%s_%s_%s.%s' \
-                            % (orig.id, file.id, orig.slug, file.container)
-                        os.rename(input_file_path, file.file_path)
-                    except OSError:
-                        file.file_name = input_file_name
                 merged_files.append(file)
             DBSession.delete(input)
 
@@ -507,6 +510,7 @@ class MediaController(BaseController):
 
     @expose('json')
     @validate(thumb_form, error_handler=edit)
+    @observable(events.Admin.MediaController.save_thumb)
     def save_thumb(self, id, thumb, **kwargs):
         """Save a thumbnail uploaded with :class:`~mediacore.forms.admin.ThumbForm`.
 
@@ -569,7 +573,8 @@ class MediaController(BaseController):
 
     @expose('json')
     @validate(update_status_form, error_handler=edit)
-    def update_status(self, id, update_button=None, publish_on=None, **values):
+    @observable(events.Admin.MediaController.update_status)
+    def update_status(self, id, status=None, publish_on=None, **values):
         """Update the publish status for the given media.
 
         :param id: Media ID
@@ -595,16 +600,10 @@ class MediaController(BaseController):
         new_slug = None
 
         # Make the requested change assuming it will be allowed
-        if update_button == _('Review Complete'):
+        if status == 'unreviewed':
             media.reviewed = True
-        elif update_button == _('Publish Now'):
-            media.publishable = True
-            media.publish_on = publish_on or datetime.now()
-            media.update_popularity()
-            # Remove the stub prefix if the user wants the default media title
-            if media.slug.startswith('_stub_'):
-                new_slug = get_available_slug(Media, media.slug[len('_stub_'):])
-                media.slug = new_slug
+        elif status == 'draft':
+            self._publish_media(media, publish_on)
         elif publish_on:
             media.publish_on = publish_on
             media.update_popularity()
@@ -624,3 +623,78 @@ class MediaController(BaseController):
             )
         else:
             redirect(action='edit')
+
+    @expose('json')
+    def bulk(self, type=None, ids=None, **kwargs):
+        """Perform bulk operations on media items
+
+        :param type: The type of bulk action to perform (delete)
+        :param ids: A list of IDs.
+
+        """
+        if not ids:
+            ids = []
+        elif not isinstance(ids, list):
+            ids = [ids]
+
+        media = Media.query.filter(Media.id.in_(ids)).all()
+        success = True
+        rows = None
+
+        def render_rows(media):
+            rows = {}
+            for m in media:
+                stream = render('admin/media/index-table.html', {'media': [m]})
+                rows[m.id] = unicode(stream.select('table/tbody/tr'))
+            return rows
+
+        if type == 'review':
+            for m in media:
+                m.reviewed = True
+            rows = render_rows(media)
+        elif type == 'publish':
+            for m in media:
+                m.reviewed = True
+                if m.encoded:
+                    self._publish_media(m)
+            rows = render_rows(media)
+        elif type == 'delete':
+            for m in media:
+                self._delete_media(m)
+        else:
+            success = False
+
+        return dict(
+            success = success,
+            ids = ids,
+            rows = rows,
+        )
+
+    def _publish_media(self, media, publish_on=None):
+        media.publishable = True
+        media.publish_on = publish_on or media.publish_on or datetime.now()
+        media.update_popularity()
+        # Remove the stub prefix if the user wants the default media title
+        if media.slug.startswith('_stub_'):
+            new_slug = get_available_slug(Media, media.slug[len('_stub_'):])
+            media.slug = new_slug
+
+    def _delete_media(self, media):
+        # Collect everything we'll need to delete after updating the DB
+        files = []
+        file_storage = []
+        for file in media.files:
+            file_storage.append(file.storage)
+            # Detach the file from the session but retain the data
+            orm.make_transient(file)
+            files.append(file)
+        thumbs = thumb_paths(media).values()
+
+        # Delete it
+        DBSession.delete(media)
+        DBSession.flush()
+
+        # Delete all the files from their corresponding storage engines
+        for storage, file in izip(file_storage, files):
+            storage.delete(file.unique_id)
+        helpers.delete_files(thumbs, Media._thumb_dir)

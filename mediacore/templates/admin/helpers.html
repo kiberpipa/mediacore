@@ -19,36 +19,31 @@
       xmlns:xi="http://www.w3.org/2001/XInclude"
       py:strip="">
 
-	<py:def function="paginated_tfoot(paginator, colspan=1, radius=2, show_if_single_page=False)">
+	<py:def function="paginated_tfoot(paginator, colspan=1, radius=2, show_if_single_page=False, link_args={})">
 		<tfoot py:if="paginator.page_count > (not show_if_single_page and 1 or 0)" py:with="
 			leftmost_page = max(paginator.first_page, paginator.page - radius);
 			rightmost_page = min(paginator.last_page, paginator.page + radius);
 		">
-			<a py:def="pagelink(page, text=None, strong=False)"
-			   href="${h.url_for(page=page)}"
-			   class="pager-link underline-hover"><strong py:strip="not strong">${text or page}</strong></a>
+			<a py:def="pagelink(page, text=None, extraclass='')"
+			   href="${h.url_for(page=page, **link_args)}"
+			   class="pager-link underline-hover btn inline ${extraclass}"><span>${text or page}</span></a>
 			<tr>
 				<td class="box-foot right" colspan="${colspan}">
 					<div class="pager">
-						<span class="pager-left" />
-						<span class="pager-body">
-							<span class="pager-label">Page:</span>
-							<a py:if="paginator.page &gt; paginator.first_page" py:replace="pagelink(paginator.page - 1, 'Previous', True)" />
-							<py:if test="leftmost_page > paginator.first_page">
-								<a py:replace="pagelink(paginator.first_page)" />
-								<span py:if="leftmost_page - paginator.first_page > 1" class="pager-dotdot">..</span>
-							</py:if>
-							<py:for each="page in xrange(leftmost_page, rightmost_page + 1)" py:choose="">
-								<span py:when="paginator.page == page" class="pager-current">${page}</span>
-								<a py:otherwise="" py:replace="pagelink(page)" />
-							</py:for>
-							<py:if test="paginator.last_page > rightmost_page">
-								<span py:if="paginator.last_page - rightmost_page > 1" class="pager-dotdot">..</span>
-								<a py:replace="pagelink(paginator.last_page)" />
-							</py:if>
-							<a py:if="paginator.page &lt; paginator.last_page" py:replace="pagelink(paginator.page + 1, 'Next', True)" />
-						</span>
-						<span class="pager-right" />
+						<a py:if="paginator.page &gt; paginator.first_page" py:replace="pagelink(paginator.page - 1, '&laquo;', 'pager-previous')" />
+						<py:if test="leftmost_page > paginator.first_page">
+							<a py:replace="pagelink(paginator.first_page)" />
+							<span py:if="leftmost_page - paginator.first_page > 1" class="pager-dotdot">&#8230;</span>
+						</py:if>
+						<py:for each="page in xrange(leftmost_page, rightmost_page + 1)" py:choose="">
+							<span py:when="paginator.page == page" class="pager-current btn inline active unclickable"><span>${page}</span></span>
+							<a py:otherwise="" py:replace="pagelink(page)" />
+						</py:for>
+						<py:if test="paginator.last_page > rightmost_page">
+							<span py:if="paginator.last_page - rightmost_page > 1" class="pager-dotdot">&#8230;</span>
+							<a py:replace="pagelink(paginator.last_page)" />
+						</py:if>
+						<a py:if="paginator.page &lt; paginator.last_page" py:replace="pagelink(paginator.page + 1, '&raquo;', 'pager-next')" />
 					</div>
 				</td>
 			</tr>
@@ -56,6 +51,16 @@
 	</py:def>
 
 	<py:def function="comment_stats_box(link, total=None, published=None, unreviewed=None, trash=None, query=None)">
+		<?python
+		if total is None:
+			total = query.count()
+		if published is None:
+			published = query.published().count()
+		if unreviewed is None:
+			unreviewed = query.reviewed(False).count()
+		if trash is None:
+			trash = query.trash().count()
+		?>
 		<div class="box">
 			<div class="box-head">
 				<a href="${link}"
@@ -64,26 +69,22 @@
 				<h1>Comments</h1>
 			</div>
 			<table id="comments-table" cellpadding="0" cellspacing="0">
-				<tr py:with="total = total if total is not None else query.count()"
-				    class="comments-total">
+				<tr class="comments-total">
 					<td class="comments-count" py:content="total" />
-                    <i18n:choose numeral="total">
-                      <td i18n:singular="">Comment</td>
-                      <td i18n:plural="">Comments</td>
-                    </i18n:choose>
+					<i18n:choose numeral="total">
+						<td i18n:singular="">Comment</td>
+						<td i18n:plural="">Comments</td>
+					</i18n:choose>
 				</tr>
-				<tr py:with="published = published if published is not None else query.published().count()"
-				    class="comments-published">
+				<tr class="comments-published">
 					<td class="comments-count" py:content="published" />
 					<td>Published</td>
 				</tr>
-				<tr py:with="unreviewed = unreviewed if unreviewed is not None else query.reviewed(False).count()"
-				    class="${'comments-unreviewed' if unreviewed else 'comments-trash'}">
+				<tr class="${(unreviewed and 'comments-unreviewed') or 'comments-trash'}">
 					<td class="comments-count" py:content="unreviewed" />
 					<td>Unreviewed</td>
 				</tr>
-				<tr py:with="trash = trash if total is not None else query.trash().count()"
-				    class="comments-trash">
+				<tr class="comments-trash">
 					<td class="comments-count" py:content="trash" />
 					<td>Trash</td>
 				</tr>

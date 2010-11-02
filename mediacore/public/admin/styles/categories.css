@@ -1,0 +1,13 @@
+#category-table .first-child td {
+	background: url('../images/layout/inset-shadow.png') repeat-x top;
+}
+#sbox-content #add-box .box-content,
+#sbox-content #edit-box .box-content {
+	padding-top: 0;
+}
+#category-table th#h-name,
+#tag-table th#h-name,
+#category-table td[headers='h-name'],
+#tag-table td[headers='h-name'] {
+	padding-left: 0;
+}

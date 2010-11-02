@@ -13,28 +13,24 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
+import logging
 from datetime import datetime, timedelta
-from pylons import config, request, response, session, tmpl_context
-from sqlalchemy import orm, sql
-import webob.exc
 
-from mediacore.lib.base import BaseController
-from mediacore.lib.decorators import expose, expose_xhr, paginate, validate
-from mediacore.lib.helpers import get_featured_category, url_for
+from paste.util.converters import asbool
+from pylons import app_globals, config, request, response, session, tmpl_context
+from sqlalchemy import orm, sql
+
+from mediacore.controllers.api import APIException, get_order_by
 from mediacore.lib import helpers
+from mediacore.lib.base import BaseController
+from mediacore.lib.decorators import expose, expose_xhr, observable, paginate, validate
+from mediacore.lib.helpers import get_featured_category, url_for
 from mediacore.lib.thumbnails import thumb
 from mediacore.model import Category, Media, Podcast, Tag, fetch_row, get_available_slug
 from mediacore.model.meta import DBSession
+from mediacore.plugin import events
 
-import logging
 log = logging.getLogger(__name__)
-
-class APIException(Exception):
-    """
-    API Usage Error -- wrapper for providing helpful error messages.
-    TODO: Actually display these messages!!
-    """
 
 order_columns = {
     'id': Media.id,
@@ -50,16 +46,20 @@ order_columns = {
     'comment_count': 'comment_count_published %s'
 }
 
+AUTHERROR = "Authentication Error"
+INVALIDFORMATERROR = "Invalid format (%s). Only json and mrss are supported"
+
 class MediaController(BaseController):
     """
     JSON Media API
     """
 
     @expose('json')
+    @observable(events.API.MediaController.index)
     def index(self, type=None, podcast=None, tag=None, category=None, search=None,
               max_age=None, min_age=None, order=None, offset=0, limit=10,
               published_after=None, published_before=None, featured=False,
-              id=None, slug=None, include_embed=False, **kwargs):
+              id=None, slug=None, include_embed=False, secret_key=None, format="json", **kwargs):
         """Query for a list of media.
 
         :param type:
@@ -116,7 +116,7 @@ class MediaController(BaseController):
         :param limit:
             Number of results to return in each query. Defaults to 10.
             The maximum allowed value defaults to 50 and is set via
-            :attr:`mediacore.config['app_config'].api_media_max_results`.
+            :attr:`app_globals.settings['api_media_max_results']`.
         :type limit: int
 
         :param featured:
@@ -139,6 +139,10 @@ class MediaController(BaseController):
             Note that we still return a list.
         :type slug: unicode or None
 
+        :param api_key:
+            The api access key if required in settings
+        :type api_key: unicode or None
+
         :raises APIException:
             If there is an user error in the query params.
 
@@ -150,6 +154,14 @@ class MediaController(BaseController):
                 A list of media info objects.
 
         """
+
+        if asbool(app_globals.settings['api_secret_key_required']) \
+            and secret_key != app_globals.settings['api_secret_key']:
+            return dict(error=AUTHERROR)
+
+        if format not in ("json", "mrss"):
+            return dict(error= INVALIDFORMATERROR % format)
+
         query = Media.query\
             .published()\
             .options(orm.undefer('comment_count_published'))
@@ -189,29 +201,7 @@ class MediaController(BaseController):
         if published_before:
             query = query.filter(Media.publish_on <= published_before)
 
-        # Split the order into two parts, column and direction
-        if not order:
-            order_col, order_dir = 'publish_on', 'desc'
-        else:
-            try:
-                order_col, order_dir = unicode(order).strip().lower().split(' ')
-                assert order_dir in ('asc', 'desc')
-            except:
-                raise APIException, 'Invalid order format, must be "column asc/desc", given "%s"' % order
-
-        # Get the order clause for the given column name
-        try:
-            order_attr = order_columns[order_col]
-        except KeyError:
-            raise APIException, 'Not allowed to order by "%s", please pick one of %s' % (order_col, ', '.join(order_columns.keys()))
-
-        # Normalize to something that can be used in a query
-        if isinstance(order_attr, basestring):
-            order = sql.text(order_attr % (order_dir == 'asc' and 'asc' or 'desc'))
-        else:
-            # Assume this is an sqlalchemy InstrumentedAttribute
-            order = getattr(order_attr, order_dir)()
-        query = query.order_by(order)
+        query = query.order_by(get_order_by(order, order_columns))
 
         # Search will supercede the ordering above
         if search:
@@ -227,28 +217,46 @@ class MediaController(BaseController):
 
         # Rudimentary pagination support
         start = int(offset)
-        end = start + min(int(limit), int(config['api_media_max_results']))
+        end = start + min(int(limit), int(app_globals.settings['api_media_max_results']))
+
+        if format == "mrss":
+            request.override_template = "sitemaps/mrss.xml"
+            return dict(
+                media = query[start:end],
+                title = "Media Feed",
+            )
 
         media = [self._info(m, podcast_slugs, include_embed) for m in query[start:end]]
 
         return dict(
             media = media,
-            count = query.count()
+            count = query.count(),
         )
 
 
     @expose('json')
-    def get(self, id=None, slug=None, **kwargs):
+    @observable(events.API.MediaController.get)
+    def get(self, id=None, slug=None, secret_key=None, format="json", **kwargs):
         """Expose info on a specific media item by ID or slug.
 
         :param id: A :attr:`mediacore.model.media.Media.id` for lookup
         :type id: int
         :param slug: A :attr:`mediacore.model.media.Media.slug` for lookup
         :type slug: str
+        :param api_key:
+            The api access key if required in settings
+        :type api_key: unicode or None
         :raises webob.exc.HTTPNotFound: If the media doesn't exist.
         :returns: JSON dict
 
         """
+        if asbool(app_globals.settings['api_secret_key_required']) \
+            and secret_key != app_globals.settings['api_secret_key']:
+            return dict(error=AUTHERROR)
+
+        if format not in ("json", "mrss"):
+            return dict(error= INVALIDFORMATERROR % format)
+
         query = Media.query.published()
 
         if id:
@@ -259,7 +267,14 @@ class MediaController(BaseController):
         try:
             media = query.one()
         except orm.exc.NoResultFound:
-            raise webob.exc.HTTPNotFound
+            return dict(error="No match found")
+
+        if format == "mrss":
+            request.override_template = "sitemaps/mrss.xml"
+            return dict(
+                media = [media],
+                title = "Media Entry",
+            )
 
         return self._info(media, include_embed=True)
 
@@ -307,3 +322,54 @@ class MediaController(BaseController):
             info['embed'] = helpers.embeddable_player(media)
 
         return info
+
+
+    @expose('json')
+    def files(self, id=None, slug=None, secret_key=None, **kwargs):
+        """List all files related to specific media.
+
+        :param id: A :attr:`mediacore.model.media.Media.id` for lookup
+        :type id: int
+        :param slug: A :attr:`mediacore.model.media.Media.slug` for lookup
+        :type slug: str
+        :param api_key:
+            The api access key if required in settings
+        :type api_key: unicode or None
+        :raises webob.exc.HTTPNotFound: If the media doesn't exist.
+        :returns: JSON dict
+
+        """
+        if asbool(app_globals.settings['api_secret_key_required']) \
+            and secret_key != app_globals.settings['api_secret_key']:
+            return dict(error='Authentication Error')
+
+        query = Media.query.published()
+
+        if id:
+            query = query.filter_by(id=id)
+        else:
+            query = query.filter_by(slug=slug)
+
+        try:
+            media = query.one()
+        except orm.exc.NoResultFound:
+            return dict(error='No match found')
+
+        return dict(
+            files = [self._file_info(f, media) for f in media.files],
+        )
+
+    def _file_info(self, file, media):
+        """Return a JSON-ready dict for the media file including links."""
+
+        return dict(
+            container = file.container,
+            type = file.type,
+            display_name = file.display_name,
+            created = file.created_on.isoformat(),
+            link = helpers.url_for(controller='/media', action='view',
+                                   slug=media.slug, qualified=True),
+            content = helpers.url_for(controller='/media', action='serve',
+                                      id=file.id, container=file.container,
+                                      slug=media.slug, qualified=True),
+        )

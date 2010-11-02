@@ -44,9 +44,9 @@
 				</tr>
 				<tr class="title" py:if="render_label and not (is_submit or field.show_error)">
 					<td>
-						<label py:if="render_label" py:content="field.label_text" id="${field.id}-label" class="form-label" for="${field.id}" />
-						<a py:if="field.help_text and help_url" py:content="field.help_text" href="${help_url}" class="field-help" />
-						<span py:if="field.help_text and not help_url" py:content="field.help_text" class="field-help" />
+						<label py:if="render_label" py:content="field.label_text and _(field.label_text) or None" id="${field.id}-label" class="form-label" for="${field.id}" />
+						<a py:if="field.help_text and help_url" py:content="field.help_text and _(field.help_text) or None" href="${help_url}" class="field-help" />
+						<span py:if="field.help_text and not help_url" py:content="field.help_text and _(field.help_text) or None" class="field-help" />
 						<span py:if="not field.show_error" class="field-error" py:content="error_for(field)" />
 					</td>
 				</tr>
@@ -56,7 +56,7 @@
 
 						<!-- The following 4 elements are used only by the SwiffUploadManager javascript -->
 						<div py:if="field.name == 'file'" id="bottombar">
-							<div id="browse-button" class="f-lft" />
+							<button id="browse-button" class="btn f-lft"><span>Choose a file to upload</span></button>
 							<div id="file-info" class="f-lft" />
 						</div>
 					</td>

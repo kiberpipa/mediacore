@@ -20,31 +20,53 @@
       xmlns:xi="http://www.w3.org/2001/XInclude"
       xmlns:i18n="http://genshi.edgewall.org/i18n"
       py:with="paginator=c.paginators.comments">
-<xi:include href="admin/master.html" />
+<xi:include href="../master.html" />
 <head>
-    <title>
-        <py:choose test="">
-            <py:when test="media_filter_title is None">Comments</py:when>
-            <py:when otherwise=""><span py:strip="True" i18n:msg="media_filter_title">Comments for ${media_filter_title}</span></py:when>
-        </py:choose>
-    </title>
+	<title>
+		<py:choose test="">
+			<py:when test="media_filter_title is None">Comments</py:when>
+			<py:when otherwise=""><span py:strip="True" i18n:msg="media_filter_title">Comments for ${media_filter_title}</span></py:when>
+		</py:choose>
+	</title>
 	<script src="${h.url_for('/scripts/third-party/squeezebox-1.1-rc4-yui-compressed.js')}" type="text/javascript"></script>
 	<link href="${h.url_for('/admin/styles/squeezebox.css')}" media="screen" rel="stylesheet" type="text/css" />
 	<link href="${h.url_for('/admin/styles/comments.css')}" media="screen" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="${h.url_for('/admin/scripts/confirm.js')}"></script>
+	<script type="text/javascript" src="${h.url_for('/admin/scripts/tablemgrs.js')}"></script>
 	<script type="text/javascript" src="${h.url_for('/admin/scripts/comments.js')}"></script>
 	<script type="text/javascript">
 		window.addEvent('domready', function(){
-			var cm = new CommentMgr(
-				'${h.url_for(action='save_status', status='approve', id='bulk')}',
-				'${h.url_for(action='save_status', status='trash', id='bulk')}'
-			);
+			var cm = new CommentMgr();
+			var table = new BulkTableManager('comment-table', {
+				prefix: 'comment-'
+			});
+
+			var bulkDelete = new BulkDelete(table, {
+				saveUrl: '${h.url_for(action='save_status', status='trash', id='bulk')}'
+			});
+			$$('bulk-delete').addEvent('click', bulkDelete.onClick.bind(bulkDelete));
+
+			var bulkPublish = new BulkEdit(table, {
+				saveUrl: '${h.url_for(action='save_status', status='approve', id='bulk')}',
+				onComplete: function(json){
+					$$splat(json.ids).each(function(id){
+						var row = table.table.getElementById(table.options.prefix + id);
+						row.getElement('input.bulk-checkbox').checked = false;
+						row.removeClass('tr-white').addClass('tr-gray');
+						var unpublished = row.getElement('a.btn-inline-approve');
+						if (!unpublished) return;
+						var published = new Element('span', {'class': 'btn table-row published unclickable btn-inline-approved f-lft', html: '<span>Published</span>'});
+						published.replaces(unpublished);
+					});
+				}
+			});
+			$('bulk-publish').addEvent('click', bulkPublish.onClick.bind(bulkPublish));
 		});
 	</script>
 </head>
 <body class="menu-comments-on">
 	<div class="box">
-		<div class="box-head">
+		<div class="box-head clearfix">
 			<div id="quicksearch" class="f-rgt">
 				${XML(search_form(search))}
 			</div>
@@ -53,8 +75,21 @@
 				<h1 py:when="media_filter is None">All Comments</h1>
 				<h1 py:otherwise="" i18n:msg="search">Comments for ${h.text.truncate('%s' % media_filter_title, 25)}</h1>
 			</div>
+			<div class="dropdown-wrapper f-lft" style="margin-left:10px;width:130px">
+				<button class="btn inline dropdown-toggle"><span>Bulk Actions</span></button>
+				<div class="dropdown-box">
+					<div class="dropdown-top"><div /></div>
+					<div class="dropdown-content">
+						<ol class="clearfix">
+							<li id="bulk-publish"><span>Publish</span></li>
+							<li id="bulk-delete"><span>Delete</span></li>
+						</ol>
+					</div>
+					<div class="dropdown-bottom"><div /></div>
+				</div>
+			</div>
 		</div>
-		<xi:include href="../comments/index-table.html" py:with="comments=comments; edit_form=edit_form;" />
+		<xi:include href="./index-table.html" py:with="comments=comments; edit_form=edit_form;" />
 	</div>
 </body>
 </html>

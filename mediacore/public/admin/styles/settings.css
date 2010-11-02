@@ -16,45 +16,16 @@
  */
 
 /* Common to all settings pages */
-ul#settings-menu li {
+.settings-menu li {
 	padding: 5px 0;
 }
-ul#settings-menu a {
+.settings-menu a {
 	padding-left: 20px;
 	font-size: 16px;
 }
-.menu-settings-cyberpipe-on  a#menu-settings-cyberpipe,
-.menu-settings-analytics-on  a#menu-settings-analytics,
-.menu-settings-comments-on  a#menu-settings-comments,
-.menu-settings-categories-on  a#menu-settings-categories,
-.menu-settings-display-on a#menu-settings-display,
-.menu-settings-notifications-on  a#menu-settings-notifications,
-.menu-settings-popularity-on a#menu-settings-popularity,
-.menu-settings-tags-on  a#menu-settings-tags,
-.menu-settings-upload-on a#menu-settings-upload,
-.menu-settings-users-on  a#menu-settings-users {
+.settings-menu .selected {
 	background: url('../images/icons/arrow-green-right.png') no-repeat left;
-	color: #196d29;
-}
-
-/* Users */
-.btn-add-user { background-image: url('../images/buttons/add-user.png'); width: 99px; height: 28px; }
-#display_name_container,
-#email_address_container {
-	clear: none;
-	float: left;
-	width: 50%;
-}
-#user-form .details_fieldset .fieldlabel {
-	width: 120px;
-}
-#login_details_user_name,
-#login_details_password,
-#login_details_confirm_password {
-	width: 287px;
-}
-#login_details_group {
-	width: 300px;
+	color: #417F00;
 }
 
 /* Emails and Wording Config Forms */
@@ -73,21 +44,12 @@ ul#settings-menu a {
 #settings-form .radiobuttonlist li {
 	margin-bottom: 5px;
 }
-#remote_ftp_ftp_storage_label,
-#remote_ftp_ftp_upload_directory_label,
-#remote_ftp_ftp_download_url_label,
-#remote_ftp_ftp_upload_integrity_retries_label {
-	margin-top: 0;
-}
 
-/* Categories and tags */
-.btn-add-category { background-image: url('../images/buttons/add-category.png'); width: 124px; height: 28px; }
-.btn-add-tag { background-image: url('../images/buttons/add-tag.png'); width: 91px; height: 28px; }
-#category-table .first-child td {
-	background: url('../images/layout/inset-shadow.png') repeat-x top;
+#generate_key{
+	font-size: 15px;
+	font-weight: bold;
+	margin-left: 16px;
 }
-#sbox-content #add-box .box-content,
-#sbox-content #edit-box .box-content {
-	padding-top: 0;
+#generate_key:hover {
+	text-decoration: none;
 }
-

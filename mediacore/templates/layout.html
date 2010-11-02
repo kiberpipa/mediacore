@@ -20,11 +20,18 @@
       xmlns:xi="http://www.w3.org/2001/XInclude"
       py:strip="">
 
+<?python feed_links = [] ?>
+
 <head py:match="head">
 	<title py:match="title" py:with="title = unicode(select('text()'))">
 		<py:if test="title">${Markup(title)} |</py:if>
 		MediaCore
 	</title>
+	<link py:match="link" py:attrs="select('@*')"><?python
+		attrs = h.attrs_to_dict(select('@*'))
+		if attrs['type'] == 'application/rss+xml':
+		    feed_links.append((attrs['href'], attrs['title']))
+	?></link>
 	<meta py:replace="select('*')"/>
 </head>
 
@@ -35,7 +42,6 @@
 
 	<div id="mediacore-footer" class="mediacore-content clear">
 		<div py:if="c.paginators" py:replace="pager(c.paginators.values()[0])" />
-
 		<!--! If you remove this link, please consider adding another link somewhere on your site. -->
 		<p>
             <a href="http://getmediacore.com/">MediaCore Video CMS</a>
@@ -43,6 +49,12 @@
             | Vsebina je na voljo pod licenco <a href="http://creativecommons.org/licenses/by/2.5/si/">Creative Commons Priznanje avtorstva 2.5 Slovenija</a>
             | (CC) 2001-2010 <a href="http://www.kiberpipa.org">Kiberpipa</a>.
         </p>
+		<div id="mediacore-feeds">
+			<h5>Feeds:</h5>
+			<ul>
+				<li py:for="href, title in feed_links"><a href="${href}">${title}</a></li>
+			</ul>
+		</div>
 	</div>
 
 	<!--[if IE 6]>

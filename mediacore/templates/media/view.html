@@ -21,6 +21,7 @@
       xmlns:xi="http://www.w3.org/2001/XInclude">
 <xi:include href="../master.html" />
 <xi:include href="../comments/_list.html" />
+<xi:include href="../social/facebook.html" />
 <head>
 	<title>${media.title}</title>
 	<link py:if="media.podcast" href="${h.url_for('/styles/podcasts.css')}" media="screen" rel="stylesheet" type="text/css" />
@@ -33,7 +34,7 @@
 		<div class="feat-top" />
 		<div class="feat-content clearfix">
 			<div class="feat-info">
-				<a href="${h.url_for(controller='/admin/media', action='edit', id=media.id)}" class="underline-hover f-rgt" py:if="h.is_admin()">Edit</a>
+				<a href="${h.url_for(controller='/admin/media', action='edit', id=media.id)}" class="underline-hover f-rgt" py:if="h.can_edit(media)">Edit</a>
 				<h3>${media.title}</h3>
 				<div class="feat-date" py:choose="">
 					<py:when test="media.is_published" py:with="datetime = media.publish_on.strftime('%B %d, %Y').replace(h.datetime.now().strftime(', %Y'), '')">${datetime}</py:when>
@@ -45,11 +46,11 @@
 					<div id="desc-excerpt" py:if="excerpt != fulltext" style="display:none"><p py:replace="Markup(excerpt)" /></div>
 				</py:with>
 			</div>
-			${media_player(media, width=560, height=315)}
+			${h.media_player(media, width=560, height=315)}
 			<table class="feat-meta" cellspacing="0">
-				<tr py:with="download = media.downloadable_file">
-					<td py:if="download">
-						<a class="meta meta-download underline-hover" href="${download.link_url()}"><strong>Download</strong></a>
+				<tr py:with="download_uri = h.download_uri(media)">
+					<td py:if="download_uri">
+						<a class="meta meta-download underline-hover" href="${download_uri}"><strong>Download</strong></a>
 					</td>
 					<td>
 						<div id="sharethis" class="meta-wrapper">
@@ -64,36 +65,41 @@
 							</div>
 						</div>
 					</td>
-					<td py:with="embed_code = h.embeddable_player(media)">
+					<td py:with="embed_code = h.embed_iframe_code(media)">
 						<!--! FIXME: Don't render these elements when there's no embed_code.
 						             We only render because of the mess of js above that expects these elements. -->
 						<div id="embedthis" class="meta-wrapper" style="${not embed_code and 'display:none' or None}">
 							<a class="meta meta-embed underline-hover" title="Embed on your site" href="#"><strong>Embed</strong></a>
 							<div class="meta-hover">
-								<label>Embeddable Player HTML: <input type="text" value="${embed_code}" readonly="readonly" /></label>
+								<label>Embeddable Player HTML: <input type="text" value="${unicode(embed_code)}" readonly="readonly" /></label>
 							</div>
 						</div>
 					</td>
-					<td py:if="not download">&nbsp;</td>
+					<td py:if="not download_uri">&nbsp;</td>
 				</tr>
 				<tr>
 					<td><span class="meta meta-comments" title="Comments">${media.comment_count_published}
-                        <i18n:choose numeral="media.comment_count_published">
-                          <span i18n:singular="">Comment</span>
-                          <span i18n:plural="">Comments</span>
-                        </i18n:choose>
-                    </span></td>
-					<td><a class="meta meta-likes" href="${h.url_for(action='rate')}" id="likethis" title="Vote up">
-                        ${media.likes} <strong>Like this!</strong>
-                    </a></td>
+						<i18n:choose numeral="media.comment_count_published">
+							<span i18n:singular="">Comment</span>
+							<span i18n:plural="">Comments</span>
+						</i18n:choose>
+					</span></td>
+					<td py:if="mediacore_likes"><a class="meta meta-likes" href="${h.url_for(action='rate')}" id="likethis" title="Vote up">
+						${media.likes} <strong>Like this!</strong>
+					</a></td>
 					<td><span class="meta meta-views" title="Views">${media.views}
-                        <i18n:choose numeral="media.views">
-                          <span i18n:singular="">View</span>
-                          <span i18n:plural="">Views</span>
-                        </i18n:choose>
-                    </span></td>
+						<i18n:choose numeral="media.views">
+							<span i18n:singular="">View</span>
+							<span i18n:plural="">Views</span>
+						</i18n:choose>
+					</span></td>
+					<td py:if="not mediacore_likes">&nbsp;</td>
+				</tr>
+				<tr py:if="facebook_likes">
+					<td colspan="3">${facebook_like('likethis')}</td>
 				</tr>
 			</table>
+
 		</div>
 		<div class="feat-bottom" />
 	</div>
@@ -116,11 +122,11 @@
 								<span class="meta meta-episodes" title="Podcast Episodes">
 									${podcast.media_count_published}
 									<span>
-                                        <i18n:choose numeral="podcast.media_count_published">
-                                          <span i18n:singular="">Episode</span>
-                                          <span i18n:plural="">Episodes</span>
-                                        </i18n:choose>
-                                    </span>
+										<i18n:choose numeral="podcast.media_count_published">
+											<span i18n:singular="">Episode</span>
+											<span i18n:plural="">Episodes</span>
+										</i18n:choose>
+									</span>
 								</span>
 							</span>
 						</a>
@@ -134,16 +140,19 @@
 			<ul py:replace="media_grid(related_media, thumb_size='s', desc_len=60)" />
 		</div>
 
-		<div id="category-context" class="contextbox" py:if="media.categories">
-			<h3 class="uppercase">Categories</h3>
+		<div id="category-context" class="contextbox">
 			<a py:def="cat_link(cat)" href="${h.url_for(controller='/categories', slug=cat.slug)}" class="underline-hover">${cat.name}</a>
-			${cat_link(media.categories[0])}<py:for each="cat in media.categories[1:]">, ${cat_link(cat)}</py:for>
+			<h3 class="uppercase">Categories</h3>
+			<p py:if="media.categories">${cat_link(media.categories[0])}<py:for each="cat in media.categories[1:]">, ${cat_link(cat)}</py:for></p>
+			<p py:if="not media.categories" class="contextbox-none">This is not listed under any categories.</p>
 		</div>
 
-		<div id="tag-context" class="contextbox" py:if="media.tags">
+		<div id="tag-context" class="contextbox">
+			<a class="subhead underline-hover" href="${h.url_for(controller='/media', action='tags')}">See All Tags</a>
 			<h3 class="uppercase">Tags</h3>
-			<a py:def="tag_link(tag)" href="${h.url_for(controller='/media', tag=tag.slug)}" class="underline-hover">${tag.name}</a>
-			${tag_link(media.tags[0])}<py:for each="tag in media.tags[1:]">, ${tag_link(tag)}</py:for>
+			<a py:def="tag_link(tag)" href="${h.url_for(controller='/media', action='index', tag=tag.slug)}" class="underline-hover">${tag.name}</a>
+			<p py:if="media.tags">${tag_link(media.tags[0])}<py:for each="tag in media.tags[1:]">, ${tag_link(tag)}</py:for></p>
+			<p py:if="not media.tags" class="contextbox-none">This does not have any associated tags.</p>
 		</div>
 	</div>
 </body>

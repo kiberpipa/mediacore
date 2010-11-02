@@ -22,10 +22,11 @@ from sqlalchemy import orm, sql
 from mediacore.forms.admin.tags import TagForm, TagRowForm
 from mediacore.lib import helpers
 from mediacore.lib.base import BaseController
-from mediacore.lib.decorators import expose, expose_xhr, paginate, validate
+from mediacore.lib.decorators import expose, expose_xhr, observable, paginate, validate
 from mediacore.lib.helpers import redirect, url_for
 from mediacore.model import Tag, fetch_row, get_available_slug
 from mediacore.model.meta import DBSession
+from mediacore.plugin import events
 
 import logging
 log = logging.getLogger(__name__)
@@ -34,10 +35,11 @@ tag_form = TagForm()
 tag_row_form = TagRowForm()
 
 class TagsController(BaseController):
-    allow_only = has_permission('admin')
+    allow_only = has_permission('edit')
 
     @expose('admin/tags/index.html')
     @paginate('tags', items_per_page=25)
+    @observable(events.Admin.TagsController.index)
     def index(self, page=1, **kwargs):
         """List tags with pagination.
 
@@ -63,6 +65,7 @@ class TagsController(BaseController):
         )
 
     @expose('admin/tags/edit.html')
+    @observable(events.Admin.TagsController.edit)
     def edit(self, id, **kwargs):
         """Edit a single tag.
 
@@ -85,6 +88,7 @@ class TagsController(BaseController):
 
     @expose('json')
     @validate(tag_form)
+    @observable(events.Admin.TagsController.save)
     def save(self, id, delete=False, **kwargs):
         """Save changes or create a tag.
 
@@ -126,3 +130,28 @@ class TagsController(BaseController):
             return data
         else:
             redirect(action='index', id=None)
+
+    @expose('json')
+    def bulk(self, type=None, ids=None, **kwargs):
+        """Perform bulk operations on media items
+
+        :param type: The type of bulk action to perform (delete)
+        :param ids: A list of IDs.
+
+        """
+        if not ids:
+            ids = []
+        elif not isinstance(ids, list):
+            ids = [ids]
+
+        success = True
+
+        if type == 'delete':
+            Tag.query.filter(Tag.id.in_(ids)).delete(False)
+        else:
+            success = False
+
+        return dict(
+            success = success,
+            ids = ids,
+        )

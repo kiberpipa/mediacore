@@ -41,7 +41,12 @@ var TableManager = new Class({
 	initialize: function(table, opts){
 		this.table = $(table);
 		this.setOptions(opts);
+		this.init();
+		this.attach();
 	},
+
+	init: $empty,
+	attach: $empty,
 
 	insertRow: function(resp){
 		var row = Elements.from(resp.row).inject(this.table.getElement('tbody'), 'top');
@@ -63,16 +68,69 @@ var TableManager = new Class({
 
 	toElement: function(){
 		return this.table;
+	},
+
+	isPaginated: function(){
+		return !!this.table.getElement('tfoot div.pager');
+	},
+
+	_getId: function(rowId){
+		return rowId.substr(this.options.prefix.length).toInt();
+	}
+
+});
+
+var BulkTableManager = new Class({
+
+	Extends: TableManager,
+
+	attach: function(){
+		this.toggler = this.table.getElement('input.bulk-toggle');
+		if (!this.toggler) return;
+		this.toggler.getParent('th').addEvent('click', this.onToggleCheckboxes.bind(this));
+		this.table.addEvent('click:relay(td[headers=h-bulk])', this.onToggleCheckbox.bind(this));
+		var toggleOff = this.toggler.set.bind(this.toggler, ['checked', false]);
+		this.addEvents({
+			insertRow: toggleOff,
+			updateRow: toggleOff,
+			removeRow: toggleOff
+		});
+	},
+
+	getCheckedRows: function(){
+		return this.table.getElements('input.bulk-checkbox:checked').getParent('tr');
+	},
+
+	getCheckedIds: function(){
+		return this.getCheckedRows().get('id').map(this._getId, this);
+	},
+
+	onToggleCheckbox: function(e){
+		var target = this._toggleTarget(e);
+		if (!target.checked && this.toggler.checked) this.toggler.checked = false;
+	},
+
+	onToggleCheckboxes: function(e){
+		var target = this._toggleTarget(e);
+		this.table.getElements('input.bulk-checkbox').set('checked', this.toggler.checked);
+	},
+
+	_toggleTarget: function(e){
+		var target = $(new Event(e).target);
+		if (['td', 'th'].contains(target.get('tag'))) {
+			target = target.getElement('input');
+			target.checked = !target.checked;
+		}
+		return target;
 	}
 
 });
 
 var CrudTable = new Class({
 
-	Extends: TableManager,
+	Extends: BulkTableManager,
 
 	options: {
-		prefix: 'tag-',
 		addButton: 'add-btn',
 		addModal: 'add-box',
 		addModalOptions: {
@@ -89,7 +147,7 @@ var CrudTable = new Class({
 		deleteModal: 'delete-box',
 		deleteModalOptions: {
 			ajax: true,
-			focus: 'delete',
+			focus: 'cancel',
 			extraData: {'delete': 1}
 		},
 	},
@@ -98,15 +156,14 @@ var CrudTable = new Class({
 	editModal: null,
 	deleteModal: null,
 
-	initialize: function(table, opts){
-		this.parent(table, opts);
+	init: function(){
 		this.addModal = new ModalForm(this.options.addModal, this.options.addModalOptions);
 		this.editModal = new ModalForm(this.options.editModal, this.options.editModalOptions);
 		this.deleteModal = new ModalForm(this.options.deleteModal, this.options.deleteModalOptions);
-		this.attach();
 	},
 
 	attach: function(){
+		this.parent();
 		$(this.options.addButton).addEvent('click', this.addModal.open.bind(this.addModal));
 		this.table.addEvents({
 			'click:relay(.btn-inline-edit)': this.editModal.open.bind(this.editModal),
@@ -254,6 +311,107 @@ var CategoryTable = new Class({
 			var m = option && option.get('text').match(/^\s+/);
 			var indent = m ? m[0].length : 0;
 		} while (indent >= minIndent);
+	}
+
+});
+
+var BulkAction = new Class({
+
+	Implements: [Events, Options],
+
+	options: {
+	/*	onClick: $empty,
+		onConfirm: $empty,
+		onComplete: $empty, */
+		confirmMgr: false,
+		saveUrl: null,
+		saveData: {}
+	},
+
+	initialize: function(mgr, opts){
+		this.mgr = mgr;
+		this.setOptions(opts);
+	},
+
+	onClick: function(e){
+		var numRows = this.mgr.getCheckedRows().length;
+		if (this.options.confirmMgr === false) return this.sendRequest();
+		if (!this.confirmMgr) {
+			this.confirmMgr = new ConfirmMgr(this.options.confirmMgr)
+				.addEvent('confirm', this.onConfirm.bind(this));
+		}
+		this.confirmMgr.openConfirmDialog(numRows);
+	},
+
+	onConfirm: function(){
+		this.fireEvent('confirm');
+		this.sendRequest();
+	},
+
+	onComplete: function(json){
+		this.fireEvent('complete', [json]);
+	},
+
+	onError: function(){
+		alert('An error occurred, please try again.');
+	},
+
+	sendRequest: function(){
+		if (!this.options.saveUrl) return;
+		var ids = this.mgr.getCheckedIds();
+		if (!ids.length) return;
+		if (!this.request) {
+			this.request = new Request.JSON({
+				url: this.options.saveUrl,
+				onSuccess: this.onComplete.bind(this),
+				onFailure: this.onError.bind(this)
+			});
+		}
+		var data = $merge(this.options.saveData, {ids: ids});
+		this.request.send(new Hash(data).toQueryString());
+	}
+
+});
+
+var BulkEdit = new Class({
+
+	Extends: BulkAction,
+
+	onComplete: function(json){
+		if (json.rows) {
+			new Hash(json.rows).each(function(row, id){
+				this.mgr.updateRow({id: id, row: row});
+			}, this);
+		}
+		this.parent(json);
+	}
+
+});
+
+var BulkDelete = new Class({
+
+	Extends: BulkAction,
+
+	options: {
+		confirmMgr: {
+			header: 'Confirm Delete',
+			msg: function(num){ return 'Are you sure you want to delete these ' + num + ' items?'; },
+			confirmButtonText: 'Delete',
+			confirmButtonClass: 'btn red f-rgt',
+			cancelButtonText: 'Cancel',
+			cancelButtonClass: 'btn f-lft',
+			focus: 'cancel'
+		},
+		refresh: false,
+		refreshWhenPaginated: false
+	},
+
+	onComplete: function(json){
+		json.ids.each(function(id){
+			this.mgr.removeRow($merge(json, {id: id}));
+		}, this);
+		if (this.options.refresh || (this.options.refreshWhenPaginated && this.mgr.isPaginated())) window.location = window.location;
+		this.parent(json);
 	}
 
 });

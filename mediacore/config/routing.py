@@ -19,10 +19,12 @@ may take precedent over the more generic routes. For more information
 refer to the routes manual at http://routes.groovie.org/docs/
 """
 from routes import Mapper
+from routes.util import controller_scan
 
-def make_map(config):
+def make_map(config, controller_scan=controller_scan):
     """Create, configure and return the routes Mapper"""
-    map = Mapper(directory=config['pylons.paths']['controllers'],
+    map = Mapper(controller_scan=controller_scan,
+                 directory=config['pylons.paths']['controllers'],
                  always_scan=config['debug'])
     map.explicit = False
     map.minimization = True # TODO: Rework routes so we can set this to False
@@ -74,7 +76,25 @@ def make_map(config):
         controller='podcasts',
         action='view')
 
+    # Sitemaps
+    map.connect('/sitemap.xml',
+        controller='sitemaps',
+        action='google')
+    map.connect('/latest.xml',
+        controller='sitemaps',
+        action='latest')
+    map.connect('/sitemap{page}.xml',
+        controller='sitemaps',
+        action='google',
+        requirements={'page': r'\d+'})
+    map.connect('/mrss.xml',
+        controller='sitemaps',
+        action='mrss')
+
     # Categories
+    map.connect('/categories/feed/{slug}.xml',
+        controller='categories',
+        action='feed')
     map.connect('/categories/{slug}',
         controller='categories',
         action='index',
@@ -84,11 +104,23 @@ def make_map(config):
         action='more',
         requirements={'order': 'latest|popular'})
 
+    # Tags
+    map.connect('/tags',
+        controller='media',
+        action='tags')
+    map.connect('/tags/{tag}',
+        controller='media',
+        action='index')
+
     # Media
     map.connect('/media/{slug}/{action}',
         controller='media',
         action='view')
     map.connect('/files/{id}-{slug}.{container}',
+        controller='media',
+        action='serve',
+        requirements={'id': r'\d+'})
+    map.connect('static_file_url', '/files/{id}.{container}',
         controller='media',
         action='serve',
         requirements={'id': r'\d+'})
@@ -125,27 +157,35 @@ def make_map(config):
         controller='admin/index',
         action='index')
 
-    map.connect('/admin/settings/categories',
+    map.connect('/admin/categories',
         controller='admin/categories',
         action='index')
-    map.connect('/admin/settings/categories/{id}/{action}',
+    map.connect('/admin/categories/{id}/{action}',
         controller='admin/categories',
         action='edit',
         requirements={'id': r'(\d+|new)'})
 
-    map.connect('/admin/settings/tags',
+    map.connect('/admin/tags',
         controller='admin/tags',
         action='index')
-    map.connect('/admin/settings/tags/{id}/{action}',
+    map.connect('/admin/tags/{id}/{action}',
         controller='admin/tags',
         action='edit',
         requirements={'id': r'(\d+|new)'})
 
-    map.connect('/admin/settings/users',
+    map.connect('/admin/users',
         controller='admin/users',
         action='index')
-    map.connect('/admin/settings/users/{id}/{action}',
+    map.connect('/admin/users/{id}/{action}',
         controller='admin/users',
+        action='edit',
+        requirements={'id': r'(\d+|new)'})
+
+    map.connect('/admin/settings/storage',
+        controller='admin/storage',
+        action='index')
+    map.connect('/admin/settings/storage/{id}/{action}',
+        controller='admin/storage',
         action='edit',
         requirements={'id': r'(\d+|new)'})
 
@@ -153,6 +193,10 @@ def make_map(config):
         controller='admin/comments',
         action='save_status',
         requirements={'status': 'approve|trash'})
+
+    map.connect('/admin/media/bulk/{type}',
+        controller='admin/media',
+        action='bulk')
 
     map.connect('/admin/media/merge_stubs',
         controller='admin/media',
@@ -184,6 +228,10 @@ def make_map(config):
 
     map.connect('/api/media/{action}',
         controller='api/media',
+        action='index')
+
+    map.connect('/api/categories/{action}',
+        controller='api/categories',
         action='index')
 
     ##################

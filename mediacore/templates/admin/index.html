@@ -18,8 +18,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:py="http://genshi.edgewall.org/"
       xmlns:xi="http://www.w3.org/2001/XInclude">
-<xi:include href="admin/master.html" />
-<xi:include href="admin/media/_media-table.html" />
+<xi:include href="./master.html" />
+<xi:include href="./media/_media-table.html" />
 <head>
 	<title>Dashboard</title>
 	<link href="${h.url_for('/admin/styles/media.css')}" media="screen" rel="stylesheet" type="text/css" />
@@ -52,26 +52,30 @@
 
 		<div class="box">
 			<h1 class="box-head">Awaiting Review</h1>
-			<xi:include href="media/dash-table.html" py:with="media=review_page.items; id='review-table';" />
+			<xi:include href="./media/dash-table.html" py:with="media=review_page.items; id='review-table';" />
 		</div>
 
 		<div class="box">
 			<h1 class="box-head">Awaiting Encoding</h1>
-			<xi:include href="media/dash-table.html" py:with="media=encode_page.items; id='encode-table';" />
+			<xi:include href="./media/dash-table.html" py:with="media=encode_page.items; id='encode-table';" />
 		</div>
 
 		<div class="box">
 			<h1 class="box-head">Awaiting Publishing</h1>
-			<xi:include href="media/dash-table.html" py:with="media=publish_page.items; id='publish-table';" />
+			<xi:include href="./media/dash-table.html" py:with="media=publish_page.items; id='publish-table';" />
 		</div>
 
 	</div>
 	<div class="column33">
+		<a href="${h.url_for(controller='admin/media', action='new')}" class="btn blue" style="margin-bottom:32px">
+			<span>Add New Media</span>
+		</a>
+
 		<div class="box" py:replace="comment_stats_box(h.url_for(controller='/admin/comments'), query=comments)" />
 
 		<div class="box">
 			<h1 class="box-head">Recently Published</h1>
-			<xi:include href="media/_media-table.html" />
+			<xi:include href="./media/_media-table.html" />
 			${media_table(recent_media, fields=['type', 'title'], include_thead=False, include_pagination=False, id='recently-published-table')}
 		</div>
 
