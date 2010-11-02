@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MediaCore 0.9.0dev\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2010-11-02 19:35+0100\n"
+"POT-Creation-Date: 2010-11-02 22:43+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -196,7 +196,7 @@ msgstr ""
 msgid "Select an encoded video or audio file on your computer"
 msgstr ""
 
-#: mediacore/forms/admin/media.py:99 mediacore/templates/master.html:45
+#: mediacore/forms/admin/media.py:99 mediacore/templates/master.html:46
 #: mediacore/templates/admin/settings/upload.html:23
 #: mediacore/templates/admin/settings/upload.html:29
 msgid "Upload"
@@ -957,7 +957,11 @@ msgstr ""
 msgid "Podcasts"
 msgstr ""
 
-#: mediacore/templates/master.html:48
+#: mediacore/templates/master.html:45
+msgid "Live"
+msgstr ""
+
+#: mediacore/templates/master.html:49
 msgid "Search"
 msgstr ""
 
