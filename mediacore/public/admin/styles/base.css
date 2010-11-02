@@ -736,3 +736,6 @@ input.submitbutton {
 	font-size :14px;
 	margin-top: 1px;
 }
+td[headers="h-btns"] form div {
+    width: 75px;
+}
