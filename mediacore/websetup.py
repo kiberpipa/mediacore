@@ -152,6 +152,12 @@ def add_default_data():
     p.groups.append(g)
     DBSession.add(p)
 
+    p = Permission()
+    p.permission_name = u'edit'
+    p.description = u'Grants access to edit content'
+    p.groups.append(g)
+    DBSession.add(p)
+
     category = Category()
     category.name = u'Featured'
     category.slug = u'featured'
