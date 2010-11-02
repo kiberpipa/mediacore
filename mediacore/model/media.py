@@ -196,6 +196,17 @@ class MediaQuery(Query):
     def encoded(self, flag=True):
         return self.filter(Media.encoded == flag)
 
+    def drafts(self, flag=True):
+        drafts = sql.and_(
+            Media.publishable == False,
+            Media.reviewed == True,
+            Media.encoded == True,
+        )
+        if flag:
+            return self.filter(drafts)
+        else:
+            return self.filter(sql.not_(drafts))
+
     def published(self, flag=True):
         published = sql.and_(
             Media.reviewed == True,
@@ -451,19 +462,6 @@ class Media(object):
         if cats:
             cats = Category.query.filter(Category.id.in_(cats)).all()
         self.categories = cats or []
-
-    @property
-    def status(self):
-        if not self.reviewed:
-            return u'Unreviewed'
-        elif not self.encoded:
-            return u'Unencoded'
-        elif not self.publishable:
-            return u'Draft'
-        elif self.is_published:
-            return u'Published'
-        else:
-            return u'Publishing...'
 
     def update_status(self):
         """Ensure the type (audio/video) and encoded flag are properly set.

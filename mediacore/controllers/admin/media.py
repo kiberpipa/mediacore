@@ -55,7 +55,8 @@ class MediaController(BaseController):
     @expose_xhr('admin/media/index.html', 'admin/media/index-table.html')
     @paginate('media', items_per_page=15)
     @observable(events.Admin.MediaController.index)
-    def index(self, page=1, search=None, podcast_filter=None, **kwargs):
+    def index(self, page=1, search=None, filter=None, podcast=None,
+              category=None, tag=None, **kwargs):
         """List media with pagination and filtering.
 
         :param page: Page number, defaults to 1.
@@ -73,10 +74,8 @@ class MediaController(BaseController):
                 The given search term, if any
             search_form
                 The :class:`~mediacore.forms.admin.SearchForm` instance
-            podcast_filter
-                The given podcast ID to filter by, if any
-            podcast_filter_title
-                The podcast name for rendering if a ``podcast_filter`` was specified.
+            podcast
+                The podcast object for rendering if filtering by podcast.
 
         """
         media = Media.query.options(orm.undefer('comment_count_published'))
@@ -88,18 +87,35 @@ class MediaController(BaseController):
                          .order_by(Media.publish_on.desc(),
                                    Media.modified_on.desc())
 
-        podcast_filter_title = None
-        if podcast_filter:
-            podcast_filter = int(podcast_filter)
-            media = media.filter(Media.podcast.has(Podcast.id == podcast_filter))
-            podcast_filter_title = DBSession.query(Podcast.title).get(podcast_filter)
+        if not filter:
+            pass
+        elif filter == 'unreviewed':
+            media = media.reviewed(False)
+        elif filter == 'unencoded':
+            media = media.reviewed().encoded(False)
+        elif filter == 'drafts':
+            media = media.drafts()
+        elif filter == 'published':
+             media = media.published()
+
+        if category:
+            category = fetch_row(Category, slug=category)
+            media = media.filter(Media.categories.contains(category))
+        if tag:
+            tag = fetch_row(Tag, slug=tag)
+            media = media.filter(Media.tags.contains(tag))
+        if podcast:
+            podcast = fetch_row(Podcast, slug=podcast)
+            media = media.filter(Media.podcast == podcast)
 
         return dict(
             media = media,
-            podcast_filter = podcast_filter,
-            podcast_filter_title = podcast_filter_title,
             search = search,
             search_form = search_form,
+            media_filter = filter,
+            category = category,
+            tag = tag,
+            podcast = podcast,
         )
 
 
@@ -613,8 +629,7 @@ class MediaController(BaseController):
         """Perform bulk operations on media items
 
         :param type: The type of bulk action to perform (delete)
-        :param ids: A string of IDs separated by commas.
-        :type ids: ``unicode``
+        :param ids: A list of IDs.
 
         """
         if not ids:
