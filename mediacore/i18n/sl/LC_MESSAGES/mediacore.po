@@ -146,7 +146,7 @@ msgstr "ALI:"
 #: mediacore/forms/admin/__init__.py:24
 #, fuzzy
 msgid "SEARCH..."
-msgstr "Išči"
+msgstr "Išči..."
 
 #: mediacore/forms/admin/__init__.py:40
 #, fuzzy
@@ -272,11 +272,11 @@ msgstr ""
 
 #: mediacore/forms/admin/settings.py:48
 msgid "Yes"
-msgstr ""
+msgstr "Da"
 
 #: mediacore/forms/admin/settings.py:48
 msgid "No"
-msgstr ""
+msgstr "Ne"
 
 #: mediacore/forms/admin/settings.py:205
 msgid "Live stream page:"
@@ -701,7 +701,7 @@ msgstr "Razišči"
 
 #: mediacore/templates/nav.html:25 mediacore/templates/media/index.html:24
 msgid "Media Library"
-msgstr "Media Library"
+msgstr "Arhiv posnetkov"
 
 #: mediacore/templates/nav.html:26 mediacore/templates/admin/master.html:51
 #: mediacore/templates/admin/podcasts/index.html:24
