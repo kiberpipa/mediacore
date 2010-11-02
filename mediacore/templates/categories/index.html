@@ -17,15 +17,22 @@
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
       xmlns:i18n="http://genshi.edgewall.org/i18n"
-      xmlns:xi="http://www.w3.org/2001/XInclude">
-<xi:include href="../categories/layout.html" />
+      py:with="in_text = c.category and ('in ' + c.category.name) or ''">
+<xi:include href="./layout.html" />
 <xi:include href="../master.html" />
 <head>
 	<title>${c.category and c.category.name + ' | ' or ''}Categories</title>
 	<link href="${h.url_for('/styles/categories.css')}" media="screen" rel="stylesheet" type="text/css" />
+	<link py:if="not c.category"
+	      rel="alternate" type="application/rss+xml" title="Latest"
+	      href="${h.url_for(controller='/sitemaps', action='latest')}" />
+	<link py:if="c.category"
+	      rel="alternate" type="application/rss+xml" title="Latest ${in_text}"
+	      href="${h.url_for(controller='/categories', action='feed', slug=c.category.name)}" />
 </head>
-<body py:if="featured or popular or latest" py:with="in_text = c.category and ('in ' + c.category.name) or ''">
+<body>
 	<h2><span class="uppercase">Featured</span> ${in_text}</h2>
 	<div id="category-feature" class="feat-box">
 		<div class="feat-top" />
@@ -34,21 +41,23 @@
 				<h3><a class="underline-hover nocolor" href="${h.url_for(controller='/media', action='view', slug=featured.slug)}">${featured.title}</a></h3>
 				<p py:replace="Markup(h.truncate_xhtml(featured.description, 300))" />
 			</div>
-			${media_player(featured, width=400, height=225)}
+			${h.media_player(featured, width=400, height=225)}
 			<div class="feat-meta">
-				<span class="meta meta-comments" title="Comments">${featured.comment_count_published}
-                    <i18n:choose numeral="featured.comment_count_published">
-                      <span i18n:singular="">Comment</span>
-                      <span i18n:plural="">Comments</span>
-                    </i18n:choose>
-                </span>
+				<span class="meta meta-comments" title="Comments">
+					${featured.comment_count_published}
+					<i18n:choose numeral="featured.comment_count_published">
+						<span i18n:singular="">Comment</span>
+						<span i18n:plural="">Comments</span>
+					</i18n:choose>
+				</span>
 				<a class="meta meta-likes" href="${h.url_for(controller='/media', action='rate', slug=featured.slug)}" id="likethis" title="Vote up">${featured.likes} <strong>Like this!</strong></a>
-				<span class="meta meta-views" title="Views">${featured.views}
-                    <i18n:choose numeral="featured.views">
-                      <span i18n:singular="">View</span>
-                      <span i18n:plural="">Views</span>
-                    </i18n:choose>
-                </span>
+				<span class="meta meta-views" title="Views">
+					${featured.views}
+					<i18n:choose numeral="featured.views">
+						<span i18n:singular="">View</span>
+						<span i18n:plural="">Views</span>
+					</i18n:choose>
+				</span>
 			</div>
 		</div>
 		<div class="feat-bottom" />

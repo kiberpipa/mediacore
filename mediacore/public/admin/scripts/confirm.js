@@ -29,13 +29,14 @@ var ConfirmMgr = new Class({
 	Implements: [Options, Events],
 
 	options:{
-		cancelButtonText: 'no',
-		confirmButtonText: 'yes',
-		confirmButtonClass: 'btn submitbutton btn-yes f-rgt',
-		cancelButtonClass: 'btn submitbutton btn-no f-rgt',
+		cancelButtonText: 'No',
+		confirmButtonText: 'Yes',
+		confirmButtonClass: 'btn red f-rgt',
+		cancelButtonClass: 'btn f-rgt',
 		header: 'Confirm',
 		msg: 'Are you sure?',
-		overlayOpacity: 0.4
+		overlayOpacity: 0.4,
+		focus: 'confirm'
 		//onConfirm: $empty (e.target)
 	},
 
@@ -44,8 +45,12 @@ var ConfirmMgr = new Class({
 	},
 
 	openConfirmDialog: function(e){
-		e = new Event(e).stop();
-		var target = $(e.target);
+		if ($type(e) == 'event') {
+			e = new Event(e).stop();
+			var target = $(e.target);
+		} else {
+			var target = e;
+		}
 
 		// Set up the dialog box
 		var header = $type(this.options.header) == 'function' ? this.options.header(target) :this.options.header;
@@ -55,8 +60,8 @@ var ConfirmMgr = new Class({
 		var head = new Element('h1', {'class': 'box-head', html: header}).inject(box);
 		var text = new Element('p', {'class': 'box-content', html: msg}).inject(box);
 		var buttons = new Element('div', {'class': 'box-foot'}).inject(box);
-		var confirmButton = new Element('button', {'class': this.options.confirmButtonClass, html: this.options.confirmButtonText}).inject(buttons);
-		var cancelButton = new Element('button', {'class': this.options.cancelButtonClass, html: this.options.cancelButtonText}).inject(buttons);
+		var confirmButton = new Element('button', {'class': this.options.confirmButtonClass, html: '<span>' + this.options.confirmButtonText + '</span>'}).inject(buttons);
+		var cancelButton = new Element('button', {'class': this.options.cancelButtonClass, html: '<span>' + this.options.cancelButtonText + '</span>'}).inject(buttons);
 
 		cancelButton.addEvent('click', this.cancel.pass(target, this));
 		confirmButton.addEvent('click', this.confirm.pass(target, this));
@@ -70,8 +75,15 @@ var ConfirmMgr = new Class({
 				//        Content is displayed by SqueezeBox.applyContent w/ a timer,
 				//        so we do our best to match that delay and hope that the user
 				//        isn't super quick at hitting enter.
-				confirmButton.focus.delay(SqueezeBox.presets.overlayFx.duration || 250, confirmButton);
-			}
+				switch (this.options.focus) {
+					case 'cancel':
+						cancelButton.focus.delay(SqueezeBox.presets.overlayFx.duration || 250, cancelButton);
+						break;
+					case 'confirm':
+						confirmButton.focus.delay(SqueezeBox.presets.overlayFx.duration || 250, confirmButton);
+						break;
+				}
+			}.bind(this)
 		});
 	},
 
@@ -92,7 +104,12 @@ var DeleteConfirmMgr = new Class({
 
 	options: {
 		header: 'Confirm Delete',
-		msg: 'Are you sure you want to delete this?'
+		msg: 'Are you sure you want to delete this?',
+		confirmButtonText: 'Delete',
+		confirmButtonClass: 'btn red f-rgt',
+		cancelButtonText: 'Cancel',
+		cancelButtonClass: 'btn f-rgt',
+		focus: 'cancel'
 	},
 
 	initialize: function(opts){

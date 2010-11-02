@@ -22,6 +22,12 @@
 <xi:include href="../master.html" />
 <head>
 	<title>Explore</title>
+	<link rel="alternate" type="application/rss+xml" title="Sitemap XML"
+	      href="${h.url_for(controller='/sitemaps', action='google')}" />
+	<link rel="alternate" type="application/rss+xml" title="Sitemap RSS"
+	      href="${h.url_for(controller='/sitemaps', action='mrss')}" />
+	<link rel="alternate" type="application/rss+xml" title="Latest RSS"
+	      href="${h.url_for(controller='/sitemaps', action='latest')}" />
 </head>
 <body class="nav-explore-on">
 	<div class="mediacore-content">
@@ -31,17 +37,19 @@
 			<div class="feat-box">
 				<div class="feat-top" />
 				<div class="feat-content clearfix">
-					${media_player(featured, width=410, height=230)}
+					${h.media_player(featured, width=410, height=230)}
 					<h3><a class="underline-hover nocolor" href="${h.url_for(controller='/media', action='view', slug=featured.slug)}">${featured.title}</a></h3>
 					<div class="feat-meta">
-						<span class="meta meta-comments" title="Comments">${featured.comment_count_published}
+						<span class="meta meta-comments" title="Comments">
+							${featured.comment_count_published}
 							<i18n:choose numeral="featured.comment_count_published">
 								<span i18n:singular="">Comment</span>
 								<span i18n:plural="">Comments</span>
 							</i18n:choose>
 						</span>
 						<a class="meta meta-likes" href="${h.url_for(controller='/media', action='rate', slug=featured.slug)}" id="likethis" title="Vote up">${featured.likes} <strong>Like this!</strong></a>
-						<span class="meta meta-views" title="Views">${featured.views}
+						<span class="meta meta-views" title="Views">
+							${featured.views}
 							<i18n:choose numeral="featured.views">
 								<span i18n:singular="">View</span>
 								<span i18n:plural="">Views</span>

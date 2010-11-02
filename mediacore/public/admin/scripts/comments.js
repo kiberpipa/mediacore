@@ -34,31 +34,6 @@ var CommentMgr = new Class({
 	initialize: function(bulkApproveAction, bulkDeleteAction, opts) {
 		this.setOptions(opts);
 		this.processRows($(this.options.table).getElements('tbody > tr'));
-
-		var publishBtn = new Element('a', {href: '#', 'class': this.options.bulkPublishBtnClass})
-			.grab(new Element('span', {html: 'Publish'}));
-		var publishConfirmMgr = new ConfirmMgr({
-			onConfirm: this._bulkSubmit.pass([bulkApproveAction, 'Unable to publish the selected comments'], this),
-			header: 'Confirm Publish',
-			msg: 'Are you sure you want to publish these comments?'
-		});
-		publishBtn.addEvent('click', publishConfirmMgr.openConfirmDialog.bind(publishConfirmMgr));
-
-		var deleteBtn = new Element('a', {href: '#', 'class': this.options.bulkDeleteBtnClass})
-			.grab(new Element('span', {html: 'Delete'}));
-		var deleteConfirmMgr = new ConfirmMgr({
-			onConfirm: this._bulkSubmit.pass([bulkDeleteAction, 'Unable to delete the selected comments'], this),
-			header: 'Confirm Delete',
-			msg: 'Are you sure you want to delete these comments?'
-		});
-		deleteBtn.addEvent('click', deleteConfirmMgr.openConfirmDialog.bind(deleteConfirmMgr));
-
-		var trs = $(this.options.table).getElement('tbody').getElements('tr');
-		if(trs.length != 1 || trs[0].getElements('td').length != 1) {
-			/* Only show if there are comments -- not if there is the single row with a single cell 'None Found' */
-			var h1 = $(this.options.table).getPrevious().getElement('h1');
-			this.bulkMgr = new BulkMgr(h1, $(this.options.table), [publishBtn, deleteBtn]);
-		}
 	},
 
 	processRows: function(rows) {
@@ -80,123 +55,6 @@ var CommentMgr = new Class({
 		});
 	}
 
-});
-
-var BulkMgr = new Class({
-	Implements: Options,
-
-	options:{
-		bulkDivClass: 'bulk-div f-lft',
-		bulkBtnClass: 'bulk-btn btn',
-		selectDivClass: 'select-div f-rgt',
-		selectAllClass: 'select-all',
-		selectNoneClass: 'select-none',
-		dividerClass: 'select-divider',
-		userActionDivClass: 'bulk-user-action-div f-rgt',
-		selectCol: 0,
-		checkedColClass: 'checkbox-col'
-	},
-
-	slidingDiv: null,
-	slidingDivWidth: null,
-	bulkBtn: null,
-	bulkActionDiv: null,
-	actionsVisible: true,
-	table: null,
-
-	initialize: function(h1, table, actions, opts) {
-
-		this.table = table;
-
-		var bulkDiv = new Element('div', {'class': this.options.bulkDivClass});
-		bulkDiv.inject(h1.getParent(), 'after');
-		bulkDiv.setStyle('position', 'relative');
-
-		// build bulk button
-		this.bulkBtn = new Element('a', {href: '#', 'class': this.options.bulkBtnClass})
-			.addEvent('click', this._toggleBulk.bind(this));
-		this.bulkBtn.grab(new Element('span', {html: 'Bulk mode'}));
-		this.bulkBtn.set('styles', {
-			'position': 'absolute',
-			'top': '0',
-			'left': '0',
-			'z-index': '1'
-		});
-
-		// build div to hold actions
-		var selectAll = new Element('a', {href: '#', html: 'Select All', 'class': this.options.selectAllClass})
-			.addEvent('click', this._select.pass(true, this));
-		var divider = new Element('span', {html: '|', 'class': this.options.dividerClass});
-		var selectNone = new Element('a', {href: '#', html: 'Select None', 'class': this.options.selectNoneClass})
-			.addEvent('click', this._select.pass(false,this));
-		this.selectDiv = new Element('div', {'class': this.options.selectDivClass});
-		this.selectDiv.adopt(selectAll, divider, selectNone);
-
-		var userActionDiv = new Element('div', {'class': this.options.userActionDivClass});
-		for(var i=0; i < actions.length; i++){
-			userActionDiv.grab(actions[i]);
-		}
-
-		this.slidingDiv = new Element('div', {'class': 'sliding-div'});
-		this.slidingDiv.set('styles', {
-			'overflow': 'hidden',
-			'position': 'absolute',
-			'top': '0',
-			'left': '50px',
-			'z-index': '0'
-		});
-		this.slidingDiv.adopt(userActionDiv, this.selectDiv);
-		bulkDiv.adopt(this.bulkBtn, this.slidingDiv);
-
-		this.slidingDivWidth = this.slidingDiv.offsetWidth + 10;
-		this.slidingDiv.setStyle('width', '0');
-
-		this.table.getElement('tbody').getElements('tr').each(function(row){
-			var checkTd = new Element('td', {'class': this.options.checkedColClass})
-				.setStyle('display', 'none');
-			var selectCol = row.getChildren()[this.options.selectCol];
-			checkTd.inject(selectCol, 'after');
-			checkTd.grab(new Element('input', {'type': 'checkbox', 'value': '?', 'checked': false}));
-		}.bind(this));
-
-		this._toggleBulk();
-	},
-
-	_toggleBulk: function() {
-		var hideCol = this.options.selectCol;
-		var showCol = this.options.selectCol;
-
-		if(this.actionsVisible) {
-			// hide actions
-			this.bulkBtn.removeClass('invert-btn');
-			this.bulkBtn.addClass('btn');
-			this.slidingDiv.get('tween').start('width', this.slidingDiv.offsetWidth, '0');
-			hideCol++;
-		} else {
-			// show actions
-			this.bulkBtn.removeClass('btn');
-			this.bulkBtn.addClass('invert-btn');
-			this.slidingDiv.get('tween').start('width', this.slidingDiv.offsetWidth, this.slidingDivWidth);
-			showCol++;
-		}
-
-		this.table.getElement('tbody').getElements('tr').each(function(row){
-			row.getChildren()[hideCol].setStyle('display', 'none');
-			row.getChildren()[showCol].setStyle('display', '');
-		}.bind(this));
-
-		this.actionsVisible = !this.actionsVisible;
-	},
-
-	_select: function(toCheck){
-		$$('td.'+this.options.checkedColClass+' > input[type=checkbox]').set('checked', toCheck);
-	},
-
-	getSelectedRows: function() {
-		return $$('td.'+this.options.checkedColClass+' > input[type=checkbox]:checked').map(function(input){
-			return input.getParent('tr');
-		});
-	}
 });
 
 var Comment = new Class({
@@ -230,7 +88,7 @@ var Comment = new Class({
 		this.editLink = new Element('span', {'class': 'edit-text clickable', text: 'Edit Text'})
 			.addEvent('click', this.toggleForm.bind(this));
 		var span = td.getElement('div.comment-submitted').appendText(' | ').grab(this.editLink);
-		var cancelButton = this.form.getElement('input.btn-cancel');
+		var cancelButton = this.form.getElement('button.btn-cancel');
 		cancelButton.addEvent('click', this.toggleForm.bind(this));
 
 		this.form.addEvent('submit', this.saveEditForm.bind(this));
@@ -238,12 +96,19 @@ var Comment = new Class({
 	},
 
 	requestConfirmPublish: function(){
-		var confirmMgr = new ConfirmMgr({
+/*		var confirmMgr = new ConfirmMgr({
 			onConfirm: this.doConfirm.pass([this.publishLink.href, this.updatePublished.bind(this)], this),
 			header: 'Confirm Publish',
+			confirmButtonText: 'Publish',
+			confirmButtonClass: 'btn green f-rgt',
+			cancelButtonText: 'Cancel',
 			msg: 'Are you sure you want to publish <strong>' + this.getAuthor() + '</strong>&#8217;s comment?'
 		});
-		this.publishLink.addEvent('click', confirmMgr.openConfirmDialog.bind(confirmMgr));
+		this.publishLink.addEvent('click', confirmMgr.openConfirmDialog.bind(confirmMgr));*/
+		this.publishLink.addEvent('click', function(e){
+			e = new Event(e).stop();
+			this.doConfirm(this.publishLink.href, this.updatePublished.bind(this));
+		}.bind(this));
 		return this;
 	},
 
@@ -251,6 +116,9 @@ var Comment = new Class({
 		var confirmMgr = new ConfirmMgr({
 			onConfirm: this.doConfirm.pass([this.deleteLink.href, this.updateDeleted.bind(this)], this),
 			header: 'Confirm Delete',
+			confirmButtonText: 'Delete',
+			cancelButtonText: 'Cancel',
+			focus: 'cancel',
 			msg: 'Are you sure you want to delete <strong>' + this.getAuthor() + '</strong>&#8217;s comment?'
 		});
 		this.deleteLink.addEvent('click', confirmMgr.openConfirmDialog.bind(confirmMgr));
@@ -265,7 +133,7 @@ var Comment = new Class({
 	updatePublished: function(){
 		this.row.removeClass('tr-white').addClass('tr-gray');
 		var unpublished = this.row.getElement('a.btn-inline-approve');
-		var published = new Element('span', {'class': 'btn unclickable btn-inline-approved f-lft', text: 'published'});
+		var published = new Element('span', {'class': 'btn table-row published unclickable btn-inline-approved f-lft', html: '<span>published</span>'});
 		published.replaces(unpublished);
 		return this;
 	},

@@ -17,24 +17,29 @@ from pylons import request, response, session, tmpl_context
 from repoze.what.predicates import has_permission
 from sqlalchemy import orm, sql
 
-from mediacore.lib.base import BaseController
-from mediacore.lib.decorators import expose, expose_xhr, paginate, validate
-from mediacore.lib.helpers import redirect, url_for
-from mediacore.model import Category, fetch_row, get_available_slug
-from mediacore.model.meta import DBSession
-
 from mediacore.forms.admin.categories import CategoryForm, CategoryRowForm
+from mediacore.forms.admin.tags import TagForm, TagRowForm
+from mediacore.lib.base import BaseController
+from mediacore.lib.decorators import expose, expose_xhr, observable, paginate, validate
+from mediacore.lib.helpers import redirect, url_for
+from mediacore.model import Category, Tag, fetch_row, get_available_slug
+from mediacore.model.meta import DBSession
+from mediacore.plugin import events
 
 import logging
 log = logging.getLogger(__name__)
 
 category_form = CategoryForm()
 category_row_form = CategoryRowForm()
+tag_form = TagForm()
+tag_row_form = TagRowForm()
 
 class CategoriesController(BaseController):
-    allow_only = has_permission('admin')
+    allow_only = has_permission('edit')
 
     @expose('admin/categories/index.html')
+    @paginate('tags', items_per_page=25)
+    @observable(events.Admin.CategoriesController.index)
     def index(self, **kwargs):
         """List categories.
 
@@ -52,13 +57,21 @@ class CategoriesController(BaseController):
             .options(orm.undefer('media_count'))\
             .populated_tree()
 
+        tags = DBSession.query(Tag)\
+            .options(orm.undefer('media_count'))\
+            .order_by(Tag.name)
+
         return dict(
             categories = categories,
             category_form = category_form,
             category_row_form = category_row_form,
+            tags = tags,
+            tag_form = tag_form,
+            tag_row_form = tag_row_form,
         )
 
     @expose('admin/categories/edit.html')
+    @observable(events.Admin.CategoriesController.edit)
     def edit(self, id, **kwargs):
         """Edit a single category.
 
@@ -82,6 +95,7 @@ class CategoriesController(BaseController):
 
     @expose('json')
     @validate(category_form)
+    @observable(events.Admin.CategoriesController.save)
     def save(self, id, delete=None, **kwargs):
         """Save changes or create a category.
 

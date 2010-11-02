@@ -33,6 +33,8 @@ sa_auth.cookie_secret = superdupersecret
 
 # Specify an optional prefix for table names.
 # Use this if you want to put mediacore in the same database as another app.
+# XXX: If you use this setting and you want to enable search, you'll have
+#      to manually edit setup_triggers.sql to include this prefix.
 # e.g. if you want your tables to be named like 'mcore_media', you should set:
 # db_table_prefix = mcore
 
@@ -51,9 +53,13 @@ file_serve_method = default
 
 # Data paths
 cache_dir = %(here)s/data
-image_dir = %(here)s/mediacore/public/images
+image_dir = %(here)s/data/images
 media_dir = %(here)s/data/media
-deleted_files_dir = %(here)s/data/deleted
+
+# Files can be moved to a trash-like folder instead of being deleted
+# permanently from the filesystem. Uncomment the line below to enable this:
+#deleted_files_dir = %(here)s/data/deleted
+
 # If you'd like to fine-tune the individual locations of the cache data dirs
 # for the Cache data, or the Session saves, un-comment the desired settings
 # here:
@@ -91,7 +97,7 @@ beaker.session.key = mediacore
 keys = root, routes, mediacore, sqlalchemy, auth
 
 [handlers]
-keys = console
+keys = console, wsgierrors, logfile
 
 [formatters]
 keys = generic
@@ -120,7 +126,6 @@ qualname = sqlalchemy.engine
 # "level = DEBUG" logs SQL queries and results.
 # "level = WARN" logs neither.  (Recommended for production systems.)
 
-
 # A logger for authentication, identification and authorization -- this is
 # repoze.who and repoze.what:
 [logger_auth]
@@ -132,6 +137,20 @@ qualname = auth
 [handler_console]
 class = StreamHandler
 args = (sys.stderr,)
+level = NOTSET
+formatter = generic
+
+[handler_wsgierrors]
+# Handler for logging to the WSGI error handler (eg. apache's error log)
+class = pylons.log.WSGIErrorsHandler
+args = ()
+level = NOTSET
+format = generic
+
+[handler_logfile]
+# Handler for logging to a dedicated logfile
+class = FileHandler
+args = ('/path/to/mediacore_install/data/deployment.log','a')
 level = NOTSET
 formatter = generic
 

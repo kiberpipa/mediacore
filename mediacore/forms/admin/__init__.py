@@ -13,20 +13,28 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from pylons.i18n import _
+from pylons.i18n import N_ as _
 from tw.forms.validators import FieldStorageUploadConverter
 
-from mediacore.forms import FileField, Form, ListForm, TextField
+from mediacore.forms import FileField, Form, ListForm, SubmitButton, TextField
+from mediacore.plugin import events
 
 
 class SearchForm(ListForm):
+    template = 'admin/search-form.html'
+    id = 'nav-search'
     method = 'get'
-    fields = [TextField('search', label_text=_('SEARCH...'))]
+    fields = [
+        TextField('search', label_text=_('SEARCH...')),
+        SubmitButton('go', default='Go', css_classes=['clickable nav-search-btn']),
+    ]
     submit_text = None
 
+    def post_init(self, *args, **kwargs):
+        events.Admin.SearchForm(self)
 
 class ThumbForm(ListForm):
-    template = 'mediacore.templates.admin.thumb-form'
+    template = 'admin/thumb-form.html'
     id = 'thumb-form'
     css_class = 'form'
     submit_text = None
@@ -45,3 +53,5 @@ class ThumbForm(ListForm):
 #        SubmitButton('save', default='Save', css_classes=['btn', 'btn-save', 'f-rgt']),
     ]
 
+    def post_init(self, *args, **kwargs):
+        events.Admin.ThumbForm(self)

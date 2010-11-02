@@ -13,25 +13,37 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import logging
 import os
+import warnings
+import simplejson
 
 import formencode
 import tw.forms
 import webob.exc
 
-from genshi import XML
-from pylons import config, request, response, tmpl_context
-from pylons.templating import render_genshi as render
-from pylons.decorators import jsonify
+from decorator import decorator
+from paste.deploy.converters import asbool
+from pylons import app_globals, config, request, response, tmpl_context
+from pylons.decorators.cache import create_cache_key, _make_dict_from_args
+from pylons.decorators.util import get_pylons
 
 from mediacore.lib.paginate import paginate
+from mediacore.lib.templating import render
 
-__all__ = ['expose', 'expose_xhr', 'paginate', 'validate']
+log = logging.getLogger(__name__)
+
+__all__ = ['expose', 'expose_xhr', 'paginate', 'validate', 'beaker_cache']
+
+# TODO: Rework all decorators to use the decorators module. By using it,
+#       the function signature of the original action method is preserved,
+#       allowing pylons.controllers.core.WSGIController._inspect_call to
+#       do its job properly.
 
 _func_attrs = [
     # Attributes that define useful information or context for functions
     '__dict__', '__doc__', '__name__', 'im_class', 'im_func', 'im_self',
-    'template', 'exposed' # custom attribute to allow web access
+    'exposed', # custom attribute to allow web access
 ]
 
 def _copy_func_attrs(f1, f2):
@@ -56,32 +68,26 @@ def _expose_wrapper(f, template):
     """Returns a function that will render the passed in function according
     to the passed in template"""
     f.exposed = True
-    f.template = template
 
-    if template == "json":
-        return jsonify(f)
-    elif template == "string":
+    if template == 'string':
         return f
 
     def wrapped_f(*args, **kwargs):
         result = f(*args, **kwargs)
+        tmpl = template
 
-        extra_vars = {
-            # Steal a page from TurboGears' book:
-            # include the genshi XML helper for convenience in templates.
-            'XML': XML
-        }
-        extra_vars.update(result)
+        if hasattr(request, 'override_template'):
+            tmpl = request.override_template
 
-        # If the provided template path isn't absolute (ie, doesn't start with
-        # a '/'), then prepend the default search path. By providing the
-        # template path to genshi as an absolute path, we invoke different
-        # rules for the resolution of 'xi:include' paths in the template.
-        # See http://genshi.edgewall.org/browser/trunk/genshi/template/loader.py#L178
-        if not template.startswith('/'):
-            tmpl = os.path.join(config['genshi_search_path'], template)
-        else:
-            tmpl = template
+        if tmpl == 'json':
+            if isinstance(result, (list, tuple)):
+                msg = ("JSON responses with Array envelopes are susceptible "
+                       "to cross-site data leak attacks, see "
+                       "http://wiki.pylonshq.com/display/pylonsfaq/Warnings")
+                warnings.warn(msg, Warning, 2)
+                log.warning(msg)
+            response.headers['Content-Type'] = 'application/json'
+            return simplejson.dumps(result)
 
         if request.environ.get('paste.testing', False):
             # Make the vars passed from action to template accessible to tests
@@ -96,7 +102,7 @@ def _expose_wrapper(f, template):
             if response.content_type == 'text/html':
                 response.content_type = 'application/xhtml+xml'
 
-        return render(tmpl, extra_vars=extra_vars)
+        return render(tmpl, tmpl_vars=result, method='auto')
     return wrapped_f
 
 def expose(template='string'):
@@ -233,6 +239,7 @@ class validate(object):
             if len(field_value) == 1:
                 tmpl_context.form_errors['_the_form'] = field_value[0].strip()
                 continue
+            # XXX: This doesn't support nested form fields
             tmpl_context.form_errors[field_value[0]] = field_value[1].strip()
 
         # Set up the tmpl_context.form_values dict with the invalid values
@@ -345,3 +352,158 @@ class validate_xhr(validate):
             return {'success': False, 'errors': tmpl_context.form_errors}
         else:
             return super(validate_xhr, self)._call_error_handler(args, kwargs)
+
+def beaker_cache(key="cache_default", expire="never", type=None,
+                 query_args=False,
+                 cache_headers=('content-type', 'content-length'),
+                 invalidate_on_startup=False,
+                 cache_response=True, **b_kwargs):
+    """Cache decorator utilizing Beaker. Caches action or other
+    function that returns a pickle-able object as a result.
+
+    Optional arguments:
+
+    ``key``
+        None - No variable key, uses function name as key
+        "cache_default" - Uses all function arguments as the key
+        string - Use kwargs[key] as key
+        list - Use [kwargs[k] for k in list] as key
+    ``expire``
+        Time in seconds before cache expires, or the string "never".
+        Defaults to "never"
+    ``type``
+        Type of cache to use: dbm, memory, file, memcached, or None for
+        Beaker's default
+    ``query_args``
+        Uses the query arguments as the key, defaults to False
+    ``cache_headers``
+        A tuple of header names indicating response headers that
+        will also be cached.
+    ``invalidate_on_startup``
+        If True, the cache will be invalidated each time the application
+        starts or is restarted.
+    ``cache_response``
+        Determines whether the response at the time beaker_cache is used
+        should be cached or not, defaults to True.
+
+        .. note::
+            When cache_response is set to False, the cache_headers
+            argument is ignored as none of the response is cached.
+
+    If cache_enabled is set to False in the .ini file, then cache is
+    disabled globally.
+
+    """
+    if invalidate_on_startup:
+        starttime = time.time()
+    else:
+        starttime = None
+    cache_headers = set(cache_headers)
+
+    def wrapper(func, *args, **kwargs):
+        """Decorator wrapper"""
+        pylons = get_pylons(args)
+        log.debug("Wrapped with key: %s, expire: %s, type: %s, query_args: %s",
+                  key, expire, type, query_args)
+        enabled = pylons.config.get("cache_enabled", "True")
+        if not asbool(enabled):
+            log.debug("Caching disabled, skipping cache lookup")
+            return func(*args, **kwargs)
+
+        if key:
+            key_dict = kwargs.copy()
+            key_dict.update(_make_dict_from_args(func, args))
+
+            ## FIXME: if we can stop there variables from being passed to the controller
+            # action then we can use the stock beaker_cache.
+            # Remove some system variables that can cause issues while generating cache keys
+            [key_dict.pop(x, None) for x in ("pylons", "start_response", "environ")]
+
+            if query_args:
+                key_dict.update(pylons.request.GET.mixed())
+
+            if key != "cache_default":
+                if isinstance(key, list):
+                    key_dict = dict((k, key_dict[k]) for k in key)
+                else:
+                    key_dict = {key: key_dict[key]}
+        else:
+            key_dict = None
+
+        self = None
+        if args:
+            self = args[0]
+        namespace, cache_key = create_cache_key(func, key_dict, self)
+
+        if type:
+            b_kwargs['type'] = type
+
+        cache_obj = getattr(pylons.app_globals, 'cache', None)
+        if not cache_obj:
+            cache_obj = getattr(pylons, 'cache', None)
+        if not cache_obj:
+            raise Exception('No cache object found')
+        my_cache = cache_obj.get_cache(namespace, **b_kwargs)
+
+        if expire == "never":
+            cache_expire = None
+        else:
+            cache_expire = expire
+
+        def create_func():
+            log.debug("Creating new cache copy with key: %s, type: %s",
+                      cache_key, type)
+            result = func(*args, **kwargs)
+            glob_response = pylons.response
+            headers = glob_response.headerlist
+            status = glob_response.status
+            full_response = dict(headers=headers, status=status,
+                                 cookies=None, content=result)
+            return full_response
+
+        response = my_cache.get_value(cache_key, createfunc=create_func,
+                                      expiretime=cache_expire,
+                                      starttime=starttime)
+        if cache_response:
+            glob_response = pylons.response
+            glob_response.headerlist = [header for header in response['headers']
+                                        if header[0].lower() in cache_headers]
+            glob_response.status = response['status']
+
+        return response['content']
+    return decorator(wrapper)
+
+def observable(event):
+    """Filter the result of the decorated action through the events observers.
+
+    :param event: An instance of :class:`mediacore.plugin.events.Event`
+        whose observers are called.
+    :returns: A decorator function.
+    """
+    def wrapper(func, *args, **kwargs):
+        result = func(*args, **kwargs)
+        for observer in event.observers:
+            result = observer(**result)
+        return result
+    return decorator(wrapper)
+
+def _memoize(func, *args, **kwargs):
+    if kwargs: # frozenset is used to ensure hashability
+        key = args, frozenset(kwargs.iteritems())
+    else:
+        key = args
+    cache = func.cache # attributed added by memoize
+    if key in cache:
+        return cache[key]
+    else:
+        cache[key] = result = func(*args, **kwargs)
+        return result
+
+def memoize(func):
+    """Decorate this function so cached results are returned indefinitely.
+
+    Copied from docs for the decorator module by Michele Simionato:
+    http://micheles.googlecode.com/hg/decorator/documentation.html#the-solution
+    """
+    func.cache = {}
+    return decorator(_memoize, func)

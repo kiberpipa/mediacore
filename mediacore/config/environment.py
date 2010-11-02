@@ -18,7 +18,6 @@ import re
 from gettext import GNUTranslations
 
 from genshi.filters.i18n import Translator
-from genshi.template import TemplateLoader
 from pylons.configuration import PylonsConfig
 from pylons.i18n.translation import ugettext, ungettext
 from sqlalchemy import engine_from_config
@@ -28,13 +27,13 @@ import mediacore.lib.helpers
 
 from mediacore.config.routing import make_map
 from mediacore.lib.auth import classifier_for_flash_uploads
+from mediacore.lib.templating import TemplateLoader
 from mediacore.model import Media, Podcast, init_model
 from mediacore.model.meta import DBSession
+from mediacore.plugin import PluginManager, events
 
 def load_environment(global_conf, app_conf):
-    """Configure the Pylons environment via the ``pylons.config``
-    object
-    """
+    """Configure the Pylons environment via the ``pylons.config`` object"""
     config = PylonsConfig()
 
     # Pylons paths
@@ -47,8 +46,15 @@ def load_environment(global_conf, app_conf):
     # Initialize config with the basic options
     config.init_app(global_conf, app_conf, package='mediacore', paths=paths)
 
-    config['routes.map'] = make_map(config)
+    # Initialize the plugin manager to load all active plugins
+    plugin_mgr = PluginManager(config)
+
+    mapper = make_map(config, plugin_mgr.controller_scan)
+    events.Environment.routes(mapper)
+    config['routes.map'] = mapper
     config['pylons.app_globals'] = app_globals.Globals(config)
+    config['pylons.app_globals'].plugin_mgr = plugin_mgr
+    config['pylons.app_globals'].events = events
     config['pylons.h'] = mediacore.lib.helpers
 
     # Setup cache object as early as possible
@@ -66,26 +72,26 @@ def load_environment(global_conf, app_conf):
 
     # Create the Genshi TemplateLoader
     config['pylons.app_globals'].genshi_loader = TemplateLoader(
-        search_path=paths['templates'],
+        search_path=paths['templates'] + plugin_mgr.template_loaders(),
         auto_reload=True,
+        max_cache_size=100,
         callback=enable_i18n_for_template,
     )
 
     # Setup the SQLAlchemy database engine
     engine = engine_from_config(config, 'sqlalchemy.')
     init_model(engine, config.get('db_table_prefix', None))
+    events.Environment.init_model()
 
     # CONFIGURATION OPTIONS HERE (note: all config options will override
-    # any Pylons config options)
+    #                                   any Pylons config options)
+
     # TODO: Move as many of these custom options into an .ini file, or at least
-    # to somewhere more friendly.
+    #       to somewhere more friendly.
 
-    # TODO: rework templates not to rely on this line:
-    # See docstring in pylons.configuration.PylonsConfig for details.
+    # TODO: Rework templates not to rely on this line:
+    #       See docstring in pylons.configuration.PylonsConfig for details.
     config['pylons.strict_tmpl_context'] = False
-
-    # Genshi Default Search Path
-    config['genshi_search_path'] = paths['templates'][0]
 
     config['thumb_sizes'] = { # the dimensions (in pixels) to scale thumbnails
         Media._thumb_dir: {
@@ -100,9 +106,8 @@ def load_environment(global_conf, app_conf):
         },
     }
 
-    # The max number of results to return for any api listing
-    config['api_media_max_results'] = 50
-
     # END CUSTOM CONFIGURATION OPTIONS
+
+    events.Environment.loaded(config)
 
     return config

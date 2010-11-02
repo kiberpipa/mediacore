@@ -1,15 +1,20 @@
 """Setup the MediaCore application"""
 import logging
 import os.path
+import random
+import string
 
 import pylons
 import pylons.test
 from pylons.i18n import N_
 from sqlalchemy.orm import class_mapper
-from migrate.versioning.api import version_control, version, upgrade
+from migrate.versioning.api import (drop_version_control, version_control,
+    version, upgrade)
 from migrate.versioning.exceptions import DatabaseAlreadyControlledError
 
 from mediacore.config.environment import load_environment
+from mediacore.lib.storage import (BlipTVStorage, GoogleVideoStorage,
+    LocalFileStorage, RemoteURLStorage, VimeoStorage, YoutubeStorage)
 from mediacore.model import (DBSession, metadata, Media, MediaFile, Podcast,
     User, Group, Permission, Tag, Category, Comment, Setting, Author,
     AuthorWithIP)
@@ -55,15 +60,11 @@ def setup_app(command, conf, vars):
         if filename == 'test.ini':
             log.info('Dropping existing tables...')
             metadata.drop_all(checkfirst=True)
+            drop_version_control(conf.local_conf['sqlalchemy.url'],
+                                 migrate_repository)
     else:
         # Don't reload the app if it was loaded under the testing environment
         config = load_environment(conf.global_conf, conf.local_conf)
-
-    # Have the tables already been created? If not, we'll add data later
-    db_is_fresh = not class_mapper(Media).mapped_table.exists()
-
-    log.info("Creating tables if they don't exist yet")
-    metadata.create_all(bind=DBSession.bind, checkfirst=True)
 
     # Create the migrate_version table if it doesn't exist.
     # If the table doesn't exist, we assume the schema was just setup
@@ -73,22 +74,22 @@ def setup_app(command, conf, vars):
         version_control(conf.local_conf['sqlalchemy.url'],
                         migrate_repository,
                         version=latest_version)
-        log.info('Migrate table created with version %s' % latest_version)
     except DatabaseAlreadyControlledError:
-        log.info('Migrate table already present')
-
-    # Run any new migrations, if there are any
-    upgrade(conf.local_conf['sqlalchemy.url'],
-            migrate_repository,
-            version=latest_version)
-
-    # If the tables are new, populate with the default data.
-    if db_is_fresh:
+        log.info('Running any new migrations, if there are any')
+        upgrade(conf.local_conf['sqlalchemy.url'],
+                migrate_repository,
+                version=latest_version)
+    else:
+        log.info('Initializing new database with version %r' % latest_version)
+        metadata.create_all(bind=DBSession.bind, checkfirst=True)
         add_default_data()
 
     # Save everything, along with the dummy data if applicable
     DBSession.commit()
     log.info('Successfully setup')
+
+def random_string(length):
+    return u"".join([random.choice(string.letters+string.digits) for x in range(1, length)])
 
 def add_default_data():
     log.info('Adding default data')
@@ -120,6 +121,10 @@ def add_default_data():
         (u'akismet_url', u''),
         (u'req_comment_approval', u'false'),
         (u'use_embed_thumbnails', u'true'),
+        (u'api_secret_key_required', u'true'),
+        (u'api_secret_key', random_string(20)),
+        (u'api_media_max_results', u'50'),
+        (u'api_tree_max_depth', u'10'),
     ]
 
     for key, value in settings:
@@ -191,6 +196,18 @@ def add_default_data():
     media.comments.append(comment)
     DBSession.add(media)
 
+    remote_url_storage = RemoteURLStorage()
+    default_engines = [
+        LocalFileStorage(),
+        remote_url_storage,
+        YoutubeStorage(),
+        VimeoStorage(),
+        BlipTVStorage(),
+        GoogleVideoStorage(),
+    ]
+    for engine in default_engines:
+        DBSession.add(engine)
+
     import datetime
     instructional_media = [
         (u'workflow-in-mediacore',
@@ -227,7 +244,7 @@ def add_default_data():
 
     name = u'MediaCore Team'
     email = u'info@simplestation.com'
-    for slug, title, desc, desc_plain, publish_on, duration, url, type, container in instructional_media:
+    for slug, title, desc, desc_plain, publish_on, duration, url, type_, container in instructional_media:
         media = Media()
         media.author = Author(name, email)
         media.description = desc
@@ -236,14 +253,16 @@ def add_default_data():
         media.publish_on = publish_on
         media.slug = slug
         media.title = title
+        media.type = type_
 
         media_file = MediaFile()
         media_file.container = container
         media_file.created_on = publish_on
         media_file.display_name = os.path.basename(url)
         media_file.duration = duration
-        media_file.type = type
-        media_file.url = url
+        media_file.type = type_
+        media_file.storage = remote_url_storage
+        media_file.unique_id = url
 
         DBSession.add(media)
         DBSession.add(media_file)
