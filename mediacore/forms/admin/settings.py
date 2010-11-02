@@ -227,20 +227,22 @@ class APIForm(ListForm):
     ]
 
 class CyberpipeForm(ListForm):
-    template = 'mediacore.templates.admin.box-form'
+    template = 'admin/box-form.html'
     id = 'settings-form'
     css_class = 'form'
     submit_text = None
+
     fields = [
         ListFieldSet('live', suppress_label=True, legend=_('Live stream page:'), css_classes=['details_fieldset'], children=[
             TextField('live_stream_url', label_text=_('Stream URL')),
             TextField('live_ical_url', label_text=_('Events URL (ical format)')),
             TextField('live_cortado_url', label_text=_('Cortado applet URL')),
+            # TODO: cortado should move to players
         ]),
         ListFieldSet('ldap', suppress_label=True, legend=_('LDAP settings:'), css_classes=['details_fieldset'], children=[
             TextField('ldap_connection', label_text=_('Connection')),
             TextField('ldap_dn', label_text=_('DN')),
         ]),
-        SubmitButton('save', default=_('Save'), css_classes=['btn', 'btn-save', 'f-rgt']),
+        SubmitButton('save', default=_('Save'), css_classes=['btn', 'btn-save', 'blue', 'f-rgt']),
         ResetButton('cancel', default=_('Cancel'), css_classes=['btn', 'btn-cancel']),
     ]
