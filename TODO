@@ -8,8 +8,6 @@ UPSTREAM
 - proper i18n url handling http://my.opera.com/WebApplications/blog/2008/03/17/search-engine-friendly
 - clientside detection for video playback support (upstream)
     * add cortado: http://theora.org/cortado/ + http://www.javatester.org/enabled.html
-- replace button images with HTML/CSS (upstream)
-- latest rss (upstream)
 
     EXTRAS:
     - choose lang button + geoip (locale + timezone)
@@ -31,7 +29,6 @@ KIBERPIPA
 	* ping intranet on video encode
 - setup codebase/arhive on live stream <embed />
 - old arhive import (ike+upstream)
-- getsatisfaction
 
     DEPLOY
     - uredi kategorije (npr. english content -> tag)

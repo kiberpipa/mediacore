@@ -51,7 +51,7 @@ analytics_form = AnalyticsForm(
     action=url_for(controller='/admin/settings', action='analytics_save'))
 
 cyberpipe_form = CyberpipeForm(
-    action=url_for(controller='/admin/settings', action='save_cyberpipe'))
+    action=url_for(controller='/admin/settings', action='cyberpipe_save'))
 
 
 class SettingsController(BaseSettingsController):
@@ -154,10 +154,10 @@ class SettingsController(BaseSettingsController):
 
     @expose('admin/settings/cyberpipe.html')
     def cyberpipe(self, **kwargs):
-        return self._display(cyberpipe_form, **kwargs)
+        return self._display(cyberpipe_form, values=kwargs)
 
     @expose()
     @validate(cyberpipe_form, error_handler=cyberpipe)
-    def save_cyberpipe(self, **kwargs):
+    def cyberpipe_save(self, **kwargs):
         """Save :class:`~mediacore.forms.admin.settings.CyberpipeForm`."""
         return self._save(cyberpipe_form, 'cyberpipe', **kwargs)
