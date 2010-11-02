@@ -156,3 +156,16 @@ def add_default_data():
     p.description = u'Grants access to the admin panel'
     p.groups.append(g)
     DBSession.add(p)
+
+    remote_url_storage = RemoteURLStorage()
+    default_engines = [
+        LocalFileStorage(),
+        remote_url_storage,
+        YoutubeStorage(),
+        VimeoStorage(),
+        BlipTVStorage(),
+        GoogleVideoStorage(),
+    ]
+    for engine in default_engines:
+        DBSession.add(engine)
+
