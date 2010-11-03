@@ -8,6 +8,7 @@ UPSTREAM
 - proper i18n url handling http://my.opera.com/WebApplications/blog/2008/03/17/search-engine-friendly
 - clientside detection for video playback support (upstream)
     * add cortado: http://theora.org/cortado/ + http://www.javatester.org/enabled.html
+- categories empty crash
 
     EXTRAS:
     - choose lang button + geoip (locale + timezone)
@@ -19,6 +20,7 @@ UPSTREAM
     - http://blog.pearce.org.nz/2009/08/configuring-web-servers-for-html5-ogg.html
     - codec field for files (currently we have only container)
 	- maybe use HTML5 video for streaming?
+
 
 KIBERPIPA
 - section: live.html
