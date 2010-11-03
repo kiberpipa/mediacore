@@ -4,18 +4,18 @@
 # The %(here)s variable will be replaced with the parent directory of this file
 #
 [DEFAULT]
-email_to = you@yourdomain.com
+email_to = domen@dev.si
 smtp_server = localhost
 error_email_from = paste@localhost
 
 [server:main]
-use = egg:Paste#http
-host = 0.0.0.0
-port = 8080
+use = egg:gunicorn#main
+host = 127.0.0.1
+port = 5000
 
 [app:main]
 # Specify the database for SQLAlchemy to use
-sqlalchemy.url = mysql://username:pass@localhost/dbname?charset=utf8&use_unicode=0
+sqlalchemy.url = postgres://username:pass@localhost/dbname?charset=utf8&use_unicode=0
 sqlalchemy.echo = False
 sqlalchemy.pool_recycle = 3600
 
@@ -62,10 +62,10 @@ media_dir = %(here)s/data/media
 layout_template = layout
 
 # Defines an external genshi template to wrap the output (including layout) in
-external_template = false
-external_template_name = external
-external_template_url = http://some/valid_genshi_template.html
-external_template_timeout = 600
+#external_template = false
+#external_template_name = external
+#external_template_url = http://some/valid_genshi_template.html
+#external_template_timeout = 600
 
 # Misc app instance settings
 use = egg:MediaCore
@@ -89,7 +89,7 @@ set debug = false
 keys = root
 
 [handlers]
-keys = console, wsgierrors, logfile
+keys = console, logfile
 
 [formatters]
 keys = generic
@@ -107,17 +107,17 @@ args = (sys.stderr,)
 level = NOTSET
 formatter = generic
 
-[handler_wsgierrors]
+#[handler_wsgierrors]
 # Handler for logging to the WSGI error handler (eg. apache's error log)
-class = pylons.log.WSGIErrorsHandler
-args = ()
-level = NOTSET
-format = generic
+#class = pylons.log.WSGIErrorsHandler
+#args = ()
+#level = NOTSET
+#format = generic
 
 [handler_logfile]
 # Handler for logging to a dedicated logfile
 class = FileHandler
-args = ('/path/to/mediacore_install/data/deployment.log','a')
+args = ('%(here)s/deployment.log', 'a')
 level = NOTSET
 formatter = generic
 

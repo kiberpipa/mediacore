@@ -24,7 +24,7 @@ install_requires = [
     'PasteScript == 1.7.3',
     'ToscaWidgets == 0.9.9',
     'tw.forms == 0.9.9',
-    'BeautifulSoup == 3.0.7a',
+    'BeautifulSoup == 3.0.8.1',
         # We monkeypatch this version of BeautifulSoup in mediacore.__init__
         # Patch pending: https://bugs.launchpad.net/beautifulsoup/+bug/397997
     'akismet == 0.2.0',
@@ -36,19 +36,17 @@ install_requires = [
     'decorator',
     'simplejson',
     'Babel',
+    'Pillow',
     # kiberpipa
     'icalendar',
     'pytz',
+    'supervisor',
+    'fabric',
+    'ielectric.fab',
+    'gunicorn',
+    'repoze.who.plugins.ldap',
+    'psycopg2',
 ]
-
-# PIL has some weird packaging issues (because its been around forever).
-# If PIL is installed via MacPorts, setuptools tries to install again.
-# The original PIL 1.1.6 package won't install via setuptools so this
-# this setup script will install http://dist.repoze.org/PIL-1.1.6.tar.gz
-try:
-    import PIL
-except ImportError:
-    install_requires.append('PIL >= 1.1.6')
 
 extra_arguments_for_setup = {}
 
