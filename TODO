@@ -32,6 +32,12 @@ KIBERPIPA
 - setup codebase/arhive on live stream <embed />
 - old arhive import (ike+upstream)
 
+    DOCS
+    - deploy
+    - development
+    - changelog
+    - README
+
     DEPLOY
     - uredi kategorije (npr. english content -> tag)
     - setup support email
