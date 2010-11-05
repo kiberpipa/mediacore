@@ -9,6 +9,8 @@ UPSTREAM
 - clientside detection for video playback support (upstream)
     * add cortado: http://theora.org/cortado/ + http://www.javatester.org/enabled.html
 - categories empty crash
+- submit button on crash report
+- xsendfile nginx
 
     EXTRAS:
     - choose lang button + geoip (locale + timezone)
@@ -31,6 +33,7 @@ KIBERPIPA
 	* ping intranet on video encode
 - setup codebase/arhive on live stream <embed />
 - old arhive import (ike+upstream)
+- static through nginx
 
     DOCS
     - deploy
