@@ -26,7 +26,7 @@ msgstr ""
 
 #: mediacore/controllers/error.py:65
 msgid "We're sorry but we weren't able to process this request."
-msgstr ""
+msgstr "Se opravičujemo, pri prikazu strani je prišlo do napake."
 
 #: mediacore/controllers/media.py:248
 msgid "Invalid player params provided."
@@ -771,8 +771,7 @@ msgstr "Vimeo"
 msgid "YouTube"
 msgstr "YouTube"
 
-#: mediacore/templates/error.html:24
-#, fuzzy, python-format
+#: mediacore/templates/error.html:25
 msgid "A %(code)s Error has Occurred"
 msgstr "Prišlo je do napake: %(code)s"
 
