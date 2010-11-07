@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: MediaCore 0.8.0\n"
 "Report-Msgid-Bugs-To: mediacore-developers@googlegroups.com\n"
 "POT-Creation-Date: 2010-05-23 13:39+0200\n"
-"PO-Revision-Date: 2010-11-03 12:11+0100\n"
+"PO-Revision-Date: 2010-11-06 04:19+0100\n"
 "Last-Translator: Felix Schwarz <felix.schwarz@oss.schwarz.eu>\n"
 "Language-Team: de <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.5\n"
 
-#: mediacore/websetup.py:102
+#: mediacore/websetup.py:104
 msgid ""
 "Upload your media using the form below. We'll review it and get back to "
 "you."
@@ -40,11 +40,11 @@ msgstr "Die Datei \"%s\" existiert nicht."
 msgid "No action to perform."
 msgstr "Keine Aktion ausgewählt."
 
-#: mediacore/controllers/admin/media.py:553
+#: mediacore/controllers/admin/media.py:554
 msgid "Permission denied, cannot write file"
 msgstr ""
 
-#: mediacore/controllers/admin/media.py:555
+#: mediacore/controllers/admin/media.py:556
 #, fuzzy, python-format
 msgid "Unsupport image type: %s"
 msgstr "Nicht unterstützter Bildtyp"
@@ -156,7 +156,7 @@ msgstr "Kategorie löschen"
 #: mediacore/forms/admin/settings.py:86 mediacore/forms/admin/settings.py:122
 #: mediacore/forms/admin/settings.py:142 mediacore/forms/admin/settings.py:178
 #: mediacore/forms/admin/settings.py:191 mediacore/forms/admin/settings.py:207
-#: mediacore/forms/admin/settings.py:245 mediacore/forms/admin/tags.py:43
+#: mediacore/forms/admin/settings.py:247 mediacore/forms/admin/tags.py:43
 #: mediacore/templates/admin/categories/index.html:131
 #: mediacore/templates/admin/categories/index.html:151
 #: mediacore/templates/admin/tags/index.html:86
@@ -168,7 +168,7 @@ msgstr ""
 #: mediacore/forms/admin/settings.py:85 mediacore/forms/admin/settings.py:121
 #: mediacore/forms/admin/settings.py:141 mediacore/forms/admin/settings.py:177
 #: mediacore/forms/admin/settings.py:190 mediacore/forms/admin/settings.py:206
-#: mediacore/forms/admin/settings.py:244 mediacore/forms/admin/tags.py:44
+#: mediacore/forms/admin/settings.py:246 mediacore/forms/admin/tags.py:44
 #: mediacore/forms/admin/users.py:63
 #: mediacore/forms/admin/storage/__init__.py:51
 msgid "Save"
@@ -484,32 +484,32 @@ msgstr ""
 msgid "Akismet URL"
 msgstr ""
 
-#: mediacore/forms/admin/settings.py:235
+#: mediacore/forms/admin/settings.py:236
 msgid "Live stream page:"
 msgstr ""
 
-#: mediacore/forms/admin/settings.py:236
+#: mediacore/forms/admin/settings.py:237
 msgid "Stream URL"
 msgstr ""
 
-#: mediacore/forms/admin/settings.py:237
+#: mediacore/forms/admin/settings.py:238
 msgid "Events URL (ical format)"
 msgstr ""
 
-#: mediacore/forms/admin/settings.py:238
+#: mediacore/forms/admin/settings.py:239
 msgid "Cortado applet URL"
 msgstr ""
 
-#: mediacore/forms/admin/settings.py:240
+#: mediacore/forms/admin/settings.py:242
 #, fuzzy
 msgid "LDAP settings:"
 msgstr "Einstellungen"
 
-#: mediacore/forms/admin/settings.py:241
+#: mediacore/forms/admin/settings.py:243
 msgid "Connection"
 msgstr ""
 
-#: mediacore/forms/admin/settings.py:242
+#: mediacore/forms/admin/settings.py:244
 msgid "DN"
 msgstr ""
 
@@ -733,6 +733,10 @@ msgstr ""
 msgid "BlipTV"
 msgstr ""
 
+#: mediacore/lib/storage/cyberpipe.py:18
+msgid "Cyberpipe Local File Storage"
+msgstr ""
+
 #: mediacore/lib/storage/ftp.py:50
 msgid "FTP Storage"
 msgstr ""
@@ -940,6 +944,7 @@ msgid "Feeds:"
 msgstr ""
 
 #: mediacore/templates/live.html:9 mediacore/templates/live.html:52
+#: mediacore/templates/master.html:45
 msgid "Live stream"
 msgstr ""
 
@@ -1007,10 +1012,6 @@ msgstr "Medien-Bibliothek"
 #: mediacore/templates/podcasts/index.html:23
 msgid "Podcasts"
 msgstr "Podcasts"
-
-#: mediacore/templates/master.html:45
-msgid "Live"
-msgstr ""
 
 #: mediacore/templates/master.html:49
 msgid "Search"
@@ -1709,10 +1710,12 @@ msgstr ""
 msgid "Showing %(result_count)s results tagged with '%(tag_name)s'"
 msgstr ""
 
-#: mediacore/templates/media/index.html:34
-#, python-format
-msgid "All %(result_count)s Media"
-msgstr ""
+#: mediacore/templates/media/index.html:35
+#, fuzzy, python-format
+msgid "%(count)s media"
+msgid_plural "All %(count)s media"
+msgstr[0] ""
+msgstr[1] ""
 
 #: mediacore/templates/media/tags.html:27
 msgid "All Tags"
@@ -1911,97 +1914,4 @@ msgid ""
 "You will be automatically redirected back to the [1:Media Library] in a "
 "few seconds. Hang tight."
 msgstr "Sie werden in ein paar Sekunden automatisch zurück zur"
-
-#~ msgid "Review Complete"
-#~ msgstr "Review abgeschlossen"
-
-#~ msgid "Publish Now"
-#~ msgstr "Jetzt veröffentlichen"
-
-#~ msgid "This isn't a valid YouTube, Google Video, Vimeo or direct link."
-#~ msgstr ""
-#~ "Die ist kein gültiger YouTube-, Google"
-#~ " Video-, Video- oder direkter Link."
-
-#~ msgid "Please use the format HH:MM:SS"
-#~ msgstr "Bitte verwenden Sie das Format HH:MM:SS"
-
-#~ msgid "Unfiled"
-#~ msgstr "Ungeordnet"
-
-#~ msgid "No File or URL provided."
-#~ msgstr ""
-
-#~ msgid "File extension \"%s\" is not supported."
-#~ msgstr ""
-
-#~ msgid "Success! You will be redirected shortly."
-#~ msgstr ""
-
-#~ msgid "Failed Upload"
-#~ msgstr ""
-
-#~ msgid "Sample Template, for looking at template locals"
-#~ msgstr "Beispiel-Template, um Template-Variablen anzusehen"
-
-#~ msgid "All objects from locals():"
-#~ msgstr "Alle Objekte aus locals():"
-
-#~ msgid ""
-#~ "MediaCore could not find an appropriate"
-#~ " encoding of this media item to "
-#~ "display in your browser.\n"
-#~ "\t\t\tContact the site admin if "
-#~ "you need assistance. We recommend useing"
-#~ " HTML5 compatible browser\n"
-#~ "            such as [1:Google Chrome]."
-#~ msgstr ""
-
-#~ msgid "Download this"
-#~ msgstr "Download"
-
-#~ msgid ""
-#~ "If your browser supported HTML5, you'd"
-#~ " be seeing an audio player here "
-#~ "instead of this text!"
-#~ msgstr ""
-#~ "Wenn Ihr Browser HTML5 unterstützen "
-#~ "würde, würden Sie hier ein Video "
-#~ "anstatt diesem Text sehen!"
-
-#~ msgid ""
-#~ "If your browser supported HTML5, you'd"
-#~ " be seeing a video player here "
-#~ "instead of this text!"
-#~ msgstr ""
-#~ "Wenn Ihr Browser HTML5 unterstützen "
-#~ "würde, würden Sie hier ein Video "
-#~ "anstatt diesem Text sehen!"
-
-#~ msgid "trash"
-#~ msgstr "Mülleimer"
-
-#~ msgid "for"
-#~ msgstr "für"
-
-#~ msgid "Media that matches '"
-#~ msgstr "Medien, die übereinstimmen '"
-
-#~ msgid "Unfiled Media"
-#~ msgstr "Unsortierte Medien"
-
-#~ msgid "Media for"
-#~ msgstr "MediaCore"
-
-#~ msgid "encoding %(status)s"
-#~ msgstr ""
-
-#~ msgid "Showing %(result_count)s results tagged with '%(tag.name)s'"
-#~ msgstr ""
-
-#~ msgid "Is it encoded in one of our supported formats? [1:%(formats)s.]"
-#~ msgstr "Ist sie in einem unserer unterstützten Formate kodiert?"
-
-#~ msgid "Acceptable File Formats"
-#~ msgstr "Unterstützte Dateiformate"
 

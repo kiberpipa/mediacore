@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MediaCore 0.9.0dev\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2010-11-02 22:43+0100\n"
+"POT-Creation-Date: 2010-11-06 04:19+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.5\n"
 
-#: mediacore/websetup.py:102
+#: mediacore/websetup.py:104
 msgid "Upload your media using the form below. We'll review it and get back to you."
 msgstr ""
 
@@ -38,11 +38,11 @@ msgstr ""
 msgid "No action to perform."
 msgstr ""
 
-#: mediacore/controllers/admin/media.py:553
+#: mediacore/controllers/admin/media.py:554
 msgid "Permission denied, cannot write file"
 msgstr ""
 
-#: mediacore/controllers/admin/media.py:555
+#: mediacore/controllers/admin/media.py:556
 #, python-format
 msgid "Unsupport image type: %s"
 msgstr ""
@@ -146,7 +146,7 @@ msgstr ""
 #: mediacore/forms/admin/settings.py:86 mediacore/forms/admin/settings.py:122
 #: mediacore/forms/admin/settings.py:142 mediacore/forms/admin/settings.py:178
 #: mediacore/forms/admin/settings.py:191 mediacore/forms/admin/settings.py:207
-#: mediacore/forms/admin/settings.py:245 mediacore/forms/admin/tags.py:43
+#: mediacore/forms/admin/settings.py:247 mediacore/forms/admin/tags.py:43
 #: mediacore/templates/admin/categories/index.html:131
 #: mediacore/templates/admin/categories/index.html:151
 #: mediacore/templates/admin/tags/index.html:86
@@ -158,7 +158,7 @@ msgstr ""
 #: mediacore/forms/admin/settings.py:85 mediacore/forms/admin/settings.py:121
 #: mediacore/forms/admin/settings.py:141 mediacore/forms/admin/settings.py:177
 #: mediacore/forms/admin/settings.py:190 mediacore/forms/admin/settings.py:206
-#: mediacore/forms/admin/settings.py:244 mediacore/forms/admin/tags.py:44
+#: mediacore/forms/admin/settings.py:246 mediacore/forms/admin/tags.py:44
 #: mediacore/forms/admin/users.py:63 mediacore/forms/admin/storage/__init__.py:51
 msgid "Save"
 msgstr ""
@@ -458,31 +458,31 @@ msgstr ""
 msgid "Akismet URL"
 msgstr ""
 
-#: mediacore/forms/admin/settings.py:235
+#: mediacore/forms/admin/settings.py:236
 msgid "Live stream page:"
 msgstr ""
 
-#: mediacore/forms/admin/settings.py:236
+#: mediacore/forms/admin/settings.py:237
 msgid "Stream URL"
 msgstr ""
 
-#: mediacore/forms/admin/settings.py:237
+#: mediacore/forms/admin/settings.py:238
 msgid "Events URL (ical format)"
 msgstr ""
 
-#: mediacore/forms/admin/settings.py:238
+#: mediacore/forms/admin/settings.py:239
 msgid "Cortado applet URL"
 msgstr ""
 
-#: mediacore/forms/admin/settings.py:240
+#: mediacore/forms/admin/settings.py:242
 msgid "LDAP settings:"
 msgstr ""
 
-#: mediacore/forms/admin/settings.py:241
+#: mediacore/forms/admin/settings.py:243
 msgid "Connection"
 msgstr ""
 
-#: mediacore/forms/admin/settings.py:242
+#: mediacore/forms/admin/settings.py:244
 msgid "DN"
 msgstr ""
 
@@ -697,6 +697,10 @@ msgstr ""
 msgid "BlipTV"
 msgstr ""
 
+#: mediacore/lib/storage/cyberpipe.py:18
+msgid "Cyberpipe Local File Storage"
+msgstr ""
+
 #: mediacore/lib/storage/ftp.py:50
 msgid "FTP Storage"
 msgstr ""
@@ -889,6 +893,7 @@ msgid "Feeds:"
 msgstr ""
 
 #: mediacore/templates/live.html:9 mediacore/templates/live.html:52
+#: mediacore/templates/master.html:45
 msgid "Live stream"
 msgstr ""
 
@@ -955,10 +960,6 @@ msgstr ""
 #: mediacore/templates/admin/podcasts/index.html:31
 #: mediacore/templates/podcasts/index.html:23
 msgid "Podcasts"
-msgstr ""
-
-#: mediacore/templates/master.html:45
-msgid "Live"
 msgstr ""
 
 #: mediacore/templates/master.html:49
@@ -1627,10 +1628,12 @@ msgstr ""
 msgid "Showing %(result_count)s results tagged with '%(tag_name)s'"
 msgstr ""
 
-#: mediacore/templates/media/index.html:34
+#: mediacore/templates/media/index.html:35
 #, python-format
-msgid "All %(result_count)s Media"
-msgstr ""
+msgid "%(count)s media"
+msgid_plural "All %(count)s media"
+msgstr[0] ""
+msgstr[1] ""
 
 #: mediacore/templates/media/tags.html:27
 msgid "All Tags"
