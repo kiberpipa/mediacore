@@ -1,24 +1,29 @@
 UPSTREAM
 - extract metadata on media file addition
+    * extract after storage.store()
     * use SA extensions for parsing on DB save - use parsers from settings
-    * parser in upload settings does not get saved (upstream)
-    	* use validator to/from python to convert those to @@ separated values
 - xapian search 
-- support multiple encoders on download and proper name
 - proper i18n url handling http://my.opera.com/WebApplications/blog/2008/03/17/search-engine-friendly
 - clientside detection for video playback support (upstream)
     * add cortado: http://theora.org/cortado/ + http://www.javatester.org/enabled.html
-- categories empty crash
-- submit button on crash report
+- submit button on crash report has no image
 - xsendfile nginx
+- separate versioned static files and uploaded ones
+- Add & Manage doesn't work in FIREFOX
+- can't delete media in admin
+- Save button breaks Javascript
+- tests break
+- test for adding media and deleteing it through admin interface
+- mootools & javascript & i18n & Locale
+- "add to podcast" Bulk action
 
     EXTRAS:
+    - support multiple encoders on download and proper name
     - choose lang button + geoip (locale + timezone)
     - url field for files (information)
     - use turbomail for mails and genshi for templates
     - set tinymce language
     - minification
-    - MANIFEST.in
     - http://blog.pearce.org.nz/2009/08/configuring-web-servers-for-html5-ogg.html
     - codec field for files (currently we have only container)
 	- maybe use HTML5 video for streaming?
@@ -26,25 +31,20 @@ UPSTREAM
 
 KIBERPIPA
 - section: live.html
-	* proper l10n
-    * IE support does not work.
+    * proper cortado usage
 - section: video
 	* link to kiberpipa.org event (hruske)
 	* ping intranet on video encode
-- setup codebase/arhive on live stream <embed />
-- old arhive import (ike+upstream)
+- old arhive import (ike)
 - static through nginx
-
-    DOCS
-    - deploy
-    - development
-    - changelog
-    - README
 
     DEPLOY
     - uredi kategorije (npr. english content -> tag)
     - setup support email
     - setup email settings in .ini
+    - max upload size: 2G
+    - analytics
+    - add me to admin group
 
     V2:
     - integration with encoder (Mavrik)
@@ -52,3 +52,6 @@ KIBERPIPA
     EXTRAS:
     - twitter stream separated for each event
     - use our thumbnailer with our fancy PNG
+    - setup codebase/arhive on live stream <embed />
+    - section: live.html
+        * proper l10n

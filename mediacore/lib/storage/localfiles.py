@@ -57,7 +57,7 @@ class LocalFileStorage(FileStorageEngine):
 
         """
         file_name = safe_file_name(media_file, file.filename)
-        file_path = self._get_path(file_name)
+        file_path = self._get_path(media_file, file_name)
 
         temp_file = file.file
         temp_file.seek(0)
@@ -68,16 +68,18 @@ class LocalFileStorage(FileStorageEngine):
 
         return file_name
 
-    def delete(self, unique_id):
+    def delete(self, media_file, unique_id):
         """Delete the stored file represented by the given unique ID.
 
+        :type media_file: :class:`~mediacore.model.media.MediaFile`
+        :param media_file: The associated media file object.
         :type unique_id: unicode
         :param unique_id: The identifying string for this file.
         :rtype: boolean
         :returns: True if successful, False if an error occurred.
 
         """
-        file_path = self._get_path(unique_id)
+        file_path = self._get_path(media_file, unique_id)
         return delete_files([file_path], 'media')
 
     def get_uris(self, media_file):
@@ -109,12 +111,12 @@ class LocalFileStorage(FileStorageEngine):
         uris.append(StorageURI(media_file, 'download', url, None))
 
         # Internal file URI that will be used by MediaController.serve
-        path = urlunsplit(('file', '', self._get_path(media_file.unique_id), '', ''))
+        path = urlunsplit(('file', '', self._get_path(media_file, media_file.unique_id), '', ''))
         uris.append(StorageURI(media_file, 'file', path, None))
 
         return uris
 
-    def _get_path(self, unique_id):
+    def _get_path(self, media_file, unique_id):
         """Return the local file path for the given unique ID.
 
         This method is exclusive to this engine.
