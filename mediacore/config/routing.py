@@ -31,9 +31,8 @@ def make_map(config, controller_scan=controller_scan):
 
     # Legacy kiberpipa arhive urls
     # TODO: tests
-    # TODO: verify with categories
-    # TODO: english map.redirect('/english.html', '/en/', _redirect_code="301 Moved Permanently")
-    # TODO: rss map.redirect('/rss.xml', '...')
+    map.redirect('/rss.xml', '/latests.xml')
+    map.redirect('/english.html', '/en/', _redirect_code="301 Moved Permanently")
     map.redirect('/live.html', '/live', _redirect_code="301 Moved Permanently")
     map.redirect('/vse.html', '/media', _redirect_code="301 Moved Permanently")
     map.redirect('/iskalnik.php', '/media', _redirect_code="301 Moved Permanently")
@@ -48,7 +47,7 @@ def make_map(config, controller_scan=controller_scan):
         _redirect_code="301 Moved Permanently")
     map.redirect('/delavnice.html', '/categories/delavnice',
         _redirect_code="301 Moved Permanently")
-    map.redirect('/wclj.html', '/categories/wclj',
+    map.redirect('/wclj.html', '/categories/web-camp-ljubljana',
         _redirect_code="301 Moved Permanently")
     map.redirect('/veceri_za_inovativne_in_podjetne.html', '/categories/veceri-za-inovativne-in-podjetne',
         _redirect_code="301 Moved Permanently")
