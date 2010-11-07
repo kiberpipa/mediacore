@@ -29,7 +29,7 @@ from mediacore.lib.htmlsanitizer import entities_to_unicode
 from mediacore.model.meta import DBSession, metadata
 
 # maximum length of slug strings for all objects.
-SLUG_LENGTH = 50
+SLUG_LENGTH = 100
 
 #####
 # Generally you will not want to define your table's mappers, and data objects
