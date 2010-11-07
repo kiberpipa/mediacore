@@ -30,6 +30,8 @@ belongs to a :class:`mediacore.model.podcasts.Podcast`.
 
 import math
 import os.path
+import shutil
+import logging
 
 from datetime import datetime
 
@@ -37,7 +39,7 @@ from sqlalchemy import Table, ForeignKey, Column, sql
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import (attributes, backref, class_mapper, column_property,
-    composite, dynamic_loader, mapper, Query, relation, validates)
+    composite, dynamic_loader, mapper, Query, relation, validates, synonym)
 from sqlalchemy.orm.collections import attribute_mapped_collection
 from sqlalchemy.schema import DDL
 from sqlalchemy.types import Boolean, DateTime, Integer, Unicode, UnicodeText
@@ -55,6 +57,8 @@ from mediacore.model.comments import Comment, CommentQuery, comments
 from mediacore.model.tags import Tag, TagList, tags, extract_tags, fetch_and_create_tags
 from mediacore.plugin import events
 
+
+log = logging.getLogger(__name__)
 
 media = Table('media', metadata,
     Column('id', Integer, autoincrement=True, primary_key=True),
@@ -443,6 +447,22 @@ class Media(object):
     def __repr__(self):
         return '<Media: %s>' % self.slug
 
+    def _set_slug(self, value):
+        """Moves media directory around"""
+        # TODO: revert if slug breaks unique constraint
+        for media_file in self.files:
+            path = media_file.storage.folder(media_file)
+            new_path = media_file.storage.folder(media_file, value)
+            log.debug('Moving %s to %s' % (path, new_path))
+            if os.path.exists(path):
+                if new_path != path:
+                    shutil.move(path, new_path)
+        self._slug = value
+
+    def _get_slug(self):
+        return self._slug
+    slug = property(_get_slug, _set_slug)
+
     def set_tags(self, tags):
         """Set the tags relations of this media, creating them as needed.
 
@@ -701,6 +721,7 @@ _media_mapper = mapper(
             ).label('comment_count_published'),
             deferred=True,
         ),
+        'slug': synonym('_slug', map_column=True),
 })
 
 # Add properties for counting how many media items have a given Tag

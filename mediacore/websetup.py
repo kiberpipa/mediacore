@@ -15,6 +15,7 @@ from migrate.versioning.exceptions import DatabaseAlreadyControlledError
 from mediacore.config.environment import load_environment
 from mediacore.lib.storage import (BlipTVStorage, GoogleVideoStorage,
     LocalFileStorage, RemoteURLStorage, VimeoStorage, YoutubeStorage)
+from mediacore.lib.storage import CyberpipeLocalFileStorage
 from mediacore.model import (DBSession, metadata, Media, MediaFile, Podcast,
     User, Group, Permission, Tag, Category, Comment, Setting, Author,
     AuthorWithIP)
@@ -166,7 +167,7 @@ def add_default_data():
 
     remote_url_storage = RemoteURLStorage()
     default_engines = [
-        LocalFileStorage(),
+        CyberpipeLocalFileStorage(),
         remote_url_storage,
         YoutubeStorage(),
         VimeoStorage(),
