@@ -396,10 +396,9 @@ class MediaController(BaseController):
                 data['success'] = True
             elif delete:
                 storage = file.storage
-                unique_id = file.unique_id
                 DBSession.delete(file)
                 DBSession.flush()
-                storage.delete(file, unique_id)
+                storage.delete(file)
                 media = fetch_row(Media, id)
                 data['success'] = True
             else:
@@ -692,7 +691,7 @@ class MediaController(BaseController):
 
         # Delete all the files from their corresponding storage engines
         for storage, file in izip(file_storage, files):
-            storage.delete(file, file.unique_id)
+            storage.delete(file)
         helpers.delete_files(thumbs, Media._thumb_dir)
 
         # Delete it
