@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: MediaCore 0.8.0\n"
 "Report-Msgid-Bugs-To: mediacore-developers@googlegroups.com\n"
 "POT-Creation-Date: 2010-05-23 13:39+0200\n"
-"PO-Revision-Date: 2010-11-06 04:19+0100\n"
+"PO-Revision-Date: 2010-11-08 07:31+0100\n"
 "Last-Translator: Felix Schwarz <felix.schwarz@oss.schwarz.eu>\n"
 "Language-Team: de <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -40,11 +40,11 @@ msgstr "Die Datei \"%s\" existiert nicht."
 msgid "No action to perform."
 msgstr "Keine Aktion ausgewählt."
 
-#: mediacore/controllers/admin/media.py:554
+#: mediacore/controllers/admin/media.py:553
 msgid "Permission denied, cannot write file"
 msgstr ""
 
-#: mediacore/controllers/admin/media.py:556
+#: mediacore/controllers/admin/media.py:555
 #, fuzzy, python-format
 msgid "Unsupport image type: %s"
 msgstr "Nicht unterstützter Bildtyp"
@@ -733,7 +733,7 @@ msgstr ""
 msgid "BlipTV"
 msgstr ""
 
-#: mediacore/lib/storage/cyberpipe.py:18
+#: mediacore/lib/storage/cyberpipe.py:22
 msgid "Cyberpipe Local File Storage"
 msgstr ""
 
@@ -1680,7 +1680,7 @@ msgstr ""
 msgid ""
 "Cyberpipe video archive is categorized collection of recorded sessions in"
 " ten years activity of [1:multimedia center Kiberpipa]. Currently it "
-"counts 700 plus of recorded lectures, art events, workshops, etc. To play"
+"counts 500 plus of recorded lectures, art events, workshops, etc. To play"
 " the videos you only need internet browser, but for downoaded files we "
 "recommend open source [2:VLC media player]."
 msgstr ""
@@ -1914,4 +1914,16 @@ msgid ""
 "You will be automatically redirected back to the [1:Media Library] in a "
 "few seconds. Hang tight."
 msgstr "Sie werden in ein paar Sekunden automatisch zurück zur"
+
+#~ msgid ""
+#~ "Cyberpipe video archive is categorized "
+#~ "collection of recorded sessions in ten"
+#~ " years activity of [1:multimedia center "
+#~ "Kiberpipa]. Currently it counts 700 plus"
+#~ " of recorded lectures, art events, "
+#~ "workshops, etc. To play the videos "
+#~ "you only need internet browser, but "
+#~ "for downoaded files we recommend open"
+#~ " source [2:VLC media player]."
+#~ msgstr ""
 

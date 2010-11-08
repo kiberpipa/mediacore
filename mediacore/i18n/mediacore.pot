@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MediaCore 0.9.0dev\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2010-11-06 04:19+0100\n"
+"POT-Creation-Date: 2010-11-08 07:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,11 +38,11 @@ msgstr ""
 msgid "No action to perform."
 msgstr ""
 
-#: mediacore/controllers/admin/media.py:554
+#: mediacore/controllers/admin/media.py:553
 msgid "Permission denied, cannot write file"
 msgstr ""
 
-#: mediacore/controllers/admin/media.py:556
+#: mediacore/controllers/admin/media.py:555
 #, python-format
 msgid "Unsupport image type: %s"
 msgstr ""
@@ -697,7 +697,7 @@ msgstr ""
 msgid "BlipTV"
 msgstr ""
 
-#: mediacore/lib/storage/cyberpipe.py:18
+#: mediacore/lib/storage/cyberpipe.py:22
 msgid "Cyberpipe Local File Storage"
 msgstr ""
 
@@ -1599,7 +1599,7 @@ msgstr ""
 #: mediacore/templates/media/explore.html:85
 msgid ""
 "Cyberpipe video archive is categorized collection of recorded sessions in ten"
-" years activity of [1:multimedia center Kiberpipa]. Currently it counts 700 "
+" years activity of [1:multimedia center Kiberpipa]. Currently it counts 500 "
 "plus of recorded lectures, art events, workshops, etc. To play the videos you"
 " only need internet browser, but for downoaded files we recommend open source"
 " [2:VLC media player]."

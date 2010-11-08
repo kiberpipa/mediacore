@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: MediaCore 0.8.0\n"
 "Report-Msgid-Bugs-To: video@kiberpipa.org\n"
 "POT-Creation-Date: 2010-05-23 13:39+0200\n"
-"PO-Revision-Date: 2010-11-06 04:19+0100\n"
+"PO-Revision-Date: 2010-11-08 07:31+0100\n"
 "Last-Translator: Domen Kožar <domen@dev.si>\n"
 "Language-Team: sl <sl@li.org>\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 "
@@ -41,11 +41,11 @@ msgstr "Datoteka \"%s\" ne obstaja."
 msgid "No action to perform."
 msgstr "Ni ukaza za izvedbo."
 
-#: mediacore/controllers/admin/media.py:554
+#: mediacore/controllers/admin/media.py:553
 msgid "Permission denied, cannot write file"
 msgstr "Nimam pravic za pisanje v datoteko"
 
-#: mediacore/controllers/admin/media.py:556
+#: mediacore/controllers/admin/media.py:555
 #, python-format
 msgid "Unsupport image type: %s"
 msgstr "Nepodprt tip slike: %s"
@@ -724,7 +724,7 @@ msgstr ""
 msgid "BlipTV"
 msgstr "BlipTV"
 
-#: mediacore/lib/storage/cyberpipe.py:18
+#: mediacore/lib/storage/cyberpipe.py:22
 msgid "Cyberpipe Local File Storage"
 msgstr ""
 
@@ -1657,13 +1657,13 @@ msgstr "O arhivu"
 msgid ""
 "Cyberpipe video archive is categorized collection of recorded sessions in"
 " ten years activity of [1:multimedia center Kiberpipa]. Currently it "
-"counts 700 plus of recorded lectures, art events, workshops, etc. To play"
+"counts 500 plus of recorded lectures, art events, workshops, etc. To play"
 " the videos you only need internet browser, but for downoaded files we "
 "recommend open source [2:VLC media player]."
 msgstr ""
 "Kiberpipin videoarhiv je kategorizirana zbirka posnetkov in desetletne "
 "dejavnosti [1:multimedijskega centra Kiberpipa]. Trenutno šteje dobrih "
-"700 posnetkov predavanj, umetniških dogodkov, delavnic, ipd. Za "
+"500 posnetkov predavanj, umetniških dogodkov, delavnic, ipd. Za "
 "predvajanje zadostuje brskalnik, za dolpotegnjene datoteke pa priporočamo"
 " prav tako odprtokodni [2:VLC media player]."
 

@@ -8,14 +8,15 @@ UPSTREAM
     * add cortado: http://theora.org/cortado/ + http://www.javatester.org/enabled.html
 - submit button on crash report has no image
 - xsendfile nginx
-- separate versioned static files and uploaded ones
-- Add & Manage doesn't work in FIREFOX
-- can't delete media in admin
-- Save button breaks Javascript
-- tests break
+- separate versioned static files and uploaded ones (data dir should be configurable through ini)
+- Add & Manage doesn't work in FIREFOX (wait for closure tools)
+- can't delete media in admin (get rid of magic SA stuff)
+- Save button breaks Javascript (wait for closure tools)
+- tests break (on upstream todo)
 - test for adding media and deleteing it through admin interface
-- mootools & javascript & i18n & Locale
-- "add to podcast" Bulk action
+- mootools & javascript & i18n & Locale (make separate genshi file to render JS object)
+- "add to podcast" Bulk action (just do it)
+- add option in podcast to map category->podcast (just do it)
 
     EXTRAS:
     - support multiple encoders on download and proper name
@@ -37,6 +38,7 @@ KIBERPIPA
 	* ping intranet on video encode
 - old arhive import (ike)
 - static through nginx
+- metadata on Media
 
     DEPLOY
     - uredi kategorije (npr. english content -> tag)
@@ -45,6 +47,7 @@ KIBERPIPA
     - max upload size: 2G
     - analytics
     - add me to admin group
+    - setup featured category
 
     V2:
     - integration with encoder (Mavrik)
