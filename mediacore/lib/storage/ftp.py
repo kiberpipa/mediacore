@@ -106,8 +106,11 @@ class FTPStorage(FileStorageEngine):
         finally:
             ftp.quit()
 
-    def delete(self, unique_id):
+    def delete(self, media_file):
         """Delete the stored file represented by the given unique ID.
+
+        :type media_file: :class:`~mediacore.model.media.MediaFile`
+        :param media_file: The associated media file object.
 
         :type unique_id: unicode
         :param unique_id: The identifying string for this file.
@@ -121,7 +124,7 @@ class FTPStorage(FileStorageEngine):
         try:
             if upload_dir:
                 ftp.cwd(upload_dir)
-            ftp.delete(unique_id)
+            ftp.delete(media_file.unique_id)
             return True
         except FTP.all_errors, e:
             log.exception(e)
@@ -131,9 +134,6 @@ class FTPStorage(FileStorageEngine):
 
     def get_uris(self, file):
         """Return a list of URIs from which the stored file can be accessed.
-
-        :type unique_id: unicode
-        :param unique_id: The identifying string for this file.
 
         :rtype: list
         :returns: All :class:`StorageURI` tuples for this file.

@@ -35,11 +35,11 @@ class AmazonS3Storage(StorageEngine):
 
         """
 
-    def delete(self, unique_id):
+    def delete(self, media_file):
         """Delete the stored file represented by the given unique ID.
 
-        :type unique_id: unicode
-        :param unique_id: The identifying string for this file.
+        :type media_file: :class:`~mediacore.model.media.MediaFile`
+        :param media_file: The associated media file object.
         :rtype: boolean
         :returns: True if successful, False if an error occurred.
 
@@ -48,8 +48,8 @@ class AmazonS3Storage(StorageEngine):
     def get_uris(self, file):
         """Return a list of URIs from which the stored file can be accessed.
 
-        :type unique_id: unicode
-        :param unique_id: The identifying string for this file.
+        :type file: :class:`~mediacore.model.media.MediaFile`
+        :param file: The associated media file object.
         :rtype: list
         :returns: All :class:`StorageURI` tuples for this file.
 

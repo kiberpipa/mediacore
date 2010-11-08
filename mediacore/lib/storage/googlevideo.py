@@ -98,9 +98,6 @@ class GoogleVideoStorage(EmbedStorageEngine):
     def get_uris(self, file):
         """Return a list of URIs from which the stored file can be accessed.
 
-        :type unique_id: unicode
-        :param unique_id: The identifying string for this file.
-
         :rtype: list
         :returns: All :class:`StorageURI` tuples for this file.
 
