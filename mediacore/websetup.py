@@ -140,24 +140,36 @@ def add_default_data():
         s.value = value
         DBSession.add(s)
 
-    u = User()
-    u.user_name = u'admin'
-    u.display_name = u'Admin'
-    u.email_address = u'admin@somedomain.com'
-    u.password = u'admin'
-    DBSession.add(u)
+    admin_user = User()
+    admin_user.user_name = u'admin'
+    admin_user.display_name = u'Admin'
+    admin_user.email_address = u'admin@somedomain.com'
+    admin_user.password = u'admin'
+    DBSession.add(admin_user)
 
-    g = Group()
-    g.group_name = u'admins'
-    g.display_name = u'Admins'
-    g.users.append(u)
-    DBSession.add(g)
+    admin_group = Group()
+    admin_group.group_name = u'admins'
+    admin_group.display_name = u'Admins'
+    admin_group.users.append(admin_user)
+    DBSession.add(admin_group)
 
-    p = Permission()
-    p.permission_name = u'admin'
-    p.description = u'Grants access to the admin panel'
-    p.groups.append(g)
-    DBSession.add(p)
+    editor_group = Group()
+    editor_group.group_name = u'editors'
+    editor_group.display_name = u'Editors'
+    DBSession.add(editor_group)
+
+    admin_perm = Permission()
+    admin_perm.permission_name = u'admin'
+    admin_perm.description = u'Grants access to the admin panel'
+    admin_perm.groups.append(admin_group)
+    DBSession.add(admin_perm)
+
+    edit_perm = Permission()
+    edit_perm.permission_name = u'edit'
+    edit_perm.description = u'Grants access to edit site content'
+    edit_perm.groups.append(admin_group)
+    edit_perm.groups.append(editor_group)
+    DBSession.add(edit_perm)
 
     p = Permission()
     p.permission_name = u'edit'
