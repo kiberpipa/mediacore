@@ -114,7 +114,7 @@ class LocalFileStorage(FileStorageEngine):
 
         return uris
 
-    def _get_path(self, media_file):
+    def _get_path(self, media_file, unique_id=None):
         """Return the local file path for the given Media file.
 
         This method is exclusive to this engine.
@@ -122,6 +122,6 @@ class LocalFileStorage(FileStorageEngine):
         basepath = self._data.get('path', None)
         if not basepath:
             basepath = config['media_dir']
-        return os.path.join(basepath, media_file.unique_id)
+        return os.path.join(basepath, unique_id or media_file.unique_id)
 
 FileStorageEngine.register(LocalFileStorage)
