@@ -1,18 +1,14 @@
 UPSTREAM
 - extract metadata on media file addition
     * extract after storage.store()
-    * use SA extensions for parsing on DB save - use parsers from settings
 - xapian search 
 - proper i18n url handling http://my.opera.com/WebApplications/blog/2008/03/17/search-engine-friendly
 - clientside detection for video playback support (upstream)
     * add cortado: http://theora.org/cortado/ + http://www.javatester.org/enabled.html
-- xsendfile nginx
 - mootools & javascript & i18n & Locale (make separate genshi file to render JS object)
+- video width&height
 - "add to podcast" Bulk action (just do it)
 - add option in podcast to map category->podcast (just do it)
-- front page css is broken (text too long)
-- can't delete media in admin (get rid of magic SA stuff)
-- video width&height
 
     EXTRAS:
     - support multiple encoders on download and proper name
@@ -29,13 +25,13 @@ KIBERPIPA
 - section: video
 	* link to kiberpipa.org event (hruske)
 	* ping intranet on video encode
-- old arhive import (ike)
-- static through nginx
-- metadata on Media
+- metadata on Media (url, avtor, intranet ID)
 - ldap user
+- static through nginx
 - separate versioned static files and uploaded ones (data dir should be configurable through ini)
 
     DEPLOY
+    - old arhive import (ike)
     - uredi kategorije (npr. english content -> tag)
     - setup support email & test it
     - setup email settings in .ini
