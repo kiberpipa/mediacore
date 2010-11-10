@@ -47,7 +47,8 @@ sa_auth.cookie_secret = superdupersecret
 
 # Method to use when servng static media files.
 #   apache_xsendfile - requires Apache 2.x and mod_xsendfile
-#   nginx_redirect - requires nginx - *not yet implemented*
+#   nginx_redirect - requires nginx - relative to media_dir
+#       (make sure nginx has permissions to serve the file)
 #   default - uses environ['wsgi.file_wrapper'] if it's provided by the server,
 #             otherwise a pure-python file iterator returns the file in chunks
 file_serve_method = default

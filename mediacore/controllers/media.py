@@ -397,11 +397,13 @@ class MediaController(BaseController):
             #      Apache handles them for you.
             response.headers['X-Sendfile'] = file_path
             response.body = ''
-
+            response.headers.update(headers)
         elif method == 'nginx_redirect':
-            raise NotImplementedError, 'This is only a placeholder'
-            response.headers['X-Accel-Redirect'] = '../relative/path'
-
+            for header in ['pragma', 'cache-control', "content-type"]:
+                if header in response.headers:
+                    del response.headers[header]
+            response.headers['X-Accel-Redirect'] = file_path
+            response.headers.update(headers)
         else:
             app = FileApp(file_path, headers, content_type=file_type)
             return forward(app)
