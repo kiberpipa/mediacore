@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: MediaCore 0.8.0\n"
 "Report-Msgid-Bugs-To: video@kiberpipa.org\n"
 "POT-Creation-Date: 2010-05-23 13:39+0200\n"
-"PO-Revision-Date: 2010-11-08 07:31+0100\n"
+"PO-Revision-Date: 2010-11-10 13:50+0100\n"
 "Last-Translator: Domen Kožar <domen@dev.si>\n"
 "Language-Team: sl <sl@li.org>\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 "
@@ -37,15 +37,15 @@ msgstr "Napačni parametri za predvajalnik."
 msgid "File \"%s\" does not exist."
 msgstr "Datoteka \"%s\" ne obstaja."
 
-#: mediacore/controllers/admin/media.py:406
+#: mediacore/controllers/admin/media.py:405
 msgid "No action to perform."
 msgstr "Ni ukaza za izvedbo."
 
-#: mediacore/controllers/admin/media.py:553
+#: mediacore/controllers/admin/media.py:552
 msgid "Permission denied, cannot write file"
 msgstr "Nimam pravic za pisanje v datoteko"
 
-#: mediacore/controllers/admin/media.py:555
+#: mediacore/controllers/admin/media.py:554
 #, python-format
 msgid "Unsupport image type: %s"
 msgstr "Nepodprt tip slike: %s"
@@ -55,7 +55,7 @@ msgid "Please enter your name!"
 msgstr "Vnesi svoje ime!"
 
 #: mediacore/forms/comments.py:30 mediacore/forms/admin/categories.py:44
-#: mediacore/forms/admin/tags.py:41
+#: mediacore/forms/admin/tags.py:44
 #: mediacore/templates/admin/categories/index.html:75
 #: mediacore/templates/admin/categories/index.html:104
 #: mediacore/templates/admin/storage/index.html:49
@@ -141,7 +141,7 @@ msgstr "Išči..."
 msgid "You forgot to select an image!"
 msgstr "Ups! Ne pozabi vnesti slike."
 
-#: mediacore/forms/admin/categories.py:45 mediacore/forms/admin/tags.py:42
+#: mediacore/forms/admin/categories.py:45 mediacore/forms/admin/tags.py:45
 msgid "Slug"
 msgstr "Slug"
 
@@ -153,7 +153,7 @@ msgstr "Nadkategorija"
 #: mediacore/forms/admin/settings.py:86 mediacore/forms/admin/settings.py:122
 #: mediacore/forms/admin/settings.py:142 mediacore/forms/admin/settings.py:178
 #: mediacore/forms/admin/settings.py:191 mediacore/forms/admin/settings.py:207
-#: mediacore/forms/admin/settings.py:247 mediacore/forms/admin/tags.py:43
+#: mediacore/forms/admin/settings.py:247 mediacore/forms/admin/tags.py:46
 #: mediacore/templates/admin/categories/index.html:131
 #: mediacore/templates/admin/categories/index.html:151
 #: mediacore/templates/admin/tags/index.html:86
@@ -165,14 +165,14 @@ msgstr "Prekliči"
 #: mediacore/forms/admin/settings.py:85 mediacore/forms/admin/settings.py:121
 #: mediacore/forms/admin/settings.py:141 mediacore/forms/admin/settings.py:177
 #: mediacore/forms/admin/settings.py:190 mediacore/forms/admin/settings.py:206
-#: mediacore/forms/admin/settings.py:246 mediacore/forms/admin/tags.py:44
+#: mediacore/forms/admin/settings.py:246 mediacore/forms/admin/tags.py:47
 #: mediacore/forms/admin/users.py:63
 #: mediacore/forms/admin/storage/__init__.py:51
 msgid "Save"
 msgstr "Shrani"
 
 #: mediacore/forms/admin/categories.py:67 mediacore/forms/admin/media.py:154
-#: mediacore/forms/admin/podcasts.py:122 mediacore/forms/admin/tags.py:59
+#: mediacore/forms/admin/podcasts.py:122 mediacore/forms/admin/tags.py:62
 #: mediacore/forms/admin/users.py:64
 #: mediacore/forms/admin/storage/__init__.py:56
 #: mediacore/templates/admin/categories/index.html:132
@@ -709,7 +709,7 @@ msgid ""
 "%(post_vars)s\n"
 msgstr ""
 
-#: mediacore/lib/storage/__init__.py:424
+#: mediacore/lib/storage/__init__.py:351
 msgid "Unusable file or URL provided."
 msgstr ""
 
@@ -811,6 +811,10 @@ msgstr "E-pošta: (kamor ti pošljemo e-pošto, če najdemo)"
 #: mediacore/templates/error.html:53
 msgid "What were you looking for when you got the error?"
 msgstr "Kaj si iskal, ko si dobil napako?"
+
+#: mediacore/templates/error.html:57
+msgid "Submit Error Report"
+msgstr "Izpolni poročilo o napaki."
 
 #: mediacore/templates/helpers.html:37
 #: mediacore/templates/admin/helpers.html:69
@@ -1213,6 +1217,7 @@ msgid "All Comments"
 msgstr "Vsi komentarji"
 
 #: mediacore/templates/admin/comments/index.html:76
+#, python-format
 msgid "Comments for %(search)s"
 msgstr "Komentarji za %(search)s"
 
@@ -1468,6 +1473,7 @@ msgid "Add episode"
 msgstr "Dodaj epizodo"
 
 #: mediacore/templates/admin/podcasts/_podcast-table.html:60
+#, python-format
 msgid "View First Episode %(num)s"
 msgid_plural "View All %(num)s Episodes"
 msgstr[0] "Poglej %(num)s epizodo"
@@ -1622,20 +1628,12 @@ msgstr "Zadnje dodani RSS"
 #: mediacore/templates/media/explore.html:71
 msgid ""
 "As soon as there are more than 9 published videos in the library, the "
-"most popular videos will be listed here."
+"most popular videos will be listed here.\n"
+"\t\t\t\t\tWhy not [1:add] a few more?"
 msgstr ""
-
-#: mediacore/templates/media/explore.html:73
-msgid "Why not"
-msgstr ""
-
-#: mediacore/templates/media/explore.html:73
-msgid "add"
-msgstr ""
-
-#: mediacore/templates/media/explore.html:73
-msgid "a few more?"
-msgstr ""
+"Takoj ko bo več kot 9 objavljenih posnetkov v knjižnici, bodo "
+"tu objavljeni najbolj popularni."
+"Zakaj ne [1:dodaš] še kakšega?"
 
 #: mediacore/templates/media/explore.html:80
 msgid "About archive"
@@ -1785,7 +1783,9 @@ msgstr "Nima nastavljenih oznak."
 
 #: mediacore/templates/players/flash_swiff.html:24
 msgid "You must have javascript and flash enabled to see the player."
-msgstr "Moraš imeti omogočen javascript in flash za pravilno delovanje predvajalnika."
+msgstr ""
+"Moraš imeti omogočen javascript in flash za pravilno delovanje "
+"predvajalnika."
 
 #: mediacore/templates/podcasts/index.html:28
 msgid "All Podcasts"
@@ -1885,4 +1885,20 @@ msgid ""
 "You will be automatically redirected back to the [1:Media Library] in a "
 "few seconds. Hang tight."
 msgstr "Takoj te bomo preusmerili nazaj na [1:Arhiv posnetkov]. Drži se."
+
+#~ msgid ""
+#~ "As soon as there are more than "
+#~ "9 published videos in the library, "
+#~ "the most popular videos will be "
+#~ "listed here."
+#~ msgstr ""
+
+#~ msgid "Why not"
+#~ msgstr ""
+
+#~ msgid "add"
+#~ msgstr ""
+
+#~ msgid "a few more?"
+#~ msgstr ""
 
