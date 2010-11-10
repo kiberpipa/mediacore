@@ -21,7 +21,7 @@ from PIL import Image
 # XXX: note that pylons.url is imported here. Make sure to only use it with
 #      absolute paths (ie. those starting with a /) to avoid differences in
 #      behavior from mediacore.lib.helpers.url_for
-from pylons import config, url as url_for
+from pylons import config, app_globals, url as url_for
 
 __all__ = [
     'ThumbDict', 'create_default_thumbs_for', 'create_thumbs_for',
@@ -188,6 +188,10 @@ def resize_thumb(img, size, filter=Image.ANTIALIAS):
         crop_rect[Y2] = crop_rect[Y] + crop_size[Y]
 
         img = img.crop(crop_rect)
+
+    elif app_globals.settings['keep_aspect_ratio']:
+        # resize height acording to our src_ratio
+        size = (size[X], int(size[X]/float(src_ratio)))
 
     return img.resize(size, filter)
 
