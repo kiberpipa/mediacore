@@ -684,7 +684,7 @@ class MediaController(BaseController):
         #        and not not linking to a nonexistent file.
         # Delete every file from the storage engine
         for file in media.files:
-            file.storage.delete(file.unique_id)
+            file.storage.delete(file)
             # Remove this item from the DBSession so that the foreign key
             # ON DELETE CASCADE can take effect.
             DBSession.expunge(file)
