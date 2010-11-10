@@ -99,7 +99,13 @@ class AbstractPlayer(AbstractClass):
         self.media = media
         self.uris = uris
         self.width = width
-        self.height = height
+        file_width = uris[0].file.width
+        file_height = uris[0].file.height
+        if app_globals.settings['keep_aspect_ratio'] and file_width and file_height:
+            ratio = float(file_width)/float(file_height)
+            self.height = int(self.width/ratio)
+        else:
+            self.height = height
         self.autoplay = autoplay
         self.autobuffer = autobuffer
         self.qualified = qualified

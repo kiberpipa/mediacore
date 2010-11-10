@@ -110,6 +110,7 @@ def add_default_data():
         (u'flash_player', u'jwplayer'),
         (u'html5_player', u'html5'),
         (u'player_type', u'best'),
+        (u'keep_aspect_ratio', u'true'),
         (u'featured_category', u'1'),
         (u'max_upload_size', u'314572800'),
         (u'ftp_storage', u'false'),

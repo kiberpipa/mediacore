@@ -118,6 +118,7 @@ class DisplayForm(ListForm):
             options=category_options,
             validator=Int(),
         ),
+        boolean_radiobuttonlist('keep_aspect_ratio', label_text=_('Adjust height to keep aspect ratio of original video')),
         SubmitButton('save', default=_('Save'), css_classes=['btn', 'btn-save', 'blue', 'f-rgt']),
         ResetButton('cancel', default=_('Cancel'), css_classes=['btn', 'btn-cancel']),
     ]
