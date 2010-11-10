@@ -8,6 +8,24 @@ Let's say your mediacore installation lies in ~/mediacore/
 * python batch-scripts/import/old_kiberpipa_arhive_import.py develop.ini
 
 
+Development
+===========
+
+    $ virtualenv --no-site-packages -p python2.6 mediacore
+    $ cd mediacore
+    $ source bin/activate
+    $ python setup.py develop
+    $ vim development.ini
+    $ paster setup-app
+    $ paster serve
+
+
+Deployment
+==========
+
+    $ fab deploy_pylons
+
+
 CHANGELOG
 =========
 
@@ -15,6 +33,7 @@ Initial release
 ---------------
 
 - added THANKS page
+- implemented LDAP support with user object
 - about text
     * templates/media/explore.html
 - bigger SLUG column size (100)

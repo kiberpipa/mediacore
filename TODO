@@ -6,28 +6,24 @@ UPSTREAM
 - proper i18n url handling http://my.opera.com/WebApplications/blog/2008/03/17/search-engine-friendly
 - clientside detection for video playback support (upstream)
     * add cortado: http://theora.org/cortado/ + http://www.javatester.org/enabled.html
-- submit button on crash report has no image
 - xsendfile nginx
 - separate versioned static files and uploaded ones (data dir should be configurable through ini)
-- Add & Manage doesn't work in FIREFOX (wait for closure tools)
-- can't delete media in admin (get rid of magic SA stuff)
-- Save button breaks Javascript (wait for closure tools)
-- tests break (on upstream todo)
-- test for adding media and deleteing it through admin interface
 - mootools & javascript & i18n & Locale (make separate genshi file to render JS object)
 - "add to podcast" Bulk action (just do it)
 - add option in podcast to map category->podcast (just do it)
+- front page css is broken (text too long)
+- Add & Manage doesn't work in FIREFOX (wait for closure tools)
+- Save button breaks Javascript (wait for closure tools)
+- can't delete media in admin (get rid of magic SA stuff)
+- video width&height
 
     EXTRAS:
     - support multiple encoders on download and proper name
     - choose lang button + geoip (locale + timezone)
-    - url field for files (information)
     - use turbomail for mails and genshi for templates
     - set tinymce language
     - minification
     - http://blog.pearce.org.nz/2009/08/configuring-web-servers-for-html5-ogg.html
-    - codec field for files (currently we have only container)
-	- maybe use HTML5 video for streaming?
 
 
 KIBERPIPA
@@ -39,20 +35,23 @@ KIBERPIPA
 - old arhive import (ike)
 - static through nginx
 - metadata on Media
+- ldap user
 
     DEPLOY
     - uredi kategorije (npr. english content -> tag)
-    - setup support email
+    - setup support email & test it
     - setup email settings in .ini
     - max upload size: 2G
     - analytics
     - add me to admin group
     - setup featured category
+    - videos are downloadable?
 
     V2:
     - integration with encoder (Mavrik)
 
     EXTRAS:
+	- maybe use HTML5 video for streaming?
     - twitter stream separated for each event
     - use our thumbnailer with our fancy PNG
     - setup codebase/arhive on live stream <embed />
