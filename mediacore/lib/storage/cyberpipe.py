@@ -21,10 +21,6 @@ class CyberpipeLocalFileStorage(LocalFileStorage):
 
     default_name = N_(u'Cyberpipe Local File Storage')
 
-    _default_data = {
-        'path': '/home/arhivar/static_html/media/',
-        'rtmp_server_uri': None,
-    }
     # TODO: parse birate, width, height, display_name
 
     def _get_path(self, media_file, unique_id=None):
