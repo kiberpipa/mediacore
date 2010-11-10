@@ -22,7 +22,7 @@ msgstr ""
 msgid ""
 "Upload your media using the form below. We'll review it and get back to "
 "you."
-msgstr ""
+msgstr "Naloži posnetek s pomočjo forme spodaj. Pregledali ga bomo in objavili."
 
 #: mediacore/controllers/error.py:65
 msgid "We're sorry but we weren't able to process this request."
@@ -30,7 +30,7 @@ msgstr "Se opravičujemo, pri prikazu strani je prišlo do napake."
 
 #: mediacore/controllers/media.py:248
 msgid "Invalid player params provided."
-msgstr ""
+msgstr "Napačni parametri za predvajalnik."
 
 #: mediacore/controllers/admin/media.py:382
 #, python-format
@@ -134,23 +134,20 @@ msgid "Submit"
 msgstr ""
 
 #: mediacore/forms/admin/__init__.py:28
-#, fuzzy
 msgid "SEARCH..."
 msgstr "Išči..."
 
 #: mediacore/forms/admin/__init__.py:48
-#, fuzzy
 msgid "You forgot to select an image!"
-msgstr "Ups! Ne pozabi vnesti datoteke."
+msgstr "Ups! Ne pozabi vnesti slike."
 
 #: mediacore/forms/admin/categories.py:45 mediacore/forms/admin/tags.py:42
 msgid "Slug"
 msgstr "Slug"
 
 #: mediacore/forms/admin/categories.py:46
-#, fuzzy
 msgid "Parent Category"
-msgstr "Izbriši kategorijo"
+msgstr "Nadkategorija"
 
 #: mediacore/forms/admin/categories.py:47 mediacore/forms/admin/comments.py:31
 #: mediacore/forms/admin/settings.py:86 mediacore/forms/admin/settings.py:122
@@ -161,7 +158,7 @@ msgstr "Izbriši kategorijo"
 #: mediacore/templates/admin/categories/index.html:151
 #: mediacore/templates/admin/tags/index.html:86
 msgid "Cancel"
-msgstr ""
+msgstr "Prekliči"
 
 #: mediacore/forms/admin/categories.py:48 mediacore/forms/admin/comments.py:30
 #: mediacore/forms/admin/media.py:153 mediacore/forms/admin/podcasts.py:121
@@ -189,21 +186,20 @@ msgid "Delete"
 msgstr "Izbriši"
 
 #: mediacore/forms/admin/media.py:42
-#, fuzzy
 msgid "Bad duration formatting, use Hour&#058;Min&#058;Sec"
-msgstr "Napačna oblika časa trajanja, uporabi Ura:Min:Sek"
+msgstr "Napačna oblika časa trajanja, uporabi Ura&#058;Min&#058;Sek"
 
 #: mediacore/forms/admin/media.py:67
 msgid "Value must be in the format wxh; e.g. 200x300"
-msgstr ""
+msgstr "Vrednost mora biti v formatu WxH; npr. 200x300"
 
 #: mediacore/forms/admin/media.py:73
 msgid "Width must be a valid integer"
-msgstr ""
+msgstr "Dolžina mora biti število"
 
 #: mediacore/forms/admin/media.py:77
 msgid "Height must be a valid integer"
-msgstr ""
+msgstr "Širina mora biti število"
 
 #: mediacore/forms/admin/media.py:99
 msgid "Select an encoded video or audio file on your computer"
@@ -317,9 +313,8 @@ msgid "Subtitle"
 msgstr "Podnaslov"
 
 #: mediacore/forms/admin/podcasts.py:111
-#, fuzzy
 msgid "Podcast Details:"
-msgstr "Epizode podcastev"
+msgstr "Podrobnosti podcasta"
 
 #: mediacore/forms/admin/podcasts.py:112
 msgid "Explicit?"
@@ -334,9 +329,8 @@ msgid "Copyright"
 msgstr "Avtorstvo"
 
 #: mediacore/forms/admin/podcasts.py:116
-#, fuzzy
 msgid "Advanced Options:"
-msgstr "Imaš naslednje možnosti:"
+msgstr "Napredne nastavitve:"
 
 #: mediacore/forms/admin/podcasts.py:117
 msgid "Your Feed URL"
@@ -348,11 +342,11 @@ msgstr "iTunes URL"
 
 #: mediacore/forms/admin/podcasts.py:119
 msgid "Feedburner URL"
-msgstr ""
+msgstr "Feedburner URL"
 
 #: mediacore/forms/admin/settings.py:39
 msgid "Always use the selected HTML5 player"
-msgstr ""
+msgstr "Vedno uporabi izbran HTML5 predvajalnik"
 
 #: mediacore/forms/admin/settings.py:40
 msgid ""
@@ -495,17 +489,16 @@ msgid "Cortado applet URL"
 msgstr ""
 
 #: mediacore/forms/admin/settings.py:242
-#, fuzzy
 msgid "LDAP settings:"
-msgstr "Nastavitve"
+msgstr "LDAP nastavitve"
 
 #: mediacore/forms/admin/settings.py:243
 msgid "Connection"
-msgstr ""
+msgstr "Povezava"
 
 #: mediacore/forms/admin/settings.py:244
 msgid "DN"
-msgstr ""
+msgstr "DN"
 
 #: mediacore/forms/admin/users.py:37
 msgid "User name already exists"
@@ -963,7 +956,7 @@ msgstr "Trenutno ni prenosa v živo. Preveri znova kasneje."
 
 #: mediacore/templates/live.html:114
 msgid "Upcoming events in Cyberpipe"
-msgstr "Bljižni dogodki v Kiberpipi"
+msgstr "Prihajajoči dogodki v Kiberpipi"
 
 #: mediacore/templates/live.html:120
 msgid "When?"
@@ -1123,9 +1116,8 @@ msgid "Delete Category"
 msgstr "Izbriši kategorijo"
 
 #: mediacore/templates/admin/categories/index.html:129
-#, fuzzy
 msgid "Are you sure you want to delete this category [1:and ALL of its children]?"
-msgstr "Si prepričan, da želiš izbrisati oznako?"
+msgstr "Si prepričan, da želiš izbrisati to kateogorijo [1:in VSO njeno vsebino]?"
 
 #: mediacore/templates/admin/categories/index.html:138
 #: mediacore/templates/admin/tags/index.html:73
@@ -1187,7 +1179,6 @@ msgid "Approve this comment for publishing"
 msgstr "Odobri komentar za objavo"
 
 #: mediacore/templates/admin/comments/_comment-table.html:43
-#, fuzzy
 msgid "Approve"
 msgstr "Odobri"
 
@@ -1213,7 +1204,7 @@ msgid "Comments for"
 msgstr "Komentarji"
 
 #: mediacore/templates/admin/comments/index.html:74
-#, fuzzy, python-format
+#, python-format
 msgid "Comments that match '%(search)s'"
 msgstr "Komentarji, ki se ujemajo z '%(search)s'"
 
@@ -1222,7 +1213,6 @@ msgid "All Comments"
 msgstr "Vsi komentarji"
 
 #: mediacore/templates/admin/comments/index.html:76
-#, fuzzy, python-format
 msgid "Comments for %(search)s"
 msgstr "Komentarji za %(search)s"
 
@@ -1411,7 +1401,6 @@ msgid "review pending"
 msgstr "čaka na preverjanje"
 
 #: mediacore/templates/admin/media/update-status-form.html:52
-#, fuzzy
 msgid "encoding"
 msgstr "čaka na zakodiranje"
 
@@ -1479,13 +1468,12 @@ msgid "Add episode"
 msgstr "Dodaj epizodo"
 
 #: mediacore/templates/admin/podcasts/_podcast-table.html:60
-#, fuzzy, python-format
 msgid "View First Episode %(num)s"
 msgid_plural "View All %(num)s Episodes"
 msgstr[0] "Poglej %(num)s epizodo"
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[1] "Poglej %(num)s epizodi"
+msgstr[2] "Poglej %(num)s epizode"
+msgstr[3] "Poglej %(num)s epizod"
 
 #: mediacore/templates/admin/podcasts/edit.html:85
 msgid "View this podcast where it is published"
@@ -1613,7 +1601,7 @@ msgstr "Ni še objavljenih komentarjev."
 #: mediacore/templates/comments/_list.html:54
 #, python-format
 msgid "said on %(datetime)s…"
-msgstr ""
+msgstr "rečeno %(datetime)s…"
 
 #: mediacore/templates/comments/_list.html:70
 msgid "Write a comment"
@@ -1772,13 +1760,12 @@ msgid "Podcast Episodes"
 msgstr "Epizode podcastev"
 
 #: mediacore/templates/media/view.html:125
-#, fuzzy
 msgid "Episode"
 msgid_plural "Episodes"
 msgstr[0] "Epizoda"
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[1] "Epizodi"
+msgstr[2] "Epizode"
+msgstr[3] "Epizod"
 
 #: mediacore/templates/media/view.html:139
 msgid "Related Media"
@@ -1794,11 +1781,11 @@ msgstr "Poglej vse oznake"
 
 #: mediacore/templates/media/view.html:155
 msgid "This does not have any associated tags."
-msgstr ""
+msgstr "Nima nastavljenih oznak."
 
 #: mediacore/templates/players/flash_swiff.html:24
 msgid "You must have javascript and flash enabled to see the player."
-msgstr ""
+msgstr "Moraš imeti omogočen javascript in flash za pravilno delovanje predvajalnika."
 
 #: mediacore/templates/podcasts/index.html:28
 msgid "All Podcasts"
@@ -1826,10 +1813,10 @@ msgstr "Prebrskaj epizode"
 #, python-format
 msgid "%(result_count)s Episodes"
 msgid_plural "All %(result_count)s Episodes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Samo %(result_count)s epizoda"
+msgstr[1] "Samo %(result_count)s epizodi"
+msgstr[2] "Vse %(result_count)s epizode"
+msgstr[3] "%(result_count)s epizod"
 
 #: mediacore/templates/upload/failure.html:24
 #: mediacore/templates/upload/index.html:23
@@ -1852,7 +1839,6 @@ msgstr ""
 "poti da jo odpravijo."
 
 #: mediacore/templates/upload/failure.html:35
-#, fuzzy
 msgid "Something you can check:"
 msgstr "Preveri še naslednje:"
 
