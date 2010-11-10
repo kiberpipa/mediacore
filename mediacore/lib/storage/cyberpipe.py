@@ -27,7 +27,7 @@ class CyberpipeLocalFileStorage(LocalFileStorage):
     }
     # TODO: parse birate, width, height, display_name
 
-    def _get_path(self, media_file):
+    def _get_path(self, media_file, unique_id=None):
         """return the local file path for the given unique id.
 
         this method is exclusive to this engine.
@@ -35,7 +35,7 @@ class CyberpipeLocalFileStorage(LocalFileStorage):
         path = self.folder(media_file)
         if not os.path.exists(path):
             os.mkdir(path)
-        return os.path.join(path, media_file.unique_id)
+        return os.path.join(path, unique_id or media_file.unique_id)
 
     def folder(self, media_file, slug=None):
         """Return folder where media_file is located"""
