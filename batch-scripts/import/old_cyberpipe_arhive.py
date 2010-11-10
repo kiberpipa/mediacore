@@ -112,7 +112,11 @@ videos.append({
 
     # URL for media
     if 'url' in e['extras']:
-        media.meta['URL'] = value=e['extras']['url']
+        media.meta['url'] = value=e['extras']['url']
+
+    # intranet-id for media
+    if 'intranet-id' in e['extras']:
+        media.meta['intranet-event-id'] = value=e['extras']['intranet-id']
 
     # authors
     media.meta['authors'] = ", ".join(e['authors'])

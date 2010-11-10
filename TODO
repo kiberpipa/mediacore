@@ -6,11 +6,11 @@ UPSTREAM
 - clientside detection for video playback support (upstream)
     * add cortado: http://theora.org/cortado/ + http://www.javatester.org/enabled.html
 - mootools & javascript & i18n & Locale (make separate genshi file to render JS object)
-- video width&height
 - "add to podcast" Bulk action (just do it)
 - add option in podcast to map category->podcast (just do it)
 
     EXTRAS:
+    - make a button to change player (if current one fails for some reason)
     - support multiple encoders on download and proper name
     - choose lang button + geoip (locale + timezone)
     - use turbomail for mails and genshi for templates
