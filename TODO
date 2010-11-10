@@ -7,13 +7,10 @@ UPSTREAM
 - clientside detection for video playback support (upstream)
     * add cortado: http://theora.org/cortado/ + http://www.javatester.org/enabled.html
 - xsendfile nginx
-- separate versioned static files and uploaded ones (data dir should be configurable through ini)
 - mootools & javascript & i18n & Locale (make separate genshi file to render JS object)
 - "add to podcast" Bulk action (just do it)
 - add option in podcast to map category->podcast (just do it)
 - front page css is broken (text too long)
-- Add & Manage doesn't work in FIREFOX (wait for closure tools)
-- Save button breaks Javascript (wait for closure tools)
 - can't delete media in admin (get rid of magic SA stuff)
 - video width&height
 
@@ -36,6 +33,7 @@ KIBERPIPA
 - static through nginx
 - metadata on Media
 - ldap user
+- separate versioned static files and uploaded ones (data dir should be configurable through ini)
 
     DEPLOY
     - uredi kategorije (npr. english content -> tag)
