@@ -3,7 +3,6 @@
 
 import os
 import logging
-from shutil import copyfileobj
 
 from pylons import config
 from pylons.i18n import N_
@@ -35,7 +34,7 @@ class CyberpipeLocalFileStorage(LocalFileStorage):
 
     def folder(self, media_file, slug=None):
         """Return folder where media_file is located"""
-        basepath = self._data.get('path', config.get('media_dir', None))
+        basepath = config['app_conf']['media_dir']
         return os.path.join(basepath, slug or media_file.media.slug)
 
 FileStorageEngine.register(CyberpipeLocalFileStorage)

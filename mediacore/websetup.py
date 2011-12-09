@@ -172,11 +172,11 @@ def add_default_data():
     edit_perm.groups.append(editor_group)
     DBSession.add(edit_perm)
 
-    p = Permission()
-    p.permission_name = u'edit'
-    p.description = u'Grants access to edit content'
-    p.groups.append(g)
-    DBSession.add(p)
+    #p = Permission()
+    #p.permission_name = u'edit'
+    #p.description = u'Grants access to edit content'
+    #p.groups.append(g)
+    #DBSession.add(p)
 
     remote_url_storage = RemoteURLStorage()
     default_engines = [

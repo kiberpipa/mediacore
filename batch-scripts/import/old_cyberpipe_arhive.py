@@ -17,14 +17,8 @@ if __name__ == "__main__":
     DEBUG = cmd.options.debug
 
 # BEGIN SCRIPT & SCRIPT SPECIFIC IMPORTS
-import pdb
-import sys
 import re
 import os
-import urllib2
-import urlparse
-import tempfile
-import shutil
 from datetime import datetime
 import logging
 

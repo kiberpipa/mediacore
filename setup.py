@@ -11,10 +11,10 @@ install_requires = [
     'WebTest == 1.2',
     'Pylons == 0.10',
     'WebHelpers == 1.0',
-    'SQLAlchemy >= 0.6.4',
+    'SQLAlchemy >= 0.6.4,<0.7',
     'sqlalchemy-migrate == 0.6',
     'Genshi == 0.6',
-    'Babel == 0.9.5',
+    'Babel == 0.9.6',
     'Routes == 1.12.3',
     'repoze.who == 1.0.18',
     'repoze.what-pylons == 1.0',
@@ -29,7 +29,7 @@ install_requires = [
         # Patch pending: https://bugs.launchpad.net/beautifulsoup/+bug/397997
     'akismet == 0.2.0',
     'feedparser >= 4.1', # needed only for rss import script
-    'cElementTree >= 1, < 2',
+    'cElementTree < 2',
     'gdata > 2, < 2.1',
     'unidecode',
     'importlib',
@@ -46,6 +46,7 @@ install_requires = [
     'gunicorn',
     'repoze.who.plugins.ldap',
     'psycopg2',
+    'WebOb<=1.0',
 ]
 
 extra_arguments_for_setup = {}
